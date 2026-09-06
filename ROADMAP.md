@@ -92,9 +92,17 @@ première variable d'environnement du projet — jusque-là, le déploiement res
 les navigateurs Android. Générer des PNG 192/512 depuis `public/icons/phoenix.svg` améliorerait
 l'installation sur l'écran d'accueil. Le mode hors ligne, lui, ne dépend pas de ça.
 
+**Vérifier le service worker sur un appareil réel — à faire en premier.** Le rituel ne fait aucun
+appel réseau, c'est mesuré. Mais l'enregistrement du service worker n'a pas pu être vérifié de bout
+en bout pendant le build : le navigateur d'aperçu utilisé bloque les service workers. Le script est
+valide et correctement servi ; il reste à confirmer, sur un Android réel en mode avion, que
+`/aujourdhui`, `/plan` et `/rituel` s'ouvrent bien après fermeture de l'app. Tant que ce n'est pas
+confirmé, le produit ne doit pas promettre « fonctionne hors ligne » sans nuance — la page d'accueil
+dit aujourd'hui « calculés sur ton téléphone », ce qui est exact.
+
 **Vérification réseau réelle.** Le budget (< 200 Ko de JS par route, LCP < 2,5 s en 3G lente) est
 tenu au build ; il n'a pas encore été mesuré sur un vrai appareil d'entrée de gamme sur un vrai
-réseau. C'est la première chose à faire avant d'ajouter quoi que ce soit.
+réseau.
 
 **Plusieurs marchés.** `src/config/market.ts` isole devise, montants, services de paiement, villes et
 guichets. Ouvrir un deuxième pays, c'est un deuxième fichier de configuration et une relecture

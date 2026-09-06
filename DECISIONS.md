@@ -104,7 +104,16 @@ six glyphes.
 Le manifeste déclare une icône SVG. Le support des icônes SVG de manifeste est correct sur Chrome
 Android mais inégal pour le mode `maskable` ; générer des PNG 192/512 demanderait une chaîne de
 rastérisation qui n'apporte rien au MVP. Le mode hors ligne ne dépend pas de l'installabilité : il
-vient du service worker, qui fonctionne dans tous les cas. À reprendre — noté dans `ROADMAP.md`.
+vient du service worker, dont la vérification reste ouverte (voir ci-dessous). À reprendre — noté
+dans `ROADMAP.md`.
+
+**Le hors ligne est revendiqué à hauteur de ce qui a été mesuré.**
+Le rituel a été joué en entier avec `fetch`, `XMLHttpRequest` et `sendBeacon` instrumentés : aucun
+appel réseau. En revanche, l'enregistrement du service worker n'a pas pu être vérifié — le navigateur
+d'aperçu disponible ici le bloque, et le Chrome de l'utilisateur n'était pas joignable. Plutôt que
+d'écrire « fonctionne hors ligne » sur la page d'accueil sans l'avoir constaté, la formulation retenue
+est « calculés sur ton téléphone, sans connexion », qui est exacte. Le point est ouvert en tête de la
+section technique de `ROADMAP.md`.
 
 **Node.js a été installé sur la machine de build.**
 Il n'était pas présent. Installé via `winget install OpenJS.NodeJS.LTS` (24.19.0), après accord.

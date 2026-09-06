@@ -110,10 +110,17 @@ Budget tenu, mesuré sur le build de production :
 | bibliothèque d'icônes | aucune | aucune, les icônes sont des `<svg>` inline |
 | images | aucune photo | aucune, tout le visuel est vectoriel |
 
-`motion` n'est chargé que sur `/profil`, en import dynamique. Le service worker
-(`public/sw.js`, écrit à la main) met la coquille en cache : `/aujourdhui`, `/plan` et `/rituel`
-fonctionnent en avion — le rituel ne fait aucun appel réseau, y compris pour réécrire le plan.
-`prefers-reduced-motion` coupe toute animation.
+`motion` n'est chargé que sur `/profil`, en import dynamique. `prefers-reduced-motion` coupe toute
+animation.
+
+**Hors ligne — ce qui est vérifié, et ce qui ne l'est pas.** Le rituel a été joué de bout en bout avec
+`fetch`, `XMLHttpRequest` et `sendBeacon` instrumentés : **zéro appel réseau**, y compris pour
+réécrire le plan. Tout est calculé sur l'appareil, et l'état vit dans `localStorage`. Le service
+worker (`public/sw.js`, écrit à la main) met la coquille en cache pour couvrir le cas du retour sur
+l'app sans réseau ; il est servi correctement (`application/javascript`, `no-store`) et son script est
+valide, **mais son enregistrement n'a pas pu être vérifié de bout en bout** — le seul navigateur
+pilotable dans cet environnement bloque l'enregistrement des service workers. À confirmer sur un
+appareil réel : c'est la première ligne de la section technique de [ROADMAP.md](ROADMAP.md).
 
 ## Mesure
 

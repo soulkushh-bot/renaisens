@@ -93,8 +93,9 @@ export default function Accueil() {
 
       <footer className="mt-14 border-t border-encre/20 pt-5 text-[0.82rem] text-encre/55">
         <p>
-          RENaiSENS est gratuit et fonctionne hors ligne. Écrit pour des femmes francophones en
-          transition, en Afrique de l’Ouest et dans la diaspora.
+          RENaiSENS est gratuit. Ton plan et ton rituel sont calculés sur ton téléphone, sans
+          connexion. Écrit pour des femmes francophones en transition, en Afrique de l’Ouest et dans
+          la diaspora.
         </p>
       </footer>
     </main>
