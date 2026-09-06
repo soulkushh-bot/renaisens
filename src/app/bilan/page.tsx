@@ -2,9 +2,10 @@
 
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { BandeDecoupee, Couche } from '@/components/marque/Papier'
+import { RosacePhenix } from '@/components/marque/RosacePhenix'
 import { Bouton } from '@/components/ui/base'
 import { ChampTexte, ChoixUnique, Echelle } from '@/components/ui/champs'
-import { PhoenixStamp } from '@/components/marque/PhoenixStamp'
 import { ECRANS, question } from '@/content/questions'
 import { useEtat } from '@/lib/etat'
 import type { AnswerValue } from '@/types'
@@ -12,11 +13,12 @@ import type { AnswerValue } from '@/types'
 /**
  * Le bilan : six écrans de trois à quatre questions.
  *
- * L'écran de confidentialité passe AVANT la première question, en français simple et court — ce
- * n'est pas un texte juridique, c'est la raison pour laquelle elle va répondre honnêtement sur son
- * argent et sur sa famille.
+ * L'écran de confidentialité passe AVANT la première question, en français simple — ce n'est pas un
+ * texte juridique, c'est la raison pour laquelle elle va répondre honnêtement sur son argent et sur
+ * sa famille.
  *
- * Elle peut fermer l'onglet à n'importe quel moment : chaque réponse est écrite dans le brouillon.
+ * La progression n'est pas une barre qui se remplit : ce sont six morceaux de papier qui se
+ * collent. Le chiffre est écrit à côté, donc la couleur n'est jamais seule à le dire.
  */
 
 const ETAPE_CONFIDENTIALITE = -1
@@ -50,10 +52,9 @@ export default function Bilan() {
   }, [etape])
 
   /**
-   * Forme fonctionnelle obligatoire : deux réponses tapées dans le même tick de rendu partagent
-   * la même fermeture, et la première serait écrasée par la seconde. Ça n'arrive pas à un rythme
-   * humain sur une machine rapide — ça arrive sur un Android d'entrée de gamme dont le thread
-   * principal traîne, c'est-à-dire exactement l'appareil du segment pilote.
+   * Forme fonctionnelle obligatoire : deux réponses tapées dans le même tick de rendu partagent la
+   * même fermeture, et la première serait écrasée. Ça n'arrive pas à un rythme humain sur une
+   * machine rapide — ça arrive sur un Android d'entrée de gamme dont le thread principal traîne.
    */
   const repondre = (id: string, valeur: AnswerValue) => {
     setReponses((precedent) => {
@@ -65,17 +66,18 @@ export default function Bilan() {
 
   if (etape === ETAPE_CONFIDENTIALITE) {
     return (
-      <main className="colonne flex min-h-dvh flex-col justify-center py-12">
-        <PhoenixStamp taille={44} className="text-cuve" />
-        <h1 className="mt-6 text-[1.8rem]">Avant de commencer</h1>
-        <div className="mt-5 flex flex-col gap-3 text-[1rem] text-encre/85">
+      <main className="colonne flex min-h-dvh flex-col justify-center py-14">
+        <RosacePhenix couches={0} taille={96} />
+        <h1 className="decoupe uppercase mt-8 text-[2.3rem]">Avant de commencer</h1>
+        <div className="mt-6 flex flex-col gap-4 text-[1.05rem] leading-relaxed text-encre/85">
           <p>
             Tu vas répondre à des questions sur ton argent, ton travail et tes proches. C’est
             nécessaire pour que ton plan serve à quelque chose.
           </p>
           <p>
-            Tout est enregistré <strong>sur ton téléphone</strong>, dans ton navigateur. Rien n’est
-            envoyé sur un serveur, il n’y a pas de compte à créer et personne d’autre ne peut le lire.
+            Tout est enregistré <strong className="text-indigo">sur ton téléphone</strong>, dans ton
+            navigateur. Rien n’est envoyé sur un serveur, il n’y a pas de compte à créer et personne
+            d’autre ne peut le lire.
           </p>
           <p>
             Si tu effaces les données du site, ou si tu appuies sur « Tout effacer » dans les
@@ -83,13 +85,13 @@ export default function Bilan() {
             jamais eu.
           </p>
         </div>
-        <Bouton className="mt-8 w-full" onClick={() => setEtape(0)}>
+        <Bouton className="mt-10 w-full" onClick={() => setEtape(0)}>
           J’ai compris, on commence
         </Bouton>
         <button
           type="button"
           onClick={() => router.push('/')}
-          className="mt-3 text-[0.9rem] text-encre/60 underline underline-offset-4"
+          className="mt-4 font-display text-[0.9rem] font-bold uppercase text-encre/60 underline"
         >
           Revenir à l’accueil
         </button>
@@ -113,23 +115,31 @@ export default function Bilan() {
   }
 
   return (
-    <main className="colonne pb-32 pt-8">
-      <div className="flex items-center gap-2" aria-hidden="true">
+    <main className="colonne pb-40 pt-8">
+      {/* Six morceaux de papier qui se collent, pas une barre qui se remplit. */}
+      <div className="flex items-center gap-1.5" aria-hidden="true">
         {ECRANS.map((e, i) => (
           <span
             key={e.id}
-            className="h-2 flex-1 border border-encre/35"
-            style={{ background: i <= etape ? 'var(--color-air)' : 'transparent' }}
+            className="couche coupe h-3 flex-1"
+            style={{
+              ['--teinte' as never]:
+                i < etape
+                  ? 'var(--color-feuille)'
+                  : i === etape
+                    ? 'var(--color-corail)'
+                    : 'var(--color-papier-clair)',
+            }}
           />
         ))}
       </div>
-      <p className="mt-2 text-[0.8rem] text-encre/55">
+      <p className="chiffres mt-3 font-display text-[0.85rem] font-bold uppercase text-encre/60">
         Écran {etape + 1} sur {ECRANS.length}
       </p>
 
-      <h1 className="mt-6 text-[1.5rem]">{ecran.intention}</h1>
+      <h1 className="decoupe uppercase mt-7 text-[1.9rem]">{ecran.intention}</h1>
 
-      <div className="mt-8 flex flex-col gap-9">
+      <div className="mt-10 flex flex-col gap-11">
         {questions.map((q) => {
           const v = reponses[q.id]
           if (q.type === 'echelle') {
@@ -163,24 +173,27 @@ export default function Bilan() {
         })}
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 border-t border-encre/20 bg-coton">
-        <div className="colonne flex items-center gap-3 py-3">
-          <button
-            type="button"
-            onClick={() => setEtape(etape - 1)}
-            className="min-h-12 px-2 text-[0.92rem] text-encre/65 underline underline-offset-4"
-          >
-            Revenir
-          </button>
-          <Bouton className="flex-1" onClick={avancer} disabled={manquantes.length > 0}>
-            {LIBELLES[etape] ?? 'Voir mon profil'}
-          </Bouton>
-        </div>
-        {manquantes.length > 0 ? (
-          <p className="colonne pb-3 text-[0.8rem] text-encre/60">
-            Il reste {manquantes.length} question{manquantes.length > 1 ? 's' : ''} sur cet écran.
-          </p>
-        ) : null}
+      <div className="fixed inset-x-0 bottom-0 z-20">
+        <BandeDecoupee teinte="papier-clair" />
+        <Couche teinte="papier-clair" coupe={false}>
+          <div className="colonne flex items-center gap-3 py-3">
+            <button
+              type="button"
+              onClick={() => setEtape(etape - 1)}
+              className="min-h-12 px-2 font-display text-[0.9rem] font-bold uppercase text-encre/65 underline"
+            >
+              Revenir
+            </button>
+            <Bouton className="flex-1" onClick={avancer} disabled={manquantes.length > 0}>
+              {LIBELLES[etape] ?? 'Voir mon profil'}
+            </Bouton>
+          </div>
+          {manquantes.length > 0 ? (
+            <p className="colonne pb-3 text-[0.85rem] text-encre/65">
+              Il reste {manquantes.length} question{manquantes.length > 1 ? 's' : ''} sur cet écran.
+            </p>
+          ) : null}
+        </Couche>
       </div>
     </main>
   )

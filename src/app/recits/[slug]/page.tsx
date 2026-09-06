@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { Bande } from '@/components/ui/base'
-import { PhoenixStamp } from '@/components/marque/PhoenixStamp'
+import { BandeDecoupee, Couche } from '@/components/marque/Papier'
+import { RosacePhenix } from '@/components/marque/RosacePhenix'
 import { actionOptionnelle } from '@/content/actions'
 import { AVERTISSEMENT_RECITS, RECITS, recit } from '@/content/stories'
 import { NOM_DIMENSION } from '@/types'
@@ -18,9 +18,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params
   const r = recit(slug)
-  if (!r) return { title: 'Récit introuvable — RENaiSENS' }
+  if (!r) return { title: 'Récit introuvable — RenaiSens' }
   return {
-    title: `${r.prenom}, ${r.age} ans — RENaiSENS`,
+    title: `${r.prenom}, ${r.age} ans — RenaiSens`,
     description: `${r.accroche} Parcours illustratif.`,
   }
 }
@@ -33,58 +33,69 @@ export default async function PageRecit({ params }: { params: Promise<{ slug: st
   const premiere = actionOptionnelle(r.premiereAction)
 
   return (
-    <main className="colonne pb-16 pt-8">
-      <Link href="/recits" className="text-[0.88rem] underline underline-offset-4">
-        Tous les récits
-      </Link>
+    <main className="pb-6">
+      <div className="colonne pt-9">
+        <Link
+          href="/recits"
+          className="font-display text-[0.88rem] font-bold uppercase text-indigo underline"
+        >
+          Tous les récits
+        </Link>
 
-      <div className="mt-6 flex items-start justify-between gap-4">
-        <div>
-          <h1 className="text-[1.8rem]">
-            {r.prenom}, {r.age} ans
-          </h1>
-          <p className="mt-1 text-[0.9rem] text-encre/60">
-            {r.ville} · {NOM_DIMENSION[r.dimension]} · {r.duree}
-          </p>
+        <div className="mt-7 flex items-start justify-between gap-5">
+          <div>
+            <h1 className="decoupe chiffres text-[2.2rem]">
+              {r.prenom}, {r.age} ans
+            </h1>
+            <p className="mt-2 font-display text-[0.85rem] font-bold uppercase text-encre/60">
+              {r.ville} · {NOM_DIMENSION[r.dimension]} · {r.duree}
+            </p>
+          </div>
+          <RosacePhenix couches={4} taille={72} className="mt-1 shrink-0" />
         </div>
-        <PhoenixStamp taille={44} className="mt-1 shrink-0 text-pale" />
+
+        <p className="decoupe mt-7 text-[1.45rem] leading-[1.15] text-corail">{r.accroche}</p>
       </div>
 
-      <p className="mt-5 font-display text-[1.25rem] leading-snug">{r.accroche}</p>
+      <BandeDecoupee teinte="feuille" className="mt-11" />
 
-      <Bande className="mt-8" />
-
-      <article className="mt-7 flex flex-col gap-7">
+      <article className="colonne mt-9 flex flex-col gap-9">
         <section>
-          <h2 className="text-[1.1rem] text-encre/60">Avant</h2>
-          <p className="mt-2 text-[1rem] leading-relaxed">{r.avant}</p>
+          <h2 className="decoupe uppercase text-[1.25rem] text-encre/60">Avant</h2>
+          <p className="mt-3 text-[1.06rem] leading-relaxed">{r.avant}</p>
         </section>
 
         <section>
-          <h2 className="text-[1.1rem] text-encre/60">Ce qui a basculé</h2>
-          <p className="mt-2 text-[1rem] leading-relaxed">{r.bascule}</p>
+          <h2 className="decoupe uppercase text-[1.25rem] text-encre/60">Ce qui a basculé</h2>
+          <p className="mt-3 text-[1.06rem] leading-relaxed">{r.bascule}</p>
         </section>
 
         <section>
-          <h2 className="text-[1.1rem] text-encre/60">Aujourd’hui</h2>
-          <p className="mt-2 text-[1rem] leading-relaxed">{r.apres}</p>
+          <h2 className="decoupe uppercase text-[1.25rem] text-encre/60">Aujourd’hui</h2>
+          <p className="mt-3 text-[1.06rem] leading-relaxed">{r.apres}</p>
         </section>
       </article>
 
       {premiere ? (
-        <section className="mt-9 border-l-2 border-laiton pl-4">
-          <h2 className="text-[1.05rem]">Ce qu’elle a fait en premier</h2>
-          <p className="mt-2 text-[1rem]">{premiere.titre}</p>
-          <p className="mt-2 text-[0.9rem] text-encre/65">{premiere.pourquoi}</p>
-        </section>
+        <div className="colonne mt-10">
+          <Couche teinte="souci" className="p-6">
+            <h2 className="decoupe uppercase text-[1.3rem] text-encre">Ce qu’elle a fait en premier</h2>
+            <p className="mt-3 text-[1.06rem] leading-relaxed text-encre">{premiere.titre}</p>
+            <p className="mt-3 text-[0.96rem] leading-relaxed text-encre/75">{premiere.pourquoi}</p>
+          </Couche>
+        </div>
       ) : null}
 
-      <section className="mt-9 border border-encre/25 p-4">
-        <h2 className="text-[1.05rem]">Ce qui n’est pas réglé</h2>
-        <p className="mt-2 text-[0.96rem] text-encre/80">{r.reste}</p>
-      </section>
+      <div className="colonne mt-6">
+        <Couche teinte="papier-clair" className="p-6">
+          <h2 className="decoupe uppercase text-[1.3rem]">Ce qui n’est pas réglé</h2>
+          <p className="mt-3 text-[1.02rem] leading-relaxed text-encre/85">{r.reste}</p>
+        </Couche>
+      </div>
 
-      <p className="mt-10 text-[0.85rem] text-encre/55">{AVERTISSEMENT_RECITS}</p>
+      <p className="colonne mt-12 text-[0.88rem] leading-relaxed text-encre/60">
+        {AVERTISSEMENT_RECITS}
+      </p>
     </main>
   )
 }

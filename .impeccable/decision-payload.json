@@ -1,0 +1,139 @@
+{
+  "title": "Choisir le monde visuel de RenaiSens",
+  "question": "Le tirage a assigné « L'Enseigne peinte ». Tu la gardes, tu prends une alternative, ou tu relances.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "L'Enseigne peinte",
+      "kicker": "LE TIRAGE",
+      "lineage": "panneaux peints à la main d'Abidjan et de Dakar — enseignes de salons de coiffure",
+      "thesis": "Le panneau de salon montre une grille de transformations nommées et numérotées, peintes à la main, et on entre en disant laquelle on veut. C'est exactement ce que fait ce produit — et ça refuse le défaut « bien-être » : pas de fond crème, pas de serif à fort contraste, pas de cartes molles.",
+      "palette": ["#E4571B", "#F2B233", "#136F63", "#141210", "#F7F2E6"],
+      "materials": [
+        "peinture sur contreplaqué",
+        "lettrage à la main",
+        "ombre portée peinte au pinceau",
+        "encres en surimpression, légèrement hors repère"
+      ],
+      "viewport": "Un panneau peint plein cadre. Le nom peint à la main, large, avec son ombre portée. Dessous, la question du jour 1 posée directement — et une grille numérotée de situations nommées, peintes comme les styles d'un salon. La sienne s'allume quand elle répond.",
+      "risk": "Le lettrage peint devient pastiche s'il est trop propre et trop régulier — la main doit rester visible. Et une grille de situations nommées peut ressembler à un menu de coiffure si les noms ne sont pas exactement les siens.",
+      "raised": [
+        {
+          "from": "La boîte à rythmes (déclinée)",
+          "raise": "Une seule ligne de temps ininterrompue traverse le produit et dit toujours où elle en est dans les trente jours. La semaine n'est plus un titre, c'est une position."
+        },
+        {
+          "from": "Le tableau de brassage (compétitif)",
+          "raise": "Chaque état est dessiné — trait plein, entaille, coche, anneau ouvert — jamais porté par la couleur seule. C'était déjà une règle du produit ; elle devient une grammaire visible."
+        },
+        {
+          "from": "Le papier découpé de Łowicz (compétitif)",
+          "raise": "La progression s'empile en couches de papier découpé : la profondeur vient du recouvrement, jamais d'une ombre ni d'un dégradé. Chaque semaine tenue colle une couche de plus."
+        },
+        {
+          "from": "Le kiosque d'État (décliné)",
+          "raise": "Un jeu d'encres volontairement restreint, imprimé légèrement hors repère. La richesse de matière vient du décalage d'impression, pas d'un dégradé — c'est ce qui enlève le côté « trop vectoriel » sans coûter un octet de photo."
+        }
+      ],
+      "comp": ".impeccable/mocks/decision/assigned.webp",
+      "hero": "https://impeccable.style/worlds/cards/vernacular-ephemera-socialist-kiosk-print-hero.webp"
+    },
+    {
+      "id": "model-pick",
+      "label": "Le pagne et sa lisière",
+      "kicker": "MON PREMIER CHOIX",
+      "lineage": "wax imprimé et sa lisière portant le nom du motif",
+      "thesis": "Chaque motif de wax porte un nom qui est une phrase de vie — « Mon mari est capable », « L'œil de ma rivale ». Son profil est un pagne, et son archétype en est le nom, imprimé dans la lisière comme sur le vrai tissu.",
+      "palette": ["#1B4D8F", "#E8721C", "#F5C518", "#B4245C", "#F4EFE4"],
+      "materials": ["cire imprimée", "craquelures de la cire", "lisière imprimée", "surimpression"],
+      "viewport": "Un pagne plein cadre, sa lisière courant sur le bord de l'écran et portant le nom de son motif — c'est-à-dire son archétype.",
+      "risk": "C'est aussi la direction où la plupart des projets sur ce marché atterrissent : le wax est le raccourci évident vers « africain ». Il peut virer au simple décor si les noms ne font pas le travail. C'est mon premier choix, et c'est précisément pour ça que le tirage ne me l'a pas donné.",
+      "comp": ".impeccable/mocks/decision/model-pick.webp"
+    },
+    {
+      "id": "challenger-papercut",
+      "label": "Le papier découpé en couches",
+      "verdict": "competitive",
+      "lineage": "papier découpé de Łowicz, couches de couleur pleine collées",
+      "thesis": "Aucune ombre nulle part, et pourtant de la profondeur — parce que ce sont neuf papiers découpés séparément et collés l'un sur l'autre.",
+      "palette": ["#D8322F", "#F0A81E", "#2C7A4B", "#1B3A6B", "#FAF6EC"],
+      "materials": ["papiers de couleur pleine", "découpe aux ciseaux", "collage en couches"],
+      "viewport": "Sa carte de profil se construit en couches collées : une de plus à chaque semaine tenue.",
+      "case": "Fusionne remarquablement sur la clarté produit : « chaque semaine tenue colle une couche » résout mieux la progression que l'ancienne teinte, et « la profondeur par recouvrement, jamais par l'ombre » est exactement l'antidote au rendu vectoriel froid. Perd sur l'identification : le papier découpé polonais n'est pas son monde.",
+      "risk": "Un monde d'Europe centrale plaqué sur une utilisatrice d'Abidjan. Joli, mais emprunté.",
+      "comp": ".impeccable/mocks/decision/challenger-papercut.webp",
+      "hero": "https://impeccable.style/worlds/cards/craft-making-lowicz-layered-papercut-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/craft-making-lowicz-layered-papercut.webp"
+    },
+    {
+      "id": "challenger-cyclorama",
+      "label": "Le lever de lumière",
+      "verdict": "competitive",
+      "lineage": "cyclorama de théâtre, du noir au plein jour",
+      "thesis": "Le mur courbe part du noir sans profondeur ; une bande cobalt apparaît, le rose s'accumule, et les silhouettes gagnent une ombre avant que la scène devienne le jour.",
+      "palette": ["#0B0D1A", "#1D3A8F", "#E0648C", "#F6C96B", "#FBF6EE"],
+      "materials": ["lumière projetée", "bandes d'horizon", "pochoir de plan de feu"],
+      "viewport": "Le fond de l'app est un ciel qui se lève au fil des trente jours : nuit, première lueur, aube, plein jour.",
+      "case": "C'est la proposition qui porte le mieux l'espoir, littéralement — et les phases sont nommées et étiquetées, donc la couleur n'est jamais seule à porter l'information. Perd sur l'identification : un cyclorama n'est l'objet quotidien de personne à Abidjan, et le dégradé aube est précisément le cliché « bien-être » qu'on cherche à éviter.",
+      "risk": "Un dégradé de lever de soleil est l'image la plus usée du développement personnel. À une nuance près du cliché.",
+      "comp": ".impeccable/mocks/decision/challenger-cyclorama.webp",
+      "hero": "https://impeccable.style/worlds/cards/stagecraft-theater-lighting-cyclorama-dawn-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/stagecraft-theater-lighting-cyclorama-dawn.webp"
+    },
+    {
+      "id": "challenger-jackfield",
+      "label": "Le tableau de brassage",
+      "verdict": "competitive",
+      "lineage": "jackfield de studio, lignes de liaison ambre sur verre noir",
+      "thesis": "Chaque élément est relié à son état par une ligne : pleine, entaillée, coupée, doublée, ou finissant en anneau ouvert. Aucune couleur ne porte d'état.",
+      "palette": ["#0A0A0C", "#E9A21C", "#3A3A3E", "#F2F2F0"],
+      "materials": ["verre noir", "une seule encre ambre", "lignes tracées"],
+      "viewport": "Le plan comme un tableau de liaisons numérotées : chaque action reliée à sa semaine par une ligne dont le tracé dit l'état.",
+      "case": "Gagne sur la rigueur : le vocabulaire d'états dessinés est plus strict que tout ce qu'un panneau peint propose, et il sert directement une règle d'accessibilité du produit. Perd totalement sur l'identification et sur les consignes : verre noir et ambre, c'est l'inverse de « chaleur, couleurs lumineuses, espoir ».",
+      "risk": "Une salle machine. Froid, technique, et à contresens de tout ce que tu as demandé.",
+      "comp": ".impeccable/mocks/decision/challenger-jackfield.webp",
+      "hero": "https://impeccable.style/worlds/cards/operate-b-normalled-jackfield-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/operate-b-normalled-jackfield.webp"
+    },
+    {
+      "id": "challenger-drum",
+      "label": "La boîte à rythmes",
+      "verdict": "declined",
+      "lineage": "rangée de seize pas d'une boîte à rythmes du début des années 80",
+      "palette": ["#232326", "#D93A2B", "#E8892A", "#F2C744"],
+      "materials": ["panneau charbon", "touches de couleur", "LED"],
+      "case": "Perd sur les deux axes. Une machine de studio occidentale n'évoque rien pour une femme d'Abidjan qui prépare sa reconversion, et le panneau charbon à LED contredit chaque consigne de chaleur et de lumière.",
+      "kept": "La ligne de temps ininterrompue qui dit toujours où est « maintenant ».",
+      "hero": "https://impeccable.style/worlds/cards/signals-instruments-drum-machine-step-row-hero.webp"
+    },
+    {
+      "id": "challenger-kiosk",
+      "label": "Le kiosque d'État",
+      "verdict": "declined",
+      "lineage": "imprimés de kiosque, trois encres autorisées sur carton gris",
+      "palette": ["#8C8C86", "#C4442E", "#1F4E79", "#E8E4D8"],
+      "materials": ["trois encres", "carton recyclé", "impression hors repère"],
+      "case": "Perd sur les deux axes : l'imprimé d'État du bloc de l'Est n'est pas son monde, et sa règle « aucune photographie nulle part » contredit frontalement ta décision d'inclure des photos.",
+      "kept": "Le jeu d'encres restreint et le hors-repère assumé, qui donnent de la matière sans dégradé.",
+      "hero": "https://impeccable.style/worlds/cards/vernacular-ephemera-socialist-kiosk-print-hero.webp"
+    }
+  ],
+  "reroll": {
+    "registers": ["safer", "bolder"]
+  },
+  "buildPath": {
+    "value": "code",
+    "toggle": true
+  },
+  "canon": true,
+  "canonCard": {
+    "label": "Le standard de la catégorie",
+    "thesis": "Ce que livre n'importe quelle app de développement personnel qui marche, exécuté impeccablement : cartes à coins doux sur fond chaud, grandes cibles tactiles, libellés en langue simple, et une seule couleur saturée qui n'apparaît que là où l'on peut agir.",
+    "palette": ["#FBF7F2", "#FFFFFF", "#1A1A1A", "#E4571B"],
+    "materials": ["cartes à coins doux", "fond teinté chaud", "une couleur d'action"],
+    "viewport": "L'agencement que la visiteuse attend, au meilleur niveau de finition.",
+    "risk": "Indiscernable de la concurrence, par construction. C'est aussi le choix le plus sûr : il marche, et il ne surprendra personne.",
+    "comp": ".impeccable/mocks/decision/canon.webp"
+  },
+  "steer": true
+}

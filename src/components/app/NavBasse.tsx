@@ -5,44 +5,50 @@ import { usePathname } from 'next/navigation'
 import { useEtat } from '@/lib/etat'
 
 /**
- * La barre basse n'apparaît qu'après le bilan.
- * Avant, l'écran ne propose qu'une seule chose à faire — c'est ce qui fait qu'on la fait.
+ * La barre basse : une bande de papier indigo au bord cranté, collée en bas de la page.
+ * Elle n'apparaît qu'après le bilan — avant, l'écran ne propose qu'une seule chose à faire.
  *
- * Icônes dessinées à la main dans la même langue que le tampon (arêtes droites, aucune courbe).
- * Aucune bibliothèque d'icônes n'est chargée : sur un Android d'entrée de gamme, ce sont des
- * dizaines de kilo-octets qui ne servent à rien.
+ * Les icônes sont des formes découpées pleines, dans la même langue que la rosace : aucune ligne,
+ * aucun contour, aucune bibliothèque chargée. L'onglet actif est découpé dans un autre papier —
+ * la couleur n'est pas seule à le dire, il y a aussi la fleur et le fond.
  */
 
 const ENTREES = [
-  { href: '/aujourdhui', libelle: 'Aujourd’hui', glyphe: <rect x="4" y="4" width="8" height="8" /> },
+  {
+    href: '/aujourdhui',
+    libelle: 'Aujourd’hui',
+    forme: <path d="M12 2 C18 7 20 15 12 22 C4 15 6 7 12 2 Z" />,
+  },
   {
     href: '/plan',
     libelle: 'Plan',
-    glyphe: (
+    forme: (
       <>
-        <rect x="2" y="3" width="12" height="2" />
-        <rect x="2" y="7" width="9" height="2" />
-        <rect x="2" y="11" width="6" height="2" />
+        <rect x="2" y="3" width="20" height="4" rx="1" />
+        <rect x="2" y="10" width="14" height="4" rx="1" />
+        <rect x="2" y="17" width="8" height="4" rx="1" />
       </>
     ),
   },
   {
     href: '/recits',
     libelle: 'Récits',
-    glyphe: (
+    forme: (
       <>
-        <rect x="2" y="2" width="8" height="10" fill="none" stroke="currentColor" strokeWidth="1.5" />
-        <rect x="6" y="4" width="8" height="10" fill="none" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="8" cy="8" r="6" />
+        <circle cx="16" cy="16" r="6" />
       </>
     ),
   },
   {
     href: '/reglages',
     libelle: 'Réglages',
-    glyphe: (
+    forme: (
       <>
-        <rect x="7" y="2" width="2" height="12" />
-        <rect x="2" y="7" width="12" height="2" />
+        <circle cx="12" cy="5" r="4" />
+        <circle cx="12" cy="19" r="4" />
+        <circle cx="5" cy="12" r="4" />
+        <circle cx="19" cy="12" r="4" />
       </>
     ),
   },
@@ -58,34 +64,56 @@ export function NavBasse() {
   return (
     <nav
       aria-label="Navigation principale"
-      className="sticky bottom-0 z-10 mt-10 border-t border-encre/20 bg-coton"
+      className="sur-fond-sombre sticky bottom-0 z-10 mt-14"
     >
-      <ul className="colonne flex">
-        {ENTREES.map((e) => {
-          const actif = chemin === e.href || chemin.startsWith(`${e.href}/`)
-          return (
-            <li key={e.href} className="flex-1">
-              <Link
-                href={e.href}
-                aria-current={actif ? 'page' : undefined}
-                className={`flex min-h-14 flex-col items-center justify-center gap-1 py-2 text-[0.72rem] ${
-                  actif ? 'text-cuve' : 'text-encre/55'
-                }`}
-              >
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
-                  {e.glyphe}
-                </svg>
-                <span>{e.libelle}</span>
-                <span
-                  aria-hidden="true"
-                  className="block h-[2px] w-6"
-                  style={{ background: actif ? 'var(--color-laiton)' : 'transparent' }}
-                />
-              </Link>
-            </li>
-          )
-        })}
-      </ul>
+      <div
+        aria-hidden="true"
+        className="couche feston"
+        style={{ ['--teinte' as never]: 'var(--color-indigo)', height: '14px' }}
+      />
+      <div className="couche" style={{ ['--teinte' as never]: 'var(--color-indigo)' }}>
+        <ul className="colonne flex">
+          {ENTREES.map((e) => {
+            const actif = chemin === e.href || chemin.startsWith(`${e.href}/`)
+            return (
+              <li key={e.href} className="flex-1">
+                <Link
+                  href={e.href}
+                  aria-current={actif ? 'page' : undefined}
+                  className="flex min-h-[3.5rem] flex-col items-center justify-center gap-1.5 py-2.5"
+                >
+                  <span
+                    className="couche coupe flex h-8 w-8 items-center justify-center"
+                    style={{
+                      ['--teinte' as never]: actif
+                        ? 'var(--color-souci)'
+                        : 'transparent',
+                    }}
+                  >
+                    <svg
+                      width="17"
+                      height="17"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                      fill={actif ? 'var(--color-indigo)' : 'var(--color-papier-clair)'}
+                      opacity={actif ? 1 : 0.7}
+                    >
+                      {e.forme}
+                    </svg>
+                  </span>
+                  <span
+                    className={`font-display text-[0.72rem] font-bold uppercase tracking-[-0.005em] ${
+                      actif ? 'text-souci' : 'text-papier-clair/70'
+                    }`}
+                  >
+                    {e.libelle}
+                  </span>
+                </Link>
+              </li>
+            )
+          })}
+        </ul>
+      </div>
     </nav>
   )
 }

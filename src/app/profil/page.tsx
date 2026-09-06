@@ -1,25 +1,25 @@
 'use client'
 
-import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
-import { CarteTeinte } from '@/components/marque/CarteTeinte'
-import { Bande, LienBouton } from '@/components/ui/base'
+import { BandeDecoupee, Couche } from '@/components/marque/Papier'
+import { CompteCouches, RosacePhenix } from '@/components/marque/RosacePhenix'
+import { LienBouton } from '@/components/ui/base'
 import { useEtat } from '@/lib/etat'
 import { SUJET_DIMENSION, type DimensionId } from '@/types'
 
 /**
- * Le Profil de Renaissance.
+ * Le Profil de Renaissance — le pic émotionnel du produit.
  *
  * Ce qu'on n'affiche jamais ici : un score, une jauge, un radar, une note sur dix. Les scores
  * existent dans le moteur pour répartir les actions, et ils y restent. Ce qu'elle lit, c'est une
  * situation qu'elle peut reconnaître — ou rejeter.
+ *
+ * La révélation est en CSS pur (`.revelation` dans globals.css) : le contenu est visible par défaut
+ * et l'animation ne fait que le retarder. La version précédente le masquait derrière une
+ * bibliothèque chargée en différé, ce qui laissait cet écran blanc plus d'une seconde — au moment
+ * exact où elle attend son profil, et bien plus longtemps sur un téléphone lent.
  */
-
-const Revelation = dynamic(
-  () => import('@/components/app/RevelationProfil').then((m) => m.RevelationProfil),
-  { ssr: false },
-)
 
 function deux(dims: DimensionId[]): string {
   const [a, b] = dims
@@ -38,71 +38,76 @@ export default function Profil() {
 
   if (!pret || !etat) {
     return (
-      <main className="colonne py-16">
+      <main className="colonne py-20">
         <p className="text-encre/60">Un instant…</p>
       </main>
     )
   }
 
   const { profile, progress } = etat
+  const couches = progress.semaines.length
 
   return (
-    <main className="colonne pb-16 pt-8">
-      <p className="text-[0.85rem] text-encre/60">Ton profil de renaissance</p>
+    <main className="pb-6">
+      <div className="colonne revelation flex flex-col gap-8 pt-10">
+        <div
+          className="couche coupe sur-fond-sombre px-6 pb-7 pt-8"
+          style={{ ['--teinte' as never]: 'var(--color-indigo)' }}
+        >
+          <div className="flex justify-center">
+            <RosacePhenix couches={couches} taille={188} />
+          </div>
+          <h1 className="decoupe mt-7 text-[1.85rem] text-papier-clair">{profile.titre}</h1>
+          <p className="mt-4 text-[1.02rem] leading-relaxed text-papier-clair/90">
+            {profile.visionReformulee}
+          </p>
+          <div className="mt-7 text-papier-clair">
+            <CompteCouches couches={couches} />
+          </div>
+        </div>
 
-      <div className="mt-4 flex flex-col gap-6">
-        <Revelation>
-          <CarteTeinte
-            titre={profile.titre}
-            semainesTenues={progress.semaines.length}
-            vision={profile.visionReformulee}
-          />
+        <section>
+          <h2 className="decoupe uppercase text-[1.5rem]">Ta situation</h2>
+          <p className="mt-3 text-[1.05rem] leading-relaxed text-encre/85">{profile.situation}</p>
+        </section>
 
-          <section>
-            <h2 className="text-[1.15rem]">Ta situation</h2>
-            <p className="mt-2 text-[1rem] text-encre/85">{profile.situation}</p>
-          </section>
+        <Couche teinte="souci" className="p-6">
+          <h2 className="decoupe uppercase text-[1.5rem] text-encre">Par où on commence</h2>
+          <p className="mt-3 text-[1.05rem] leading-relaxed text-encre/85">{profile.levier}</p>
+        </Couche>
 
-          <section className="border-l-2 border-laiton pl-4">
-            <h2 className="text-[1.15rem]">Par où on commence</h2>
-            <p className="mt-2 text-[1rem] text-encre/85">{profile.levier}</p>
-          </section>
+        <Couche teinte="papier-clair" className="p-6">
+          <p className="text-[1.02rem] leading-relaxed">
+            <span className="text-encre/65">Ce qui te retient le plus en ce moment :</span>{' '}
+            <span className="font-semibold text-indigo">{deux(profile.tensions)}</span>.
+          </p>
+          <p className="mt-4 text-[1.02rem] leading-relaxed">
+            <span className="text-encre/65">Ce sur quoi tu peux t’appuyer :</span>{' '}
+            <span className="font-semibold text-indigo">{deux(profile.forces)}</span>.
+          </p>
+          <p className="mt-5 text-[0.88rem] leading-relaxed text-encre/65">
+            Pas de note, pas de pourcentage. Ces deux phrases servent à décider quelles actions tu
+            reçois — c’est tout ce qu’elles ont à faire.
+          </p>
+        </Couche>
 
-          <section>
-            <div className="border border-encre/25 p-4">
-              <p className="text-[0.98rem]">
-                <span className="text-encre/60">Ce qui te retient le plus en ce moment :</span>{' '}
-                {deux(profile.tensions)}.
-              </p>
-              <p className="mt-3 text-[0.98rem]">
-                <span className="text-encre/60">Ce sur quoi tu peux t’appuyer :</span>{' '}
-                {deux(profile.forces)}.
-              </p>
-              <p className="mt-4 text-[0.85rem] text-encre/55">
-                Pas de note, pas de pourcentage. Ces deux phrases servent à décider quelles actions
-                tu reçois — c’est tout ce qu’elles ont à faire.
-              </p>
-            </div>
-          </section>
-
-          <section>
-            <Bande />
-            <h2 className="mt-6 text-[1.15rem]">Ton année, dans tes mots</h2>
-            <p className="mt-2 border-l-2 border-air pl-4 font-display text-[1.15rem] leading-snug">
-              {profile.horizonUnAn}
-            </p>
-            <p className="mt-3 text-[0.85rem] text-encre/55">
-              On ne te réécrira pas cette phrase. Tu la reliras telle quelle dans un mois.
-            </p>
-          </section>
-        </Revelation>
+        <section>
+          <BandeDecoupee teinte="corail" />
+          <h2 className="decoupe uppercase mt-7 text-[1.5rem]">Ton année, dans tes mots</h2>
+          <p className="decoupe mt-4 text-[1.4rem] leading-[1.15] text-corail">
+            {profile.horizonUnAn}
+          </p>
+          <p className="mt-4 text-[0.88rem] text-encre/65">
+            On ne te réécrira pas cette phrase. Tu la reliras telle quelle dans un mois.
+          </p>
+        </section>
       </div>
 
-      <div className="mt-10">
+      <div className="colonne mt-12">
         <LienBouton href="/plan" className="w-full">
           Voir mon plan de trente jours
         </LienBouton>
-        <p className="mt-3 text-center text-[0.85rem] text-encre/60">
+        <p className="mt-4 text-center text-[0.9rem] text-encre/70">
           Trois actions par semaine au maximum. Une seule prioritaire.
         </p>
       </div>

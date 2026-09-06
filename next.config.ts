@@ -3,10 +3,6 @@ import type { NextConfig } from 'next'
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  experimental: {
-    // Le seul paquet lourd du projet. Tree-shaké agressivement pour tenir le budget JS.
-    optimizePackageImports: ['motion'],
-  },
   async headers() {
     return [
       {

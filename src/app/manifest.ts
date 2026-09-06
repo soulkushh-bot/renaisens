@@ -2,17 +2,17 @@ import type { MetadataRoute } from 'next'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'RENaiSENS — Devenir une nouvelle version de soi',
-    short_name: 'RENaiSENS',
+    name: 'RenaiSens — Trente jours, une chose a la fois',
+    short_name: 'RenaiSens',
     description:
-      'Fais le point, decide qui tu veux devenir, et repars avec un plan de trente jours que tu peux vraiment tenir.',
+      'Fais le point, Fais le point, puis repars avec un plan de trente jours que tu peux vraiment tenir.',
     lang: 'fr',
     start_url: '/aujourdhui',
     scope: '/',
     display: 'standalone',
     orientation: 'portrait',
-    background_color: '#F2EDE1',
-    theme_color: '#131C3D',
+    background_color: '#EEE0C4',
+    theme_color: '#1B2E58',
     icons: [
       {
         src: '/icons/phoenix.svg',

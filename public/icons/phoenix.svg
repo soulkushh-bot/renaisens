@@ -1,21 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
-  <rect width="512" height="512" fill="#131C3D"/>
-  <g transform="translate(96 96) scale(5)" fill="#F2EDE1">
-    <polygon points="32,0 29,7 35,7"/>
-    <polygon points="32,7 27,16 37,16"/>
-    <rect x="30" y="16" width="4" height="5"/>
-    <polygon points="32,20 42,35 32,50 22,35"/>
-    <polygon points="22,23 2,5 8,19 22,29"/>
-    <polygon points="22,31 5,24 14,32 22,37"/>
-    <polygon points="42,23 62,5 56,19 42,29"/>
-    <polygon points="42,31 59,24 50,32 42,37"/>
-    <polygon points="29,50 20,64 27,54"/>
-    <polygon points="30,50 34,50 35,64 29,64"/>
-    <polygon points="35,50 44,64 37,54"/>
-    <g fill="#131C3D">
-      <rect x="26" y="28" width="3" height="3"/>
-      <rect x="35" y="28" width="3" height="3"/>
-      <rect x="30" y="37" width="4" height="4"/>
-    </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="64" height="64">
+  <circle cx="100" cy="100" r="100" fill="#1B2E58"/>
+  <circle cx="100" cy="100" r="76" fill="#F6ECD8"/>
+  <g fill="#E2574C">
+    <path d="M100 46 C118 62 126 96 118 132 C112 152 104 162 100 166 Z"/>
+    <path d="M100 46 C118 62 126 96 118 132 C112 152 104 162 100 166 Z" transform="matrix(-1 0 0 1 200 0)"/>
   </g>
+  <g fill="#2E7D5B">
+    <path d="M100 82 C76 76 52 66 38 60 C44 86 64 108 100 114 Z"/>
+    <path d="M100 82 C76 76 52 66 38 60 C44 86 64 108 100 114 Z" transform="matrix(-1 0 0 1 200 0)"/>
+  </g>
+  <g fill="#F0B429">
+    <path d="M100 140 C96 156 88 172 74 180 C74 162 82 146 100 136 Z"/>
+    <path d="M100 140 C96 156 88 172 74 180 C74 162 82 146 100 136 Z" transform="matrix(-1 0 0 1 200 0)"/>
+  </g>
+  <circle cx="100" cy="58" r="17" fill="#A8502F"/>
 </svg>

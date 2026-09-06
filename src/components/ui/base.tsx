@@ -1,38 +1,56 @@
 import Link from 'next/link'
 
 /*
-  Les primitives. Trois règles tenues partout :
-  — aucune ombre, des aplats et des bordures d'encre ;
-  — les libellés disent ce qui se passe (« Voir mon plan »), jamais « Continuer » ;
-  — pas de « → » collé au libellé, pas de rayon identique sur tous les blocs.
+  Les primitives, en papier découpé.
+
+  Un bouton n'est pas un rectangle arrondi teinté : c'est un morceau de papier coupé, avec son grain
+  et son bord irrégulier. Un contrôle standard posé dans un monde engagé est un manquement.
+
+  La couleur passe TOUJOURS par `--teinte`, jamais par une classe `bg-*` : `.couche` peint le fond à
+  partir de cette variable, et une classe utilitaire de même spécificité perdrait ou gagnerait selon
+  l'ordre de la feuille finale — c'est-à-dire au hasard.
+
+  La règle d'action vient du standard de la catégorie, retenue parce qu'elle est juste :
+  UNE SEULE COULEUR SATURÉE, ET SEULEMENT LÀ OÙ L'ON PEUT AGIR. Le corail est réservé à l'action.
 */
 
-type Variante = 'principal' | 'second' | 'discret' | 'clair' | 'contourClair'
+type Variante = 'action' | 'contour' | 'discret' | 'clair'
 
-const STYLES: Record<Variante, string> = {
-  principal: 'bg-cuve text-coton border-cuve hover:bg-air',
-  second: 'bg-transparent text-encre border-encre hover:bg-encre hover:text-coton',
-  discret: 'bg-transparent text-encre/70 border-transparent underline underline-offset-4 hover:text-encre',
-  // Les deux variantes pour fond indigo. Elles existent pour ne PAS écraser une variante à coups
-  // de classes utilitaires : l'ordre gagnant dans la feuille finale n'est pas celui de la chaîne.
-  clair: 'bg-coton text-cuve border-coton hover:bg-pale',
-  contourClair: 'bg-transparent text-coton border-coton hover:bg-coton hover:text-cuve',
+const TEINTES: Record<Variante, { teinte: string; texte: string; extra?: string }> = {
+  action: { teinte: 'var(--color-corail)', texte: 'var(--color-papier-clair)' },
+  contour: {
+    teinte: 'transparent',
+    texte: 'var(--color-indigo)',
+    extra: 'ring-2 ring-inset ring-indigo',
+  },
+  discret: { teinte: 'transparent', texte: 'var(--color-indigo)', extra: 'underline' },
+  clair: { teinte: 'var(--color-papier-clair)', texte: 'var(--color-indigo)' },
 }
 
 const BASE =
-  'inline-flex min-h-12 items-center justify-center gap-2 rounded-[2px] border px-5 py-3 text-[0.98rem] font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-40'
+  'couche coupe inline-flex min-h-[3rem] items-center justify-center gap-2 px-6 py-3 font-display text-[1rem] font-bold uppercase tracking-[-0.01em] transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-45'
+
+function habits(variante: Variante) {
+  const v = TEINTES[variante]
+  return {
+    className: `${BASE} ${v.extra ?? ''}`,
+    style: { ['--teinte' as never]: v.teinte, color: v.texte },
+  }
+}
 
 export function Bouton({
-  variante = 'principal',
+  variante = 'action',
   className = '',
+  style,
   ...props
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & { variante?: Variante }) {
-  return <button {...props} className={`${BASE} ${STYLES[variante]} ${className}`} />
+  const h = habits(variante)
+  return <button {...props} className={`${h.className} ${className}`} style={{ ...h.style, ...style }} />
 }
 
 export function LienBouton({
   href,
-  variante = 'principal',
+  variante = 'action',
   className = '',
   children,
 }: {
@@ -41,40 +59,32 @@ export function LienBouton({
   className?: string
   children: React.ReactNode
 }) {
+  const h = habits(variante)
   return (
-    <Link href={href} className={`${BASE} ${STYLES[variante]} ${className}`}>
+    <Link href={href} className={`${h.className} ${className}`} style={h.style}>
       {children}
     </Link>
   )
 }
 
-/** Le bloc de contenu du produit : un aplat écru, un trait d'encre, pas de coin arrondi. */
-export function Carte({
-  className = '',
-  children,
-}: {
-  className?: string
-  children: React.ReactNode
-}) {
-  return <div className={`border border-encre/25 bg-coton p-4 ${className}`}>{children}</div>
-}
-
-export function Bande({ className = '' }: { className?: string }) {
-  return <div aria-hidden="true" className={`bande-adire ${className}`} />
-}
-
-/** Le titre d'une section. Pas d'eyebrow en capitales espacées au-dessus — jamais. */
+/**
+ * Un titre de section.
+ * Pas d'eyebrow au-dessus — jamais, aucun brief ne le rachète. Le titre porte son propre poids.
+ */
 export function TitreSection({
   children,
   sous,
+  niveau = 2,
 }: {
   children: React.ReactNode
   sous?: React.ReactNode
+  niveau?: 2 | 3
 }) {
+  const H = niveau === 2 ? 'h2' : 'h3'
   return (
-    <header className="mb-4">
-      <h2 className="text-[1.35rem]">{children}</h2>
-      {sous ? <p className="mt-1.5 text-[0.92rem] text-encre/70">{sous}</p> : null}
+    <header className="mb-5">
+      <H className="decoupe text-[1.6rem]">{children}</H>
+      {sous ? <p className="mt-2 text-[0.98rem] text-encre/75">{sous}</p> : null}
     </header>
   )
 }

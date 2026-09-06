@@ -2,8 +2,9 @@
 
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { CarteTeinte } from '@/components/marque/CarteTeinte'
-import { Bande, Bouton, LienBouton } from '@/components/ui/base'
+import { BandeDecoupee, Couche, PetiteFleur } from '@/components/marque/Papier'
+import { CompteCouches, RosacePhenix } from '@/components/marque/RosacePhenix'
+import { Bouton, LienBouton } from '@/components/ui/base'
 import { action } from '@/content/actions'
 import { QUESTION_VISION } from '@/content/questions'
 import { reflexionPour } from '@/content/reflexions'
@@ -14,12 +15,13 @@ import type { PlanChange } from '@/types'
 /**
  * Le rituel hebdomadaire — la boucle de rétention, et le cœur du produit.
  *
- * Trois minutes, trois temps, et un plafond par construction : au plus trois cases, une question
- * courte, un diff à lire. Pas de champ de journal libre — un journal libre ne tient jamais en trois
- * minutes, et une promesse de trois minutes qu'on ne tient pas ne se répète pas une deuxième fois.
+ * Trois minutes, trois temps, plafonné par construction : au plus trois cases, une question courte,
+ * un diff à lire. Pas de champ de journal libre — un journal libre ne tient jamais en trois minutes.
  *
- * Aucun appel réseau : tout tourne en local, y compris la réécriture du plan. Le segment pilote est
- * sur un réseau instable ; un rituel qui échoue faute de 3G est un rituel qu'on ne refait pas.
+ * Aucun appel réseau : tout tourne en local, y compris la réécriture du plan.
+ *
+ * Le troisième temps colle une couche de plus sur sa rosace. C'est la récompense, et elle est
+ * matérielle : un objet qui grandit, jamais une barre qui se remplit.
  */
 
 type Etape = 'coches' | 'question' | 'resultat'
@@ -44,7 +46,7 @@ export default function Rituel() {
 
   if (!pret || !etat) {
     return (
-      <main className="colonne py-16">
+      <main className="colonne py-20">
         <p className="text-encre/60">Un instant…</p>
       </main>
     )
@@ -52,10 +54,11 @@ export default function Rituel() {
 
   const semaine = semaineCourante(etat)
   const actions = semaineDuPlan(etat.plan, semaine)?.actions ?? []
-  const selection = coches ?? actions.filter((a) => etat.progress.faites.includes(a.actionId)).map((a) => a.actionId)
+  const selection =
+    coches ?? actions.filter((a) => etat.progress.faites.includes(a.actionId)).map((a) => a.actionId)
   const reflexion = reflexionPour(semaine, etat.profile.tensions[0] ?? 'soi')
 
-  // Même raison que dans le bilan : jamais de calcul à partir de la valeur capturée par la fermeture.
+  // Forme fonctionnelle : jamais de calcul à partir de la valeur capturée par la fermeture.
   const basculer = (id: string) =>
     setCoches((precedent) => {
       const base = precedent ?? selection
@@ -81,87 +84,91 @@ export default function Rituel() {
     const quatrieme = semaineFaite >= 4
     const frein = etat.answers['q_frein']
     const vision = etat.answers[QUESTION_VISION]
+    const couches = etat.progress.semaines.length
 
     return (
-      <main className="colonne pb-16 pt-8">
-        <h1 className="text-[1.6rem]">Ce qui change</h1>
+      <main className="pb-6">
+        <Couche teinte="indigo" coupe={false} className="pb-12 pt-10">
+          <div className="colonne revelation flex flex-col gap-7">
+            <div className="flex justify-center">
+              <RosacePhenix couches={couches} taille={176} />
+            </div>
+            <div className="text-papier-clair">
+              <CompteCouches couches={couches} />
+            </div>
+          </div>
+        </Couche>
 
-        {changements.length === 0 ? (
-          <p className="mt-4 text-[1rem] text-encre/80">
-            Rien à réécrire cette semaine. Ton plan tient tel quel.
-          </p>
-        ) : (
-          <ul className="mt-5 flex flex-col gap-3">
-            {changements.map((c, i) => (
-              <li
-                key={`${c.actionId}-${i}`}
-                className={`border p-4 ${
-                  c.type === 'montee' ? 'border-laiton' : 'border-encre/25'
-                }`}
-              >
-                <p className="text-[0.98rem] text-encre/85">{c.texte}</p>
-              </li>
-            ))}
-          </ul>
-        )}
+        <div className="colonne mt-12">
+          <h1 className="decoupe uppercase text-[2.1rem]">Ce qui change</h1>
+
+          {changements.length === 0 ? (
+            <p className="mt-5 text-[1.05rem] text-encre/85">
+              Rien à réécrire cette semaine. Ton plan tient tel quel.
+            </p>
+          ) : (
+            <ul className="mt-7 flex flex-col gap-3">
+              {changements.map((c, i) => (
+                <li key={`${c.actionId}-${i}`}>
+                  <Couche teinte={c.type === 'montee' ? 'souci' : 'papier-clair'} className="p-5">
+                    <p className="text-[1.02rem] leading-relaxed text-encre/90">{c.texte}</p>
+                  </Couche>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
 
         {quatrieme ? (
           <>
-            <Bande className="mt-12" />
-            <section className="mt-8">
-              <h2 className="text-[1.35rem]">Un mois plus tôt, tu écrivais ça</h2>
-              <p className="mt-2 text-[0.9rem] text-encre/65">
+            <BandeDecoupee teinte="corail" className="mt-16" />
+            <div className="colonne mt-10">
+              <h2 className="decoupe uppercase text-[1.9rem]">Un mois plus tôt, tu écrivais ça</h2>
+              <p className="mt-3 text-[0.96rem] text-encre/70">
                 Mot pour mot, sans rien changer. C’est ton avant et ton après, dans ta langue.
               </p>
 
               {typeof frein === 'string' && frein.trim() ? (
-                <figure className="mt-6 border-l-2 border-pale pl-4">
-                  <figcaption className="text-[0.85rem] text-encre/55">
+                <figure className="mt-8">
+                  <figcaption className="font-display text-[0.85rem] font-bold uppercase text-encre/55">
                     Ce qui t’arrêtait, le premier jour
                   </figcaption>
-                  <blockquote className="mt-1 font-display text-[1.15rem] leading-snug">
+                  <blockquote className="decoupe mt-2 text-[1.35rem] leading-[1.15] text-indigo">
                     {frein}
                   </blockquote>
                 </figure>
               ) : null}
 
               {typeof vision === 'string' && vision.trim() ? (
-                <figure className="mt-5 border-l-2 border-pale pl-4">
-                  <figcaption className="text-[0.85rem] text-encre/55">
+                <figure className="mt-7">
+                  <figcaption className="font-display text-[0.85rem] font-bold uppercase text-encre/55">
                     Ce que tu voulais voir changer
                   </figcaption>
-                  <blockquote className="mt-1 font-display text-[1.15rem] leading-snug">
+                  <blockquote className="decoupe mt-2 text-[1.35rem] leading-[1.15] text-indigo">
                     {vision}
                   </blockquote>
                 </figure>
               ) : null}
 
               {reponse.trim() ? (
-                <figure className="mt-8 border-l-2 border-laiton pl-4">
-                  <figcaption className="text-[0.85rem] text-encre/55">
+                <figure className="mt-10">
+                  <figcaption className="font-display text-[0.85rem] font-bold uppercase text-encre/55">
                     Ce que tu viens d’écrire, aujourd’hui
                   </figcaption>
-                  <blockquote className="mt-1 font-display text-[1.15rem] leading-snug">
+                  <blockquote className="decoupe mt-2 text-[1.35rem] leading-[1.15] text-corail">
                     {reponse.trim()}
                   </blockquote>
                 </figure>
               ) : null}
 
-              <p className="mt-8 text-[0.95rem] text-encre/75">
+              <p className="mt-10 text-[1rem] leading-relaxed text-encre/80">
                 On ne va pas te dire si c’est bien. Relis les deux, et décide toi-même.
               </p>
-            </section>
+            </div>
           </>
         ) : null}
 
-        <div className="mt-10">
-          <CarteTeinte
-            titre={etat.profile.titre}
-            semainesTenues={etat.progress.semaines.length}
-          />
-        </div>
-
-        <div className="mt-8 flex flex-col gap-2">
+        <div className="colonne mt-12 flex flex-col gap-3">
           <LienBouton href="/aujourdhui" className="w-full">
             Revenir à ma semaine
           </LienBouton>
@@ -176,12 +183,12 @@ export default function Rituel() {
   // ————————————————————————— 2. Une question —————————————————————————
   if (etape === 'question') {
     return (
-      <main className="colonne pb-32 pt-8">
-        <p className="text-[0.85rem] text-encre/55">Rituel de la semaine {semaine} · 2 sur 3</p>
-        <h1 className="mt-4 text-[1.5rem]">{reflexion.texte}</h1>
-        {reflexion.aide ? (
-          <p className="mt-2 text-[0.92rem] text-encre/65">{reflexion.aide}</p>
-        ) : null}
+      <main className="colonne pb-36 pt-9">
+        <p className="chiffres font-display text-[0.85rem] font-bold uppercase text-encre/55">
+          Rituel de la semaine {semaine} · 2 sur 3
+        </p>
+        <h1 className="decoupe uppercase mt-5 text-[1.9rem]">{reflexion.texte}</h1>
+        {reflexion.aide ? <p className="mt-3 text-[1rem] text-encre/75">{reflexion.aide}</p> : null}
 
         <textarea
           rows={4}
@@ -190,22 +197,26 @@ export default function Rituel() {
           onChange={(e) => setReponse(e.target.value)}
           placeholder="Deux lignes suffisent."
           aria-label={reflexion.texte}
-          className="mt-5 w-full resize-y rounded-[2px] border border-encre/30 bg-transparent p-3 text-[1rem] leading-relaxed placeholder:text-encre/35 focus:border-encre"
+          className="couche coupe mt-7 w-full resize-y p-4 text-[1.05rem] leading-relaxed text-encre placeholder:text-encre/40"
+          style={{ ['--teinte' as never]: 'var(--color-papier-clair)' }}
         />
-        <p className="mt-1 text-right text-[0.78rem] text-encre/50">{reponse.length} / 280</p>
+        <p className="chiffres mt-1.5 text-right text-[0.8rem] text-encre/55">{reponse.length} / 280</p>
 
-        <div className="fixed inset-x-0 bottom-0 border-t border-encre/20 bg-coton">
-          <div className="colonne flex items-center gap-3 py-3">
-            <button
-              type="button"
-              onClick={() => setEtape('coches')}
-              className="min-h-12 px-2 text-[0.92rem] text-encre/65 underline underline-offset-4"
-            >
-              Revenir
-            </button>
-            <Bouton className="flex-1" onClick={terminer}>
-              Voir ce qui change
-            </Bouton>
+        <div className="fixed inset-x-0 bottom-0 z-20">
+          <BandeDecoupee teinte="papier-clair" />
+          <div className="couche" style={{ ['--teinte' as never]: 'var(--color-papier-clair)' }}>
+            <div className="colonne flex items-center gap-3 py-3">
+              <button
+                type="button"
+                onClick={() => setEtape('coches')}
+                className="min-h-12 px-2 font-display text-[0.9rem] font-bold uppercase text-encre/65 underline"
+              >
+                Revenir
+              </button>
+              <Bouton className="flex-1" onClick={terminer}>
+                Voir ce qui change
+              </Bouton>
+            </div>
           </div>
         </div>
       </main>
@@ -214,20 +225,24 @@ export default function Rituel() {
 
   // ————————————————————————— 1. Ce que tu as fait —————————————————————————
   return (
-    <main className="colonne pb-32 pt-8">
-      <p className="text-[0.85rem] text-encre/55">Rituel de la semaine {semaine} · 1 sur 3</p>
-      <h1 className="mt-4 text-[1.5rem]">Qu’est-ce que tu as fait cette semaine ?</h1>
-      <p className="mt-2 text-[0.94rem] text-encre/70">
+    <main className="colonne pb-36 pt-9">
+      <p className="chiffres font-display text-[0.85rem] font-bold uppercase text-encre/55">
+        Rituel de la semaine {semaine} · 1 sur 3
+      </p>
+      <h1 className="decoupe uppercase mt-5 text-[1.9rem]">Qu’est-ce que tu as fait cette semaine ?</h1>
+      <p className="mt-3 text-[1rem] leading-relaxed text-encre/75">
         Ce que tu n’as pas fait n’est pas un échec, et ne sera pas répété tel quel. Coche juste ce
         qui est vrai.
       </p>
 
       {actions.length === 0 ? (
-        <p className="mt-6 border border-encre/25 p-4 text-[0.95rem] text-encre/70">
-          Il n’y avait rien de prévu cette semaine. Tu peux passer à la question.
-        </p>
+        <Couche teinte="papier-clair" className="mt-7 p-5">
+          <p className="text-[1rem] text-encre/75">
+            Il n’y avait rien de prévu cette semaine. Tu peux passer à la question.
+          </p>
+        </Couche>
       ) : (
-        <ul className="mt-6 flex flex-col gap-2">
+        <ul className="mt-7 flex flex-col gap-3">
           {actions.map((a) => {
             const def = action(a.actionId)
             const coche = selection.includes(a.actionId)
@@ -237,27 +252,31 @@ export default function Rituel() {
                   type="button"
                   onClick={() => basculer(a.actionId)}
                   aria-pressed={coche}
-                  className={`flex w-full items-start gap-3 border p-4 text-left transition-colors ${
-                    coche ? 'border-cuve' : 'border-encre/25'
-                  }`}
+                  className="couche coupe flex w-full items-start gap-3.5 p-5 text-left"
+                  style={{
+                    ['--teinte' as never]: coche
+                      ? 'var(--color-feuille)'
+                      : 'var(--color-papier-clair)',
+                  }}
                 >
-                  <span
-                    aria-hidden="true"
-                    className={`mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center border ${
-                      coche ? 'border-cuve bg-cuve text-coton' : 'border-encre/45'
-                    }`}
-                  >
+                  <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center">
                     {coche ? (
-                      <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
-                        <polygon points="1,7 3,5 6,8 11,2 13,4 6,12" />
-                      </svg>
-                    ) : null}
+                      <PetiteFleur taille={26} petale="souci" coeur="papier-clair" />
+                    ) : (
+                      <span className="block h-4 w-4 border-2 border-encre/40" />
+                    )}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block text-[1rem] leading-snug">
+                    <span
+                      className={`block text-[1.05rem] leading-snug ${coche ? 'text-papier-clair' : 'text-encre'}`}
+                    >
                       {a.reduite ? def.versionReduite : def.titre}
                     </span>
-                    <span className="mt-1 block text-[0.82rem] text-encre/55">
+                    <span
+                      className={`mt-1.5 block font-display text-[0.82rem] font-bold uppercase ${
+                        coche ? 'text-souci' : 'text-encre/55'
+                      }`}
+                    >
                       {coche ? 'Fait' : 'Pas cette semaine'}
                     </span>
                   </span>
@@ -268,14 +287,17 @@ export default function Rituel() {
         </ul>
       )}
 
-      <div className="fixed inset-x-0 bottom-0 border-t border-encre/20 bg-coton">
-        <div className="colonne flex items-center gap-3 py-3">
-          <LienBouton href="/aujourdhui" variante="discret">
-            Plus tard
-          </LienBouton>
-          <Bouton className="flex-1" onClick={() => setEtape('question')}>
-            Passer à la question
-          </Bouton>
+      <div className="fixed inset-x-0 bottom-0 z-20">
+        <BandeDecoupee teinte="papier-clair" />
+        <div className="couche" style={{ ['--teinte' as never]: 'var(--color-papier-clair)' }}>
+          <div className="colonne flex items-center gap-3 py-3">
+            <LienBouton href="/aujourdhui" variante="discret">
+              Plus tard
+            </LienBouton>
+            <Bouton className="flex-1" onClick={() => setEtape('question')}>
+              Passer à la question
+            </Bouton>
+          </div>
         </div>
       </div>
     </main>
