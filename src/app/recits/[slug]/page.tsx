@@ -54,7 +54,7 @@ export default async function PageRecit({ params }: { params: Promise<{ slug: st
           <RosacePhenix couches={4} taille={72} className="mt-1 shrink-0" />
         </div>
 
-        <p className="decoupe mt-7 text-[1.45rem] leading-[1.15] text-corail">{r.accroche}</p>
+        <p className="decoupe mt-7 text-[1.45rem] leading-[1.15] text-indigo">{r.accroche}</p>
       </div>
 
       <BandeDecoupee teinte="feuille" className="mt-11" />

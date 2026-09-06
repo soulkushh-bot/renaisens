@@ -94,7 +94,7 @@ export default function Profil() {
         <section>
           <BandeDecoupee teinte="corail" />
           <h2 className="decoupe uppercase mt-7 text-[1.5rem]">Ton année, dans tes mots</h2>
-          <p className="decoupe mt-4 text-[1.4rem] leading-[1.15] text-corail">
+          <p className="decoupe mt-4 text-[1.4rem] leading-[1.15] text-indigo">
             {profile.horizonUnAn}
           </p>
           <p className="mt-4 text-[0.88rem] text-encre/65">

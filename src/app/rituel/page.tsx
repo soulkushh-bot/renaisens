@@ -155,7 +155,7 @@ export default function Rituel() {
                   <figcaption className="font-display text-[0.85rem] font-bold uppercase text-encre/55">
                     Ce que tu viens d’écrire, aujourd’hui
                   </figcaption>
-                  <blockquote className="decoupe mt-2 text-[1.35rem] leading-[1.15] text-corail">
+                  <blockquote className="decoupe mt-2 text-[1.35rem] leading-[1.15] text-indigo">
                     {reponse.trim()}
                   </blockquote>
                 </figure>

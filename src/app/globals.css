@@ -19,13 +19,22 @@
 */
 
 @theme {
-  /* Les encres. Pleines, non mélangées — sept feuilles de papier, pas une palette de nuances. */
+  /*
+    Les encres. Pleines, non mélangées — huit feuilles de papier, pas une palette de nuances.
+
+    Règle de contraste, vérifiée au calcul et non à l'œil :
+    — `corail`, `souci`, `feuille` et `terre` sont des couleurs de REMPLISSAGE ;
+    — le texte posé dessus est d'encre (sur corail et souci) ou de papier clair (sur feuille et terre) ;
+    — le texte accentué sur fond papier est TOUJOURS indigo (11:1), jamais corail (2,8:1, illisible).
+    Le corail crème échouait à 3,14:1 sur le bouton d'action — le contrôle le plus important du
+    produit. Il garde sa couleur et prend un texte d'encre : 4,89:1.
+  */
   --color-papier: #eee0c4;
   --color-papier-clair: #f6ecd8;
   --color-indigo: #1b2e58;
   --color-corail: #e2574c;
   --color-souci: #f0b429;
-  --color-feuille: #2e7d5b;
+  --color-feuille: #286c4e;
   --color-terre: #a8502f;
   --color-encre: #17161a;
 

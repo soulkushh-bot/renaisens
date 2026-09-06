@@ -17,7 +17,7 @@ import Link from 'next/link'
 type Variante = 'action' | 'contour' | 'discret' | 'clair'
 
 const TEINTES: Record<Variante, { teinte: string; texte: string; extra?: string }> = {
-  action: { teinte: 'var(--color-corail)', texte: 'var(--color-papier-clair)' },
+  action: { teinte: 'var(--color-corail)', texte: 'var(--color-encre)' },
   contour: {
     teinte: 'transparent',
     texte: 'var(--color-indigo)',

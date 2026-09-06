@@ -127,7 +127,7 @@ export default function PagePlan() {
 
       <div className="colonne mt-14">
         <h2 className="decoupe uppercase text-[1.9rem]">Dans un an</h2>
-        <p className="decoupe mt-4 text-[1.5rem] leading-[1.15] text-corail">{plan.horizon}</p>
+        <p className="decoupe mt-4 text-[1.5rem] leading-[1.15] text-indigo">{plan.horizon}</p>
         <p className="mt-4 text-[0.9rem] text-encre/65">
           Ta phrase, écrite le premier jour. On ne l’a pas reformulée.
         </p>
