@@ -36,10 +36,10 @@ export default function Reglages() {
   return (
     <main className="pb-6">
       <div className="colonne pt-9">
-        <h1 className="decoupe font-display uppercase text-[2.3rem]">Réglages</h1>
+        <h1 className="decoupe uppercase text-[2.3rem]">Réglages</h1>
 
         <section className="mt-9">
-          <h2 className="decoupe font-display uppercase text-[1.5rem]">Où sont tes réponses</h2>
+          <h2 className="decoupe uppercase text-[1.5rem]">Où sont tes réponses</h2>
           <div className="mt-4 flex flex-col gap-4 text-[1.03rem] leading-relaxed text-encre/85">
             <p>
               Tout ce que tu as écrit — tes réponses, ton profil, ton plan, tes rituels — est
@@ -61,7 +61,7 @@ export default function Reglages() {
 
       <div className="colonne mt-9">
         <section>
-          <h2 className="decoupe font-display uppercase text-[1.5rem]">Emporter tes données</h2>
+          <h2 className="decoupe uppercase text-[1.5rem]">Emporter tes données</h2>
           <p className="mt-3 text-[1.02rem] leading-relaxed text-encre/85">
             Un fichier lisible, avec tout ce que tu as écrit. Il t’appartient.
           </p>
@@ -71,7 +71,7 @@ export default function Reglages() {
         </section>
 
         <section className="mt-12">
-          <h2 className="decoupe font-display uppercase text-[1.5rem]">Tout effacer</h2>
+          <h2 className="decoupe uppercase text-[1.5rem]">Tout effacer</h2>
           <p className="mt-3 text-[1.02rem] leading-relaxed text-encre/85">
             Ton bilan, ton profil, ton plan et tes rituels sont supprimés de cet appareil. Ce n’est
             pas annulable, et nous n’en avons aucune copie à te renvoyer.
@@ -109,7 +109,7 @@ export default function Reglages() {
         </section>
 
         <section className="mt-12">
-          <h2 className="decoupe font-display uppercase text-[1.5rem]">Recommencer le bilan</h2>
+          <h2 className="decoupe uppercase text-[1.5rem]">Recommencer le bilan</h2>
           <p className="mt-3 text-[1.02rem] leading-relaxed text-encre/85">
             Si ta situation a changé, tu peux refaire le point. Ton plan actuel sera remplacé.
           </p>

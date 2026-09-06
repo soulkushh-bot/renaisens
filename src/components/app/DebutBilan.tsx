@@ -30,7 +30,7 @@ export function DebutBilan() {
         style={{ ['--teinte' as never]: 'var(--color-indigo)' }}
       >
         <p className="text-[0.95rem] text-papier-clair/80">Tu as déjà fait le point.</p>
-        <p className="decoupe font-display mt-2 text-[1.5rem] text-papier-clair">{etat.profile.titre}</p>
+        <p className="decoupe mt-2 text-[1.5rem] text-papier-clair">{etat.profile.titre}</p>
         <div className="mt-6 flex flex-wrap gap-3">
           <LienBouton href="/aujourdhui" variante="action">
             Reprendre où j’en suis
@@ -55,7 +55,7 @@ export function DebutBilan() {
       className="couche coupe sur-fond-sombre p-6"
       style={{ ['--teinte' as never]: 'var(--color-indigo)' }}
     >
-      <label htmlFor="vision" className="decoupe font-display block text-[1.35rem] text-papier-clair">
+      <label htmlFor="vision" className="decoupe block text-[1.35rem] text-papier-clair">
         {q.type === 'texte' ? q.texte : ''}
       </label>
       <p className="mt-3 text-[0.95rem] text-papier-clair/75">

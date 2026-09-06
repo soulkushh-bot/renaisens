@@ -22,7 +22,7 @@ export default function PageRecits() {
   return (
     <main className="pb-6">
       <div className="colonne pt-9">
-        <h1 className="decoupe font-display uppercase text-[2.3rem]">Récits</h1>
+        <h1 className="decoupe uppercase text-[2.3rem]">Récits</h1>
         <p className="mt-4 text-[1.08rem] leading-relaxed text-encre/85">
           Onze transitions, racontées avec ce qui a coincé et ce qui n’est toujours pas réglé. Une
           histoire sans reste n’est pas une histoire à laquelle on croit.
@@ -41,7 +41,7 @@ export default function PageRecits() {
             <li key={r.slug}>
               <Link href={`/recits/${r.slug}`} className="block">
                 <Couche teinte={teintes[i % 3]} className="p-5">
-                  <p className="decoupe font-display text-indigo text-[1.2rem]">
+                  <p className="decoupe text-indigo text-[1.2rem]">
                     {r.prenom}, {r.age} ans, {r.ville}
                   </p>
                   <p className="mt-2.5 text-[1rem] leading-relaxed text-encre/80">{r.accroche}</p>

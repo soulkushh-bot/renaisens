@@ -44,7 +44,7 @@ export default async function PageRecit({ params }: { params: Promise<{ slug: st
 
         <div className="mt-7 flex items-start justify-between gap-5">
           <div>
-            <h1 className="decoupe font-display chiffres text-[2.2rem]">
+            <h1 className="decoupe chiffres text-[2.2rem]">
               {r.prenom}, {r.age} ans
             </h1>
             <p className="mt-2 font-display text-[0.85rem] font-bold uppercase text-encre/60">
@@ -54,24 +54,24 @@ export default async function PageRecit({ params }: { params: Promise<{ slug: st
           <RosacePhenix couches={4} taille={72} className="mt-1 shrink-0" />
         </div>
 
-        <p className="decoupe font-display mt-7 text-[1.45rem] leading-[1.15] text-corail">{r.accroche}</p>
+        <p className="decoupe mt-7 text-[1.45rem] leading-[1.15] text-corail">{r.accroche}</p>
       </div>
 
       <BandeDecoupee teinte="feuille" className="mt-11" />
 
       <article className="colonne mt-9 flex flex-col gap-9">
         <section>
-          <h2 className="decoupe font-display uppercase text-[1.25rem] text-encre/60">Avant</h2>
+          <h2 className="decoupe uppercase text-[1.25rem] text-encre/60">Avant</h2>
           <p className="mt-3 text-[1.06rem] leading-relaxed">{r.avant}</p>
         </section>
 
         <section>
-          <h2 className="decoupe font-display uppercase text-[1.25rem] text-encre/60">Ce qui a basculé</h2>
+          <h2 className="decoupe uppercase text-[1.25rem] text-encre/60">Ce qui a basculé</h2>
           <p className="mt-3 text-[1.06rem] leading-relaxed">{r.bascule}</p>
         </section>
 
         <section>
-          <h2 className="decoupe font-display uppercase text-[1.25rem] text-encre/60">Aujourd’hui</h2>
+          <h2 className="decoupe uppercase text-[1.25rem] text-encre/60">Aujourd’hui</h2>
           <p className="mt-3 text-[1.06rem] leading-relaxed">{r.apres}</p>
         </section>
       </article>
@@ -79,7 +79,7 @@ export default async function PageRecit({ params }: { params: Promise<{ slug: st
       {premiere ? (
         <div className="colonne mt-10">
           <Couche teinte="souci" className="p-6">
-            <h2 className="decoupe font-display uppercase text-[1.3rem] text-encre">Ce qu’elle a fait en premier</h2>
+            <h2 className="decoupe uppercase text-[1.3rem] text-encre">Ce qu’elle a fait en premier</h2>
             <p className="mt-3 text-[1.06rem] leading-relaxed text-encre">{premiere.titre}</p>
             <p className="mt-3 text-[0.96rem] leading-relaxed text-encre/75">{premiere.pourquoi}</p>
           </Couche>
@@ -88,7 +88,7 @@ export default async function PageRecit({ params }: { params: Promise<{ slug: st
 
       <div className="colonne mt-6">
         <Couche teinte="papier-clair" className="p-6">
-          <h2 className="decoupe font-display uppercase text-[1.3rem]">Ce qui n’est pas réglé</h2>
+          <h2 className="decoupe uppercase text-[1.3rem]">Ce qui n’est pas réglé</h2>
           <p className="mt-3 text-[1.02rem] leading-relaxed text-encre/85">{r.reste}</p>
         </Couche>
       </div>

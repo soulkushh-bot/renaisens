@@ -100,7 +100,7 @@ export default function Rituel() {
         </Couche>
 
         <div className="colonne mt-12">
-          <h1 className="decoupe font-display uppercase text-[2.1rem]">Ce qui change</h1>
+          <h1 className="decoupe uppercase text-[2.1rem]">Ce qui change</h1>
 
           {changements.length === 0 ? (
             <p className="mt-5 text-[1.05rem] text-encre/85">
@@ -123,7 +123,7 @@ export default function Rituel() {
           <>
             <BandeDecoupee teinte="corail" className="mt-16" />
             <div className="colonne mt-10">
-              <h2 className="decoupe font-display uppercase text-[1.9rem]">Un mois plus tôt, tu écrivais ça</h2>
+              <h2 className="decoupe uppercase text-[1.9rem]">Un mois plus tôt, tu écrivais ça</h2>
               <p className="mt-3 text-[0.96rem] text-encre/70">
                 Mot pour mot, sans rien changer. C’est ton avant et ton après, dans ta langue.
               </p>
@@ -133,7 +133,7 @@ export default function Rituel() {
                   <figcaption className="font-display text-[0.85rem] font-bold uppercase text-encre/55">
                     Ce qui t’arrêtait, le premier jour
                   </figcaption>
-                  <blockquote className="decoupe font-display mt-2 text-[1.35rem] leading-[1.15] text-indigo">
+                  <blockquote className="decoupe mt-2 text-[1.35rem] leading-[1.15] text-indigo">
                     {frein}
                   </blockquote>
                 </figure>
@@ -144,7 +144,7 @@ export default function Rituel() {
                   <figcaption className="font-display text-[0.85rem] font-bold uppercase text-encre/55">
                     Ce que tu voulais voir changer
                   </figcaption>
-                  <blockquote className="decoupe font-display mt-2 text-[1.35rem] leading-[1.15] text-indigo">
+                  <blockquote className="decoupe mt-2 text-[1.35rem] leading-[1.15] text-indigo">
                     {vision}
                   </blockquote>
                 </figure>
@@ -155,7 +155,7 @@ export default function Rituel() {
                   <figcaption className="font-display text-[0.85rem] font-bold uppercase text-encre/55">
                     Ce que tu viens d’écrire, aujourd’hui
                   </figcaption>
-                  <blockquote className="decoupe font-display mt-2 text-[1.35rem] leading-[1.15] text-corail">
+                  <blockquote className="decoupe mt-2 text-[1.35rem] leading-[1.15] text-corail">
                     {reponse.trim()}
                   </blockquote>
                 </figure>
@@ -187,7 +187,7 @@ export default function Rituel() {
         <p className="chiffres font-display text-[0.85rem] font-bold uppercase text-encre/55">
           Rituel de la semaine {semaine} · 2 sur 3
         </p>
-        <h1 className="decoupe font-display uppercase mt-5 text-[1.9rem]">{reflexion.texte}</h1>
+        <h1 className="decoupe uppercase mt-5 text-[1.9rem]">{reflexion.texte}</h1>
         {reflexion.aide ? <p className="mt-3 text-[1rem] text-encre/75">{reflexion.aide}</p> : null}
 
         <textarea
@@ -229,7 +229,7 @@ export default function Rituel() {
       <p className="chiffres font-display text-[0.85rem] font-bold uppercase text-encre/55">
         Rituel de la semaine {semaine} · 1 sur 3
       </p>
-      <h1 className="decoupe font-display uppercase mt-5 text-[1.9rem]">Qu’est-ce que tu as fait cette semaine ?</h1>
+      <h1 className="decoupe uppercase mt-5 text-[1.9rem]">Qu’est-ce que tu as fait cette semaine ?</h1>
       <p className="mt-3 text-[1rem] leading-relaxed text-encre/75">
         Ce que tu n’as pas fait n’est pas un échec, et ne sera pas répété tel quel. Coche juste ce
         qui est vrai.

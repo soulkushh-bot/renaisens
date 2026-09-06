@@ -57,7 +57,7 @@ export default function Profil() {
           <div className="flex justify-center">
             <RosacePhenix couches={couches} taille={188} />
           </div>
-          <h1 className="decoupe font-display mt-7 text-[1.85rem] text-papier-clair">{profile.titre}</h1>
+          <h1 className="decoupe mt-7 text-[1.85rem] text-papier-clair">{profile.titre}</h1>
           <p className="mt-4 text-[1.02rem] leading-relaxed text-papier-clair/90">
             {profile.visionReformulee}
           </p>
@@ -67,12 +67,12 @@ export default function Profil() {
         </div>
 
         <section>
-          <h2 className="decoupe font-display uppercase text-[1.5rem]">Ta situation</h2>
+          <h2 className="decoupe uppercase text-[1.5rem]">Ta situation</h2>
           <p className="mt-3 text-[1.05rem] leading-relaxed text-encre/85">{profile.situation}</p>
         </section>
 
         <Couche teinte="souci" className="p-6">
-          <h2 className="decoupe font-display uppercase text-[1.5rem] text-encre">Par où on commence</h2>
+          <h2 className="decoupe uppercase text-[1.5rem] text-encre">Par où on commence</h2>
           <p className="mt-3 text-[1.05rem] leading-relaxed text-encre/85">{profile.levier}</p>
         </Couche>
 
@@ -93,8 +93,8 @@ export default function Profil() {
 
         <section>
           <BandeDecoupee teinte="corail" />
-          <h2 className="decoupe font-display uppercase mt-7 text-[1.5rem]">Ton année, dans tes mots</h2>
-          <p className="decoupe font-display mt-4 text-[1.4rem] leading-[1.15] text-corail">
+          <h2 className="decoupe uppercase mt-7 text-[1.5rem]">Ton année, dans tes mots</h2>
+          <p className="decoupe mt-4 text-[1.4rem] leading-[1.15] text-corail">
             {profile.horizonUnAn}
           </p>
           <p className="mt-4 text-[0.88rem] text-encre/65">

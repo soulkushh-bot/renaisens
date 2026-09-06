@@ -48,7 +48,7 @@ export default function Aujourdhui() {
     <main className="pb-6">
       <div className="colonne pt-9">
         <div className="flex items-baseline justify-between gap-4">
-          <h1 className="decoupe font-display uppercase chiffres text-[2.2rem]">Semaine {courante}</h1>
+          <h1 className="decoupe uppercase chiffres text-[2.2rem]">Semaine {courante}</h1>
           <Link href="/plan" className="font-display text-[0.92rem] font-bold uppercase text-indigo underline">
             Tout le plan
           </Link>
@@ -66,7 +66,7 @@ export default function Aujourdhui() {
             />
           ) : (
             <Couche teinte="feuille" className="p-7">
-              <h2 className="decoupe font-display uppercase text-[1.6rem] text-papier-clair">
+              <h2 className="decoupe uppercase text-[1.6rem] text-papier-clair">
                 Tu n’as rien à faire aujourd’hui.
               </h2>
               <p className="mt-3 text-[1.02rem] leading-relaxed text-papier-clair/90">
@@ -84,7 +84,7 @@ export default function Aujourdhui() {
 
         {autres.length > 0 ? (
           <section className="mt-10">
-            <h2 className="decoupe font-display uppercase text-[1.2rem] text-encre/70">Le reste de la semaine</h2>
+            <h2 className="decoupe uppercase text-[1.2rem] text-encre/70">Le reste de la semaine</h2>
             <div className="mt-4 flex flex-col gap-3">
               {autres.map((a) => (
                 <CarteAction
@@ -101,7 +101,7 @@ export default function Aujourdhui() {
 
         {faites.length > 0 ? (
           <section className="mt-10">
-            <h2 className="decoupe font-display uppercase text-[1.2rem] text-encre/70">Déjà fait cette semaine</h2>
+            <h2 className="decoupe uppercase text-[1.2rem] text-encre/70">Déjà fait cette semaine</h2>
             <div className="mt-4 flex flex-col gap-3">
               {faites.map((a) => (
                 <CarteAction
@@ -124,7 +124,7 @@ export default function Aujourdhui() {
           <div className="flex items-center gap-5">
             <RosacePhenix couches={etat.progress.semaines.length} taille={104} className="shrink-0" />
             <div className="text-papier-clair">
-              <p className="decoupe font-display text-[1.25rem] text-papier-clair">{etat.profile.titre}</p>
+              <p className="decoupe text-[1.25rem] text-papier-clair">{etat.profile.titre}</p>
               <div className="mt-3">
                 <CompteCouches couches={etat.progress.semaines.length} />
               </div>
