@@ -68,7 +68,7 @@ export default function Bilan() {
     return (
       <main className="colonne flex min-h-dvh flex-col justify-center py-14">
         <RosacePhenix couches={0} taille={96} />
-        <h1 className="decoupe uppercase mt-8 text-[2.3rem]">Avant de commencer</h1>
+        <h1 className="decoupe font-display uppercase mt-8 text-[2.3rem]">Avant de commencer</h1>
         <div className="mt-6 flex flex-col gap-4 text-[1.05rem] leading-relaxed text-encre/85">
           <p>
             Tu vas répondre à des questions sur ton argent, ton travail et tes proches. C’est
@@ -137,7 +137,7 @@ export default function Bilan() {
         Écran {etape + 1} sur {ECRANS.length}
       </p>
 
-      <h1 className="decoupe uppercase mt-7 text-[1.9rem]">{ecran.intention}</h1>
+      <h1 className="decoupe font-display uppercase mt-7 text-[1.9rem]">{ecran.intention}</h1>
 
       <div className="mt-10 flex flex-col gap-11">
         {questions.map((q) => {

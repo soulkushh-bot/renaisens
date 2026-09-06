@@ -83,7 +83,7 @@ export function TitreSection({
   const H = niveau === 2 ? 'h2' : 'h3'
   return (
     <header className="mb-5">
-      <H className="decoupe text-[1.6rem]">{children}</H>
+      <H className="decoupe font-display text-[1.6rem]">{children}</H>
       {sous ? <p className="mt-2 text-[0.98rem] text-encre/75">{sous}</p> : null}
     </header>
   )

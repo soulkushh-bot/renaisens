@@ -28,7 +28,7 @@ export default function Accueil() {
       <div className="colonne pt-8">
         <p className="font-display text-[1.3rem] font-extrabold tracking-[-0.03em] text-indigo">RenaiSens</p>
 
-        <h1 className="decoupe uppercase mt-7 text-[clamp(2.6rem,13vw,4rem)]">
+        <h1 className="decoupe font-display uppercase mt-7 text-[clamp(2.6rem,13vw,4rem)]">
           Trente jours.
           <br />
           Une chose
@@ -60,7 +60,7 @@ export default function Accueil() {
 
       <Couche teinte="feuille" coupe={false} className="pb-14 pt-10">
         <div className="colonne">
-          <h2 className="decoupe uppercase text-[1.9rem] text-papier-clair">Ce qui se passe ensuite</h2>
+          <h2 className="decoupe font-display uppercase text-[1.9rem] text-papier-clair">Ce qui se passe ensuite</h2>
           <ul className="mt-7 flex flex-col gap-5">
             {CE_QUI_SE_PASSE.map((ligne) => (
               <li key={ligne} className="flex gap-3.5">
@@ -74,7 +74,7 @@ export default function Accueil() {
 
       <div className="colonne mt-14">
         <Couche teinte="papier-clair" className="p-6">
-          <h2 className="decoupe uppercase text-[1.5rem]">Ce que tu écris reste chez toi</h2>
+          <h2 className="decoupe font-display uppercase text-[1.5rem]">Ce que tu écris reste chez toi</h2>
           <p className="mt-3 text-[1rem] leading-relaxed text-encre/85">
             Tes réponses sur ton argent, ton travail et ta famille sont enregistrées sur ton
             téléphone, et nulle part ailleurs. Pas de compte, pas de mot de passe, aucun serveur. Tu
@@ -84,7 +84,7 @@ export default function Accueil() {
       </div>
 
       <div className="colonne mt-16">
-        <h2 className="decoupe uppercase text-[1.9rem]">Des parcours qui ressemblent au tien</h2>
+        <h2 className="decoupe font-display uppercase text-[1.9rem]">Des parcours qui ressemblent au tien</h2>
         <p className="mt-3 text-[0.94rem] text-encre/70">{AVERTISSEMENT_RECITS}</p>
 
         <ul className="mt-7 flex flex-col gap-3">
@@ -92,7 +92,7 @@ export default function Accueil() {
             <li key={r.slug}>
               <Link href={`/recits/${r.slug}`} className="block">
                 <Couche teinte="papier-clair" className="p-5">
-                  <p className="decoupe text-[1.1rem]">
+                  <p className="decoupe font-display text-indigo text-[1.1rem]">
                     {r.prenom}, {r.age} ans, {r.ville}
                   </p>
                   <p className="mt-2 text-[0.98rem] text-encre/80">{r.accroche}</p>

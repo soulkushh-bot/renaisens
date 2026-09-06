@@ -90,13 +90,16 @@ body {
     phrase entière en capitales crie et écrase les accents. Les capitales sont réservées aux titres
     courts et aux libellés (classe `uppercase` ajoutée à la main), jamais au contenu qu'elle a écrit
     ni aux titres d'archétype.
+
+    Cette classe ne décide NI de la couleur NI de la famille : elle partageait ces deux déclarations
+    avec la règle `h1, h2, h3`, le compilateur CSS a fusionné les deux règles, et la règle fusionnée
+    est sortie des calques. Une règle hors calque bat tous les utilitaires — un `text-papier-clair`
+    posé à la main devenait inopérant, et le titre du profil sortait indigo sur fond indigo.
   */
   .decoupe {
-    font-family: var(--font-display);
     font-weight: 800;
     letter-spacing: -0.03em;
     line-height: 0.98;
-    color: var(--color-indigo);
   }
 
   /* --- Le papier --------------------------------------------------------- */

@@ -37,7 +37,7 @@ export default function PagePlan() {
   return (
     <main className="pb-6">
       <div className="colonne pt-9">
-        <h1 className="decoupe uppercase text-[2.3rem]">Ton plan de trente jours</h1>
+        <h1 className="decoupe font-display uppercase text-[2.3rem]">Ton plan de trente jours</h1>
         <p className="mt-4 text-[1.05rem] leading-relaxed text-encre/80">
           Trois actions par semaine au maximum, une seule prioritaire. Ce n’est pas peu : c’est ce
           qui tient quand la semaine se passe mal.
@@ -50,7 +50,7 @@ export default function PagePlan() {
             return (
               <section key={s.index}>
                 <div className="flex items-baseline gap-3">
-                  <h2 className="decoupe uppercase chiffres text-[1.5rem]">Semaine {s.index}</h2>
+                  <h2 className="decoupe font-display uppercase chiffres text-[1.5rem]">Semaine {s.index}</h2>
                   {active ? (
                     <span
                       className="couche coupe px-2.5 py-1 font-display text-[0.75rem] font-bold uppercase text-encre"
@@ -97,14 +97,14 @@ export default function PagePlan() {
 
       <Couche teinte="feuille" coupe={false} className="pb-14 pt-10">
         <div className="colonne">
-          <h2 className="decoupe uppercase text-[1.9rem] text-papier-clair">Après les trente jours</h2>
+          <h2 className="decoupe font-display uppercase text-[1.9rem] text-papier-clair">Après les trente jours</h2>
           <p className="mt-3 text-[0.96rem] text-papier-clair/80">
             Esquissé, pas figé. Ces jalons se réécriront à partir de ce que tu auras réellement fait.
           </p>
           <ul className="mt-8 flex flex-col gap-7">
             {plan.jalons90.map((j) => (
               <li key={j.jour}>
-                <p className="decoupe chiffres text-[1.15rem] text-souci">
+                <p className="decoupe font-display chiffres text-[1.15rem] text-souci">
                   Jour {j.jour} — {j.titre}
                 </p>
                 {j.actionIds.length > 0 ? (
@@ -126,8 +126,8 @@ export default function PagePlan() {
       </Couche>
 
       <div className="colonne mt-14">
-        <h2 className="decoupe uppercase text-[1.9rem]">Dans un an</h2>
-        <p className="decoupe mt-4 text-[1.5rem] leading-[1.15] text-corail">{plan.horizon}</p>
+        <h2 className="decoupe font-display uppercase text-[1.9rem]">Dans un an</h2>
+        <p className="decoupe font-display mt-4 text-[1.5rem] leading-[1.15] text-corail">{plan.horizon}</p>
         <p className="mt-4 text-[0.9rem] text-encre/65">
           Ta phrase, écrite le premier jour. On ne l’a pas reformulée.
         </p>
@@ -135,7 +135,7 @@ export default function PagePlan() {
 
       {plan.historique.length > 0 ? (
         <div className="colonne mt-16">
-          <h2 className="decoupe uppercase text-[1.9rem]">Ce que ton plan a changé</h2>
+          <h2 className="decoupe font-display uppercase text-[1.9rem]">Ce que ton plan a changé</h2>
           <ul className="mt-6 flex flex-col gap-3">
             {[...plan.historique].reverse().map((c, i) => (
               <li key={`${c.revision}-${c.actionId}-${i}`}>

@@ -33,7 +33,7 @@ export function BlocPlus() {
   if (etat === 'ok') {
     return (
       <Couche teinte="feuille" className="p-6">
-        <h2 className="decoupe uppercase text-[1.4rem] text-papier-clair">C’est noté</h2>
+        <h2 className="decoupe font-display uppercase text-[1.4rem] text-papier-clair">C’est noté</h2>
         <p className="mt-3 text-[1rem] leading-relaxed text-papier-clair/90">
           On t’écrira quand RenaiSens+ existera vraiment. Pas avant, et pas pour autre chose.
         </p>
@@ -43,7 +43,7 @@ export function BlocPlus() {
 
   return (
     <Couche teinte="papier-clair" className="p-6">
-      <h2 className="decoupe uppercase text-[1.4rem]">RenaiSens+</h2>
+      <h2 className="decoupe font-display uppercase text-[1.4rem]">RenaiSens+</h2>
       <p className="mt-3 text-[1rem] leading-relaxed text-encre/85">
         Un accompagnement plus poussé après les trente jours : des plans plus longs, et des échanges
         avec des femmes qui traversent la même chose. Ça n’existe pas encore. Si tu veux être
