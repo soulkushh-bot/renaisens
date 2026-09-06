@@ -25,17 +25,14 @@ export function DebutBilan() {
 
   if (pret && etat) {
     return (
-      <div
-        className="couche coupe sur-fond-sombre p-6"
-        style={{ ['--teinte' as never]: 'var(--color-indigo)' }}
-      >
-        <p className="text-[0.95rem] text-papier-clair">Tu as déjà fait le point.</p>
-        <p className="decoupe mt-2 text-[1.5rem] text-papier-clair">{etat.profile.titre}</p>
+      <div className="carte p-7" style={{ background: 'var(--color-rose-pale)' }}>
+        <p className="text-[0.95rem] text-encre-douce">Tu as déjà fait le point.</p>
+        <p className="mt-2 font-display text-[1.4rem] font-bold leading-snug text-foret">
+          {etat.profile.titre}
+        </p>
         <div className="mt-6 flex flex-wrap gap-3">
-          <LienBouton href="/aujourdhui" variante="action">
-            Reprendre où j’en suis
-          </LienBouton>
-          <LienBouton href="/plan" variante="clair">
+          <LienBouton href="/aujourdhui">Reprendre où j’en suis</LienBouton>
+          <LienBouton href="/plan" variante="contour">
             Revoir mon plan
           </LienBouton>
         </div>
@@ -51,14 +48,14 @@ export function DebutBilan() {
   }
 
   return (
-    <div
-      className="couche coupe sur-fond-sombre p-6"
-      style={{ ['--teinte' as never]: 'var(--color-indigo)' }}
-    >
-      <label htmlFor="vision" className="decoupe block text-[1.35rem] text-papier-clair">
+    <div className="carte p-7">
+      <label
+        htmlFor="vision"
+        className="block font-display text-[1.35rem] font-bold leading-snug text-foret"
+      >
         {q.type === 'texte' ? q.texte : ''}
       </label>
-      <p className="mt-3 text-[0.95rem] text-papier-clair">
+      <p className="mt-3 text-[0.98rem] text-encre-douce">
         Écris-le comme tu le dirais à une amie. Tu pourras le corriger, et tu le reliras dans un mois.
       </p>
       <textarea
@@ -68,13 +65,13 @@ export function DebutBilan() {
         value={texte}
         onChange={(e) => setTexte(e.target.value)}
         placeholder="Dans un an, je veux…"
-        className="couche coupe mt-4 w-full resize-y p-4 text-[1.05rem] text-encre placeholder:text-encre-douce"
-        style={{ ['--teinte' as never]: 'var(--color-papier-clair)' }}
+        className="mt-4 w-full resize-y rounded-[0.8rem] border-2 bg-white p-4 text-[1.05rem] text-encre placeholder:text-encre-douce/60"
+        style={{ borderColor: '#eadfd8' }}
       />
-      <Bouton onClick={commencer} variante="action" className="mt-4 w-full">
+      <Bouton onClick={commencer} className="mt-4 w-full">
         Faire le point
       </Bouton>
-      <p className="chiffres mt-4 text-[0.86rem] text-papier-clair">
+      <p className="chiffres mt-4 text-[0.9rem] text-encre-douce">
         Huit minutes, vingt-deux questions. Tu peux t’arrêter et reprendre.
       </p>
     </div>

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Bricolage_Grotesque, Inter_Tight } from 'next/font/google'
+import { Caveat, Figtree } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { NavBasse } from '@/components/app/NavBasse'
@@ -8,36 +8,34 @@ import { FournisseurEtat } from '@/lib/etat'
 import './globals.css'
 
 /*
-  Deux familles, pas trois.
+  Figtree porte le display et le texte courant : une humaniste chaude, lisible sur un écran bon
+  marché, qui tient les titres en gras sans devenir criarde.
 
-  Bricolage Grotesque en display, poussée jusqu'à 800 et posée en capitales : à ce poids, ses
-  terminaisons irrégulières lisent comme des lettres découpées aux ciseaux, ce que le monde demande.
-  L'ancienne version l'utilisait trop petite pour qu'on voie son caractère.
-
-  Inter Tight en texte courant : les écrans du quotidien sont du mode Operate, et une face de labeur
-  lisible sur un écran bon marché y vaut mieux qu'une face à point de vue.
+  Caveat porte les accents manuscrits — une citation, une liste d'intentions. Jamais un libellé de
+  bouton ni une information dont la lecture doit être sûre : une écriture cursive se lit moins bien,
+  et ce qui doit être compris du premier coup n'a pas à être joli.
 
   `latin-ext` est chargé en plus de `latin` : le produit est entièrement en français, et une
   interface qui casse sur un « œ » n'a pas l'air soignée.
 */
-const display = Bricolage_Grotesque({
+const display = Figtree({
   subsets: ['latin', 'latin-ext'],
   variable: '--police-display',
   display: 'swap',
-  weight: ['600', '700', '800'],
+  weight: ['400', '500', '600', '700', '800'],
 })
 
-const texte = Inter_Tight({
+const manuscrite = Caveat({
   subsets: ['latin', 'latin-ext'],
-  variable: '--police-texte',
+  variable: '--police-manuscrite',
   display: 'swap',
-  weight: ['400', '500', '600'],
+  weight: ['500', '600'],
 })
 
 export const metadata: Metadata = {
-  title: 'RenaiSens — Trente jours, une chose à la fois',
+  title: 'RenaiSens — Tu peux changer ta vie sans changer toute ta vie',
   description:
-    'Fais le point, puis repars avec un plan de trente jours que tu peux vraiment tenir. Trois actions par semaine au maximum. Tes réponses restent sur ton téléphone.',
+    'Fais le point en huit minutes, puis repars avec un plan de trente jours que tu peux vraiment tenir : trois actions par semaine, jamais plus. Tes réponses restent sur ton téléphone.',
   applicationName: 'RenaiSens',
   manifest: '/manifest.webmanifest',
   appleWebApp: { capable: true, title: 'RenaiSens', statusBarStyle: 'default' },
@@ -51,7 +49,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#1B2E58',
+  themeColor: '#8C2059',
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
@@ -60,7 +58,10 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr">
-      <body className={`${display.variable} ${texte.variable} flex min-h-dvh flex-col`}>
+      <body
+        className={`${display.variable} ${manuscrite.variable} flex min-h-dvh flex-col`}
+        style={{ ['--police-texte' as never]: 'var(--police-display)' }}
+      >
         <FournisseurEtat>
           <div className="flex-1">{children}</div>
           <NavBasse />

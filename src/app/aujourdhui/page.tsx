@@ -4,8 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { CarteAction } from '@/components/app/CarteAction'
-import { BandeDecoupee, Couche } from '@/components/marque/Papier'
-import { CompteCouches, RosacePhenix } from '@/components/marque/RosacePhenix'
+import { CompteSemaines, Phenix } from '@/components/marque/Phenix'
 import { LienBouton } from '@/components/ui/base'
 import { semaineDuPlan } from '@/lib/engine/plan'
 import { semaineCourante, useEtat } from '@/lib/etat'
@@ -13,8 +12,8 @@ import { semaineCourante, useEtat } from '@/lib/etat'
 /**
  * Le point de retour quotidien — mode Operate.
  *
- * Une seule chose au-dessus de la ligne : l'action prioritaire de la semaine, découpée dans son
- * papier souci. Le reste est en dessous, plus petit.
+ * Une seule chose au-dessus de la ligne : l'action prioritaire de la semaine. Le reste est en
+ * dessous, plus petit.
  *
  * Quand tout est fait, l'écran ne propose RIEN. Ne rien avoir à faire est un état légitime, pas un
  * vide à remplir avec un badge ou une suggestion.
@@ -45,16 +44,16 @@ export default function Aujourdhui() {
   const suivante = semaineDuPlan(etat.plan, courante + 1)
 
   return (
-    <main className="pb-6">
+    <main className="pb-8">
       <div className="colonne pt-9">
         <div className="flex items-baseline justify-between gap-4">
-          <h1 className="decoupe uppercase chiffres text-[2.2rem]">Semaine {courante}</h1>
-          <Link href="/plan" className="font-display text-[0.92rem] font-bold uppercase text-indigo underline">
+          <h1 className="chiffres text-[2.1rem]">Semaine {courante}</h1>
+          <Link href="/plan" className="text-[0.95rem] font-semibold text-magenta">
             Tout le plan
           </Link>
         </div>
         {semaine ? (
-          <p className="mt-3 text-[1.08rem] leading-relaxed text-encre">{semaine.intention}</p>
+          <p className="mt-3 text-[1.08rem] text-encre-douce">{semaine.intention}</p>
         ) : null}
 
         <div className="mt-8">
@@ -65,26 +64,24 @@ export default function Aujourdhui() {
               onBasculer={() => basculerAction(prioritaire.actionId)}
             />
           ) : (
-            <Couche teinte="feuille" className="p-7">
-              <h2 className="decoupe uppercase text-[1.6rem] text-papier-clair">
-                Tu n’as rien à faire aujourd’hui.
-              </h2>
-              <p className="mt-3 text-[1.02rem] leading-relaxed text-papier-clair">
+            <div className="carte-douce p-7" style={{ background: 'var(--color-tuile-menthe)' }}>
+              <h2 className="text-[1.5rem]">Tu n’as rien à faire aujourd’hui.</h2>
+              <p className="mt-3 text-[1.02rem] text-encre">
                 Tout ce qui était prévu pour cette semaine est fait. Ne rien avoir à faire fait
                 partie du plan — ce n’est pas un vide à remplir.
               </p>
               {suivante ? (
-                <p className="mt-5 text-[0.98rem] text-papier-clair">
+                <p className="mt-5 text-[0.98rem] text-encre-douce">
                   La semaine prochaine : {suivante.intention.replace(/^Cette semaine, /, '')}
                 </p>
               ) : null}
-            </Couche>
+            </div>
           )}
         </div>
 
         {autres.length > 0 ? (
           <section className="mt-10">
-            <h2 className="decoupe uppercase text-[1.2rem] text-encre-douce">Le reste de la semaine</h2>
+            <h2 className="text-[1.2rem]">Le reste de la semaine</h2>
             <div className="mt-4 flex flex-col gap-3">
               {autres.map((a) => (
                 <CarteAction
@@ -101,7 +98,7 @@ export default function Aujourdhui() {
 
         {faites.length > 0 ? (
           <section className="mt-10">
-            <h2 className="decoupe uppercase text-[1.2rem] text-encre-douce">Déjà fait cette semaine</h2>
+            <h2 className="text-[1.2rem]">Déjà fait cette semaine</h2>
             <div className="mt-4 flex flex-col gap-3">
               {faites.map((a) => (
                 <CarteAction
@@ -117,35 +114,30 @@ export default function Aujourdhui() {
         ) : null}
       </div>
 
-      <BandeDecoupee teinte="indigo" className="mt-14" />
-
-      <Couche teinte="indigo" coupe={false} className="pb-12 pt-4">
+      <section className="mt-14 py-10" style={{ background: 'var(--color-rose-pale)' }}>
         <div className="colonne">
-          {/* La rosace remonte sur la bande festonnée : elle la recouvre. */}
-          <div className="flex items-start gap-5">
-            <RosacePhenix
-              couches={etat.progress.semaines.length}
-              taille={124}
-              className="recouvre -mt-12 shrink-0"
-            />
-            <div className="pt-2 text-papier-clair">
-              <p className="decoupe text-[1.3rem] text-papier-clair">{etat.profile.titre}</p>
+          <div className="flex items-center gap-5">
+            <Phenix taille={104} couches={etat.progress.semaines.length} className="shrink-0" />
+            <div>
+              <p className="font-display text-[1.25rem] font-bold leading-snug text-foret">
+                {etat.profile.titre}
+              </p>
               <div className="mt-3">
-                <CompteCouches couches={etat.progress.semaines.length} />
+                <CompteSemaines couches={etat.progress.semaines.length} />
               </div>
             </div>
           </div>
 
           <div className="mt-8">
-            <LienBouton href="/rituel" variante="action" className="w-full">
+            <LienBouton href="/rituel" className="w-full">
               Faire le rituel de la semaine {courante}
             </LienBouton>
-            <p className="mt-4 text-center text-[0.9rem] text-papier-clair">
+            <p className="mt-4 text-center text-[0.92rem] text-encre-douce">
               Trois minutes. Une fois par semaine, quand tu peux.
             </p>
           </div>
         </div>
-      </Couche>
+      </section>
     </main>
   )
 }

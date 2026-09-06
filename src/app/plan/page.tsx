@@ -4,16 +4,14 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { BlocPlus } from '@/components/app/BlocPlus'
 import { CarteAction } from '@/components/app/CarteAction'
-import { BandeDecoupee, Couche, FeuilleDecoupee } from '@/components/marque/Papier'
-import { LienBouton } from '@/components/ui/base'
+import { Carte, LienBouton } from '@/components/ui/base'
 import { action } from '@/content/actions'
 import { semaineCourante, useEtat } from '@/lib/etat'
 
 /**
  * Le plan : trente jours détaillés, quatre-vingt-dix jours esquissés, un an en une phrase.
  *
- * La semaine en cours est découpée dans un papier différent — la couleur n'est pas seule à le dire,
- * il y a aussi le mot « en cours » et la position dans la pile.
+ * La semaine en cours porte une étiquette écrite, pas seulement une couleur.
  */
 export default function PagePlan() {
   const router = useRouter()
@@ -35,10 +33,10 @@ export default function PagePlan() {
   const courante = semaineCourante(etat)
 
   return (
-    <main className="pb-6">
+    <main className="pb-8">
       <div className="colonne pt-9">
-        <h1 className="decoupe uppercase text-[2.3rem]">Ton plan de trente jours</h1>
-        <p className="mt-4 text-[1.05rem] leading-relaxed text-encre">
+        <h1 className="text-[2.2rem]">Ton plan de trente jours</h1>
+        <p className="mt-4 text-[1.05rem] text-encre-douce">
           Trois actions par semaine au maximum, une seule prioritaire. Ce n’est pas peu : c’est ce
           qui tient quand la semaine se passe mal.
         </p>
@@ -49,31 +47,29 @@ export default function PagePlan() {
             const passee = s.index < courante
             return (
               <section key={s.index}>
-                <div className="flex items-baseline gap-3">
-                  <h2 className="decoupe uppercase chiffres text-[1.5rem]">Semaine {s.index}</h2>
+                <div className="flex flex-wrap items-baseline gap-3">
+                  <h2 className="chiffres text-[1.5rem]">Semaine {s.index}</h2>
                   {active ? (
                     <span
-                      className="couche coupe px-2.5 py-1 font-display text-[0.75rem] font-bold uppercase text-encre"
-                      style={{ ['--teinte' as never]: 'var(--color-souci)' }}
+                      className="rounded-full px-3 py-1 text-[0.76rem] font-bold uppercase text-white"
+                      style={{ background: 'var(--color-prune)' }}
                     >
                       en cours
                     </span>
                   ) : null}
                   {passee ? (
-                    <span className="font-display text-[0.75rem] font-bold uppercase text-encre-douce">
-                      passée
-                    </span>
+                    <span className="text-[0.8rem] font-semibold text-encre-douce">passée</span>
                   ) : null}
                 </div>
                 <p className="mb-4 mt-2 text-[1rem] text-encre-douce">{s.intention}</p>
 
                 {s.actions.length === 0 ? (
-                  <Couche teinte="papier-clair" className="p-5">
-                    <p className="text-[0.96rem] text-encre-douce">
+                  <Carte className="p-5">
+                    <p className="text-[0.98rem] text-encre-douce">
                       Rien de prévu pour l’instant. Cette semaine se remplira au prochain rituel,
                       avec ce que tu n’auras pas eu le temps de faire.
                     </p>
-                  </Couche>
+                  </Carte>
                 ) : (
                   <div className="flex flex-col gap-3">
                     {s.actions.map((a) => (
@@ -93,56 +89,60 @@ export default function PagePlan() {
         </div>
       </div>
 
-      <BandeDecoupee teinte="feuille" className="mt-16" />
-
-      <Couche teinte="feuille" coupe={false} className="pb-14 pt-10">
+      <section className="mt-16 py-12" style={{ background: 'var(--color-tuile-lavande)' }}>
         <div className="colonne">
-          <h2 className="decoupe uppercase text-[1.9rem] text-papier-clair">Après les trente jours</h2>
-          <p className="mt-3 text-[0.96rem] text-papier-clair">
+          <h2 className="text-[1.8rem]">Après les trente jours</h2>
+          <p className="mt-3 text-[0.98rem] text-encre-douce">
             Esquissé, pas figé. Ces jalons se réécriront à partir de ce que tu auras réellement fait.
           </p>
           <ul className="mt-8 flex flex-col gap-7">
             {plan.jalons90.map((j) => (
               <li key={j.jour}>
-                <p className="decoupe chiffres text-[1.15rem] text-souci">
+                <p className="chiffres font-display text-[1.15rem] font-bold text-prune">
                   Jour {j.jour} — {j.titre}
                 </p>
                 {j.actionIds.length > 0 ? (
                   <ul className="mt-3 flex flex-col gap-2.5">
                     {j.actionIds.map((id) => (
-                      <li key={id} className="flex gap-3 text-[1rem] text-papier-clair">
-                        <FeuilleDecoupee taille={16} teinte="souci" className="mt-1 shrink-0" />
+                      <li key={id} className="flex gap-3 text-[1rem] text-encre">
+                        <span
+                          aria-hidden="true"
+                          className="mt-2 block h-1.5 w-1.5 shrink-0 rounded-full"
+                          style={{ background: 'var(--color-magenta)' }}
+                        />
                         <span>{action(id).titre}</span>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <p className="mt-2 text-[1rem] text-papier-clair">{j.detail}</p>
+                  <p className="mt-2 text-[1rem] text-encre-douce">{j.detail}</p>
                 )}
               </li>
             ))}
           </ul>
         </div>
-      </Couche>
+      </section>
 
       <div className="colonne mt-14">
-        <h2 className="decoupe uppercase text-[1.9rem]">Dans un an</h2>
-        <p className="decoupe mt-4 text-[1.5rem] leading-[1.15] text-indigo">{plan.horizon}</p>
-        <p className="mt-4 text-[0.9rem] text-encre-douce">
+        <h2 className="text-[1.8rem]">Dans un an</h2>
+        <p className="manuscrit mt-4 text-[1.9rem] text-magenta">{plan.horizon}</p>
+        <p className="mt-4 text-[0.92rem] text-encre-douce">
           Ta phrase, écrite le premier jour. On ne l’a pas reformulée.
         </p>
       </div>
 
       {plan.historique.length > 0 ? (
         <div className="colonne mt-16">
-          <h2 className="decoupe uppercase text-[1.9rem]">Ce que ton plan a changé</h2>
+          <h2 className="text-[1.8rem]">Ce que ton plan a changé</h2>
           <ul className="mt-6 flex flex-col gap-3">
             {[...plan.historique].reverse().map((c, i) => (
               <li key={`${c.revision}-${c.actionId}-${i}`}>
-                <Couche teinte="papier-clair" className="p-4">
-                  <p className="text-[0.99rem] leading-relaxed text-encre">{c.texte}</p>
-                  <p className="chiffres mt-2 text-[0.8rem] text-encre-douce">Révision {c.revision}</p>
-                </Couche>
+                <Carte className="p-5">
+                  <p className="text-[0.99rem] text-encre">{c.texte}</p>
+                  <p className="chiffres mt-2 text-[0.82rem] text-encre-douce">
+                    Révision {c.revision}
+                  </p>
+                </Carte>
               </li>
             ))}
           </ul>

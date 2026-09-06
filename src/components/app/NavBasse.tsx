@@ -5,28 +5,27 @@ import { usePathname } from 'next/navigation'
 import { useEtat } from '@/lib/etat'
 
 /**
- * La barre basse : une bande de papier indigo au bord cranté, collée en bas de la page.
- * Elle n'apparaît qu'après le bilan — avant, l'écran ne propose qu'une seule chose à faire.
+ * La barre basse n'apparait qu'apres le bilan.
+ * Avant, l'ecran ne propose qu'une seule chose a faire — c'est ce qui fait qu'on la fait.
  *
- * Les icônes sont des formes découpées pleines, dans la même langue que la rosace : aucune ligne,
- * aucun contour, aucune bibliothèque chargée. L'onglet actif est découpé dans un autre papier —
- * la couleur n'est pas seule à le dire, il y a aussi la fleur et le fond.
+ * L'onglet actif est signale par la couleur ET par une pastille pleine derriere l'icone : la
+ * couleur ne porte jamais l'information seule.
  */
 
 const ENTREES = [
   {
     href: '/aujourdhui',
     libelle: 'Aujourd’hui',
-    forme: <path d="M12 2 C18 7 20 15 12 22 C4 15 6 7 12 2 Z" />,
+    forme: <path d="M12 3 C17 8 19 14 12 21 C5 14 7 8 12 3 Z" />,
   },
   {
     href: '/plan',
     libelle: 'Plan',
     forme: (
       <>
-        <rect x="2" y="3" width="20" height="4" rx="1" />
-        <rect x="2" y="10" width="14" height="4" rx="1" />
-        <rect x="2" y="17" width="8" height="4" rx="1" />
+        <rect x="3" y="4" width="18" height="3" rx="1.5" />
+        <rect x="3" y="10.5" width="13" height="3" rx="1.5" />
+        <rect x="3" y="17" width="8" height="3" rx="1.5" />
       </>
     ),
   },
@@ -35,8 +34,8 @@ const ENTREES = [
     libelle: 'Récits',
     forme: (
       <>
-        <circle cx="8" cy="8" r="6" />
-        <circle cx="16" cy="16" r="6" />
+        <circle cx="9" cy="9" r="5.5" />
+        <circle cx="15.5" cy="15.5" r="5.5" />
       </>
     ),
   },
@@ -45,10 +44,10 @@ const ENTREES = [
     libelle: 'Réglages',
     forme: (
       <>
-        <circle cx="12" cy="5" r="4" />
-        <circle cx="12" cy="19" r="4" />
-        <circle cx="5" cy="12" r="4" />
-        <circle cx="19" cy="12" r="4" />
+        <circle cx="12" cy="5.5" r="3.4" />
+        <circle cx="12" cy="18.5" r="3.4" />
+        <circle cx="5.5" cy="12" r="3.4" />
+        <circle cx="18.5" cy="12" r="3.4" />
       </>
     ),
   },
@@ -64,56 +63,44 @@ export function NavBasse() {
   return (
     <nav
       aria-label="Navigation principale"
-      className="sur-fond-sombre sticky bottom-0 z-10 mt-14"
+      className="sticky bottom-0 z-10 mt-14 border-t bg-white"
+      style={{ borderColor: '#efe4dd' }}
     >
-      <div
-        aria-hidden="true"
-        className="couche feston"
-        style={{ ['--teinte' as never]: 'var(--color-indigo)', height: '14px' }}
-      />
-      <div className="couche" style={{ ['--teinte' as never]: 'var(--color-indigo)' }}>
-        <ul className="colonne flex">
-          {ENTREES.map((e) => {
-            const actif = chemin === e.href || chemin.startsWith(`${e.href}/`)
-            return (
-              <li key={e.href} className="flex-1">
-                <Link
-                  href={e.href}
-                  aria-current={actif ? 'page' : undefined}
-                  className="flex min-h-[3.5rem] flex-col items-center justify-center gap-1.5 py-2.5"
+      <ul className="colonne flex">
+        {ENTREES.map((e) => {
+          const actif = chemin === e.href || chemin.startsWith(`${e.href}/`)
+          return (
+            <li key={e.href} className="flex-1">
+              <Link
+                href={e.href}
+                aria-current={actif ? 'page' : undefined}
+                className="flex min-h-[3.6rem] flex-col items-center justify-center gap-1 py-2.5"
+              >
+                <span
+                  className="flex h-8 w-8 items-center justify-center rounded-full"
+                  style={{ background: actif ? 'var(--color-rose-pale)' : 'transparent' }}
                 >
-                  <span
-                    className="couche coupe flex h-8 w-8 items-center justify-center"
-                    style={{
-                      ['--teinte' as never]: actif
-                        ? 'var(--color-souci)'
-                        : 'transparent',
-                    }}
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    fill={actif ? 'var(--color-prune)' : '#9a8f95'}
                   >
-                    <svg
-                      width="17"
-                      height="17"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                      fill={actif ? 'var(--color-indigo)' : 'var(--color-papier-clair)'}
-                      opacity={actif ? 1 : 0.7}
-                    >
-                      {e.forme}
-                    </svg>
-                  </span>
-                  <span
-                    className={`font-display text-[0.72rem] font-bold uppercase tracking-[-0.005em] ${
-                      actif ? 'text-souci' : 'text-papier-clair'
-                    }`}
-                  >
-                    {e.libelle}
-                  </span>
-                </Link>
-              </li>
-            )
-          })}
-        </ul>
-      </div>
+                    {e.forme}
+                  </svg>
+                </span>
+                <span
+                  className="text-[0.74rem] font-semibold"
+                  style={{ color: actif ? 'var(--color-prune)' : 'var(--color-encre-douce)' }}
+                >
+                  {e.libelle}
+                </span>
+              </Link>
+            </li>
+          )
+        })}
+      </ul>
     </nav>
   )
 }

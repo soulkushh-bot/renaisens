@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { BandeDecoupee, Couche } from '@/components/marque/Papier'
-import { RosacePhenix } from '@/components/marque/RosacePhenix'
+import { Carte } from '@/components/ui/base'
 import { actionOptionnelle } from '@/content/actions'
 import { AVERTISSEMENT_RECITS, RECITS, recit } from '@/content/stories'
 import { NOM_DIMENSION } from '@/types'
@@ -33,69 +32,51 @@ export default async function PageRecit({ params }: { params: Promise<{ slug: st
   const premiere = actionOptionnelle(r.premiereAction)
 
   return (
-    <main className="pb-6">
-      <div className="colonne pt-9">
-        <Link
-          href="/recits"
-          className="font-display text-[0.88rem] font-bold uppercase text-indigo underline"
-        >
-          Tous les récits
-        </Link>
+    <main className="colonne pb-10 pt-9">
+      <Link href="/recits" className="text-[0.92rem] font-semibold text-magenta">
+        Tous les récits
+      </Link>
 
-        <div className="mt-7 flex items-start justify-between gap-5">
-          <div>
-            <h1 className="decoupe chiffres text-[2.2rem]">
-              {r.prenom}, {r.age} ans
-            </h1>
-            <p className="mt-2 font-display text-[0.85rem] font-bold uppercase text-encre-douce">
-              {r.ville} · {NOM_DIMENSION[r.dimension]} · {r.duree}
-            </p>
-          </div>
-          <RosacePhenix couches={4} taille={72} className="mt-1 shrink-0" />
-        </div>
+      <h1 className="chiffres mt-7 text-[2.1rem]">
+        {r.prenom}, {r.age} ans
+      </h1>
+      <p className="mt-2 text-[0.92rem] font-semibold text-encre-douce">
+        {r.ville} · {NOM_DIMENSION[r.dimension]} · {r.duree}
+      </p>
 
-        <p className="decoupe mt-7 text-[1.45rem] leading-[1.15] text-indigo">{r.accroche}</p>
-      </div>
+      <p className="manuscrit mt-6 text-[1.7rem] text-magenta">{r.accroche}</p>
 
-      <BandeDecoupee teinte="feuille" className="mt-11" />
-
-      <article className="colonne mt-9 flex flex-col gap-9">
+      <article className="mt-10 flex flex-col gap-9">
         <section>
-          <h2 className="decoupe uppercase text-[1.25rem] text-encre-douce">Avant</h2>
-          <p className="mt-3 text-[1.06rem] leading-relaxed">{r.avant}</p>
+          <h2 className="text-[1.25rem]">Avant</h2>
+          <p className="mt-3 text-[1.06rem] leading-relaxed text-encre-douce">{r.avant}</p>
         </section>
 
         <section>
-          <h2 className="decoupe uppercase text-[1.25rem] text-encre-douce">Ce qui a basculé</h2>
-          <p className="mt-3 text-[1.06rem] leading-relaxed">{r.bascule}</p>
+          <h2 className="text-[1.25rem]">Ce qui a basculé</h2>
+          <p className="mt-3 text-[1.06rem] leading-relaxed text-encre-douce">{r.bascule}</p>
         </section>
 
         <section>
-          <h2 className="decoupe uppercase text-[1.25rem] text-encre-douce">Aujourd’hui</h2>
-          <p className="mt-3 text-[1.06rem] leading-relaxed">{r.apres}</p>
+          <h2 className="text-[1.25rem]">Aujourd’hui</h2>
+          <p className="mt-3 text-[1.06rem] leading-relaxed text-encre-douce">{r.apres}</p>
         </section>
       </article>
 
       {premiere ? (
-        <div className="colonne mt-10">
-          <Couche teinte="souci" className="p-6">
-            <h2 className="decoupe uppercase text-[1.3rem] text-encre">Ce qu’elle a fait en premier</h2>
-            <p className="mt-3 text-[1.06rem] leading-relaxed text-encre">{premiere.titre}</p>
-            <p className="mt-3 text-[0.96rem] leading-relaxed text-encre-douce">{premiere.pourquoi}</p>
-          </Couche>
+        <div className="mt-10 rounded-[1.15rem] p-7" style={{ background: 'var(--color-tuile-peche)' }}>
+          <h2 className="text-[1.3rem]">Ce qu’elle a fait en premier</h2>
+          <p className="mt-3 text-[1.06rem] text-encre">{premiere.titre}</p>
+          <p className="mt-3 text-[0.96rem] text-encre-douce">{premiere.pourquoi}</p>
         </div>
       ) : null}
 
-      <div className="colonne mt-6">
-        <Couche teinte="papier-clair" className="p-6">
-          <h2 className="decoupe uppercase text-[1.3rem]">Ce qui n’est pas réglé</h2>
-          <p className="mt-3 text-[1.02rem] leading-relaxed text-encre">{r.reste}</p>
-        </Couche>
-      </div>
+      <Carte className="mt-5 p-7">
+        <h2 className="text-[1.3rem]">Ce qui n’est pas réglé</h2>
+        <p className="mt-3 text-[1.02rem] text-encre-douce">{r.reste}</p>
+      </Carte>
 
-      <p className="colonne mt-12 text-[0.88rem] leading-relaxed text-encre-douce">
-        {AVERTISSEMENT_RECITS}
-      </p>
+      <p className="mt-12 text-[0.9rem] text-encre-douce">{AVERTISSEMENT_RECITS}</p>
     </main>
   )
 }

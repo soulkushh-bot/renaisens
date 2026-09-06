@@ -4,35 +4,35 @@ import { useId } from 'react'
 import type { QuestionChoix, QuestionEchelle, QuestionTemps, QuestionTexte } from '@/types'
 
 /*
-  Les champs de l'onboarding, en papier découpé.
+  Les champs de l'onboarding.
 
-  Un contrôle standard posé dans un monde engagé est un manquement — et c'est celui qui coûte le plus
-  cher ici, parce que la case à cocher est l'affordance principale du produit : c'est ce qu'elle
-  touche chaque semaine.
+  La case à cocher est l'affordance principale du produit : c'est ce qu'elle touche chaque semaine.
+  Elle doit donc être l'élément le plus visible de sa ligne, jamais le plus pâle.
 
-  — Case cochée : un carré de papier plein, COLLÉ PAR-DESSUS la feuille, et qui la déborde.
-  — Case vide : une découpe dans la feuille — un trou, en papier kraft, pas un filet gris.
-  — Champ de saisie : un rectangle coupé aux ciseaux, pas un rectangle à rayon uniforme.
+  L'état sélectionné n'est jamais porté par la couleur seule : la ligne choisie change de fond ET
+  reçoit une pastille pleine avec sa coche.
 
   Pensés pour un pouce : cibles d'au moins 48 px, jamais de menu déroulant, jamais de curseur à
   faire glisser.
 */
 
-/** Le trou découpé dans la feuille, ou le carré de couleur collé dessus. */
-function Case({ coche }: { coche: boolean }) {
+function Pastille({ coche }: { coche: boolean }) {
   return (
     <span
       aria-hidden="true"
-      className="coupe-petit relative block h-7 w-7 shrink-0"
-      style={{ background: coche ? 'var(--color-corail)' : 'var(--color-kraft)' }}
+      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 transition-colors"
+      style={{
+        borderColor: coche ? 'var(--color-prune)' : '#cfc4bd',
+        background: coche ? 'var(--color-prune)' : '#ffffff',
+      }}
     >
       {coche ? (
-        <svg viewBox="0 0 28 28" className="absolute inset-0" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
           <path
-            d="M6 14.5 L11.5 20 L22 7.5"
+            d="M3.5 8.5 6.5 11.5 12.5 4.5"
             fill="none"
-            stroke="var(--color-papier-clair)"
-            strokeWidth="4"
+            stroke="#ffffff"
+            strokeWidth="2.4"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
@@ -53,7 +53,7 @@ export function Echelle({
 }) {
   return (
     <fieldset className="border-0 p-0">
-      <legend className="decoupe mb-4 text-[1.25rem] leading-snug text-indigo">
+      <legend className="mb-4 font-display text-[1.2rem] font-semibold leading-snug text-foret">
         {question.texte}
       </legend>
       <div className="flex gap-2" role="radiogroup">
@@ -67,11 +67,11 @@ export function Echelle({
               aria-checked={actif}
               aria-label={`${n} sur 5`}
               onClick={() => onChange(n)}
-              className={`couche coupe-petit chiffres h-14 flex-1 text-[1.1rem] font-bold transition-colors ${
-                actif ? 'decoupe text-papier-clair' : 'text-encre-douce'
-              }`}
+              className="chiffres h-14 flex-1 rounded-[0.7rem] border-2 text-[1.05rem] font-bold transition-colors"
               style={{
-                ['--teinte' as never]: actif ? 'var(--color-indigo)' : 'var(--color-kraft)',
+                borderColor: actif ? 'var(--color-prune)' : '#e4d9d2',
+                background: actif ? 'var(--color-prune)' : '#ffffff',
+                color: actif ? '#ffffff' : 'var(--color-encre-douce)',
               }}
             >
               {n}
@@ -99,7 +99,7 @@ export function ChoixUnique({
   const aide = 'aide' in question ? question.aide : undefined
   return (
     <fieldset className="border-0 p-0">
-      <legend className="decoupe mb-2 text-[1.25rem] leading-snug text-indigo">
+      <legend className="mb-2 font-display text-[1.2rem] font-semibold leading-snug text-foret">
         {question.texte}
       </legend>
       {aide ? <p className="mb-4 text-[0.95rem] text-encre-douce">{aide}</p> : null}
@@ -113,14 +113,14 @@ export function ChoixUnique({
               role="radio"
               aria-checked={actif}
               onClick={() => onChange(o.valeur)}
-              className={`couche coupe flex min-h-[3.4rem] items-center gap-3.5 px-4 py-3 text-left text-[1.02rem] transition-colors ${
-                actif ? 'text-papier-clair' : 'text-encre'
-              }`}
+              className="flex min-h-[3.4rem] items-center gap-3.5 rounded-[0.8rem] border-2 px-4 py-3 text-left text-[1.02rem] transition-colors"
               style={{
-                ['--teinte' as never]: actif ? 'var(--color-feuille)' : 'var(--color-papier-clair)',
+                borderColor: actif ? 'var(--color-prune)' : '#eadfd8',
+                background: actif ? 'var(--color-rose-pale)' : '#ffffff',
+                color: 'var(--color-encre)',
               }}
             >
-              <Case coche={actif} />
+              <Pastille coche={actif} />
               <span>{o.libelle}</span>
             </button>
           )
@@ -143,23 +143,23 @@ export function ChampTexte({
   const texte = valeur ?? ''
   return (
     <div>
-      <label htmlFor={id} className="decoupe mb-2 block text-[1.25rem] leading-snug text-indigo">
+      <label
+        htmlFor={id}
+        className="mb-2 block font-display text-[1.2rem] font-semibold leading-snug text-foret"
+      >
         {question.texte}
       </label>
       {question.aide ? <p className="mb-3 text-[0.95rem] text-encre-douce">{question.aide}</p> : null}
-      {/* La feuille kraft dépasse sous le champ : le papier a une épaisseur. */}
-      <div className="couche coupe p-[3px]" style={{ ['--teinte' as never]: 'var(--color-kraft)' }}>
-        <textarea
-          id={id}
-          rows={3}
-          maxLength={question.max}
-          value={texte}
-          placeholder={question.placeholder}
-          onChange={(e) => onChange(e.target.value)}
-          className="couche coupe w-full resize-y p-4 text-[1.05rem] leading-relaxed text-encre placeholder:text-encre-douce/70"
-          style={{ ['--teinte' as never]: 'var(--color-papier-clair)' }}
-        />
-      </div>
+      <textarea
+        id={id}
+        rows={3}
+        maxLength={question.max}
+        value={texte}
+        placeholder={question.placeholder}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full resize-y rounded-[0.8rem] border-2 bg-white p-4 text-[1.05rem] leading-relaxed text-encre placeholder:text-encre-douce/60"
+        style={{ borderColor: '#eadfd8' }}
+      />
       <p className="chiffres mt-1.5 text-right text-[0.82rem] text-encre-douce">
         {texte.length} / {question.max}
       </p>

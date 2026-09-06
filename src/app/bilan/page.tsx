@@ -1,9 +1,8 @@
-'use client'
+"use client"
 
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { BandeDecoupee, Couche } from '@/components/marque/Papier'
-import { RosacePhenix } from '@/components/marque/RosacePhenix'
+import { Phenix } from '@/components/marque/Phenix'
 import { Bouton } from '@/components/ui/base'
 import { ChampTexte, ChoixUnique, Echelle } from '@/components/ui/champs'
 import { ECRANS, question } from '@/content/questions'
@@ -17,8 +16,8 @@ import type { AnswerValue } from '@/types'
  * texte juridique, c'est la raison pour laquelle elle va répondre honnêtement sur son argent et sur
  * sa famille.
  *
- * La progression n'est pas une barre qui se remplit : ce sont six morceaux de papier qui se
- * collent. Le chiffre est écrit à côté, donc la couleur n'est jamais seule à le dire.
+ * La progression est une suite de segments avec son compte écrit à côté : la couleur n'est jamais
+ * seule à dire où elle en est.
  */
 
 const ETAPE_CONFIDENTIALITE = -1
@@ -67,15 +66,15 @@ export default function Bilan() {
   if (etape === ETAPE_CONFIDENTIALITE) {
     return (
       <main className="colonne flex min-h-dvh flex-col justify-center py-14">
-        <RosacePhenix couches={0} taille={96} />
-        <h1 className="decoupe uppercase mt-8 text-[2.3rem]">Avant de commencer</h1>
-        <div className="mt-6 flex flex-col gap-4 text-[1.05rem] leading-relaxed text-encre">
+        <Phenix taille={96} />
+        <h1 className="mt-8 text-[2.2rem]">Avant de commencer</h1>
+        <div className="mt-6 flex flex-col gap-4 text-[1.05rem] leading-relaxed text-encre-douce">
           <p>
             Tu vas répondre à des questions sur ton argent, ton travail et tes proches. C’est
             nécessaire pour que ton plan serve à quelque chose.
           </p>
           <p>
-            Tout est enregistré <strong className="text-indigo">sur ton téléphone</strong>, dans ton
+            Tout est enregistré <strong className="text-prune">sur ton téléphone</strong>, dans ton
             navigateur. Rien n’est envoyé sur un serveur, il n’y a pas de compte à créer et personne
             d’autre ne peut le lire.
           </p>
@@ -91,7 +90,7 @@ export default function Bilan() {
         <button
           type="button"
           onClick={() => router.push('/')}
-          className="mt-4 font-display text-[0.9rem] font-bold uppercase text-encre-douce underline"
+          className="mt-4 text-[0.94rem] font-semibold text-encre-douce underline"
         >
           Revenir à l’accueil
         </button>
@@ -116,30 +115,25 @@ export default function Bilan() {
 
   return (
     <main className="colonne pb-40 pt-8">
-      {/* Six morceaux de papier qui se collent, pas une barre qui se remplit. */}
       <div className="flex items-center gap-3">
         <div className="flex flex-1 items-center gap-1.5" aria-hidden="true">
-        {ECRANS.map((e, i) => (
-          <span
-            key={e.id}
-            className="couche coupe h-3 flex-1"
-            style={{
-              ['--teinte' as never]:
-                i < etape
-                  ? 'var(--color-feuille)'
-                  : i === etape
-                    ? 'var(--color-corail)'
-                    : 'var(--color-papier-clair)',
-            }}
-          />
-        ))}
+          {ECRANS.map((e, i) => (
+            <span
+              key={e.id}
+              className="h-2 flex-1 rounded-full"
+              style={{
+                background:
+                  i <= etape ? 'var(--color-prune)' : '#e8ded7',
+              }}
+            />
+          ))}
         </div>
-        <p className="chiffres shrink-0 font-display text-[0.82rem] font-bold uppercase text-encre-douce">
+        <p className="chiffres shrink-0 text-[0.85rem] font-semibold text-encre-douce">
           {etape + 1} / {ECRANS.length}
         </p>
       </div>
 
-      <h1 className="decoupe uppercase mt-8 text-[1.9rem]">{ecran.intention}</h1>
+      <h1 className="mt-8 text-[1.9rem]">{ecran.intention}</h1>
 
       <div className="mt-10 flex flex-col gap-11">
         {questions.map((q) => {
@@ -175,27 +169,24 @@ export default function Bilan() {
         })}
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 z-20">
-        <BandeDecoupee teinte="papier-clair" />
-        <Couche teinte="papier-clair" coupe={false}>
-          <div className="colonne flex items-center gap-3 py-3">
-            <button
-              type="button"
-              onClick={() => setEtape(etape - 1)}
-              className="min-h-12 px-2 font-display text-[0.9rem] font-bold uppercase text-encre-douce underline"
-            >
-              Revenir
-            </button>
-            <Bouton className="flex-1" onClick={avancer} disabled={manquantes.length > 0}>
-              {LIBELLES[etape] ?? 'Voir mon profil'}
-            </Bouton>
-          </div>
-          {manquantes.length > 0 ? (
-            <p className="colonne pb-3 text-[0.85rem] text-encre-douce">
-              Il reste {manquantes.length} question{manquantes.length > 1 ? 's' : ''} sur cet écran.
-            </p>
-          ) : null}
-        </Couche>
+      <div className="fixed inset-x-0 bottom-0 z-20 border-t bg-white" style={{ borderColor: '#efe4dd' }}>
+        <div className="colonne flex items-center gap-3 py-3">
+          <button
+            type="button"
+            onClick={() => setEtape(etape - 1)}
+            className="min-h-12 px-2 text-[0.94rem] font-semibold text-encre-douce underline"
+          >
+            Revenir
+          </button>
+          <Bouton className="flex-1" onClick={avancer} disabled={manquantes.length > 0}>
+            {LIBELLES[etape] ?? 'Voir mon profil'}
+          </Bouton>
+        </div>
+        {manquantes.length > 0 ? (
+          <p className="colonne pb-3 text-[0.88rem] text-encre-douce">
+            Il reste {manquantes.length} question{manquantes.length > 1 ? 's' : ''} sur cet écran.
+          </p>
+        ) : null}
       </div>
     </main>
   )

@@ -1,262 +1,112 @@
 @import 'tailwindcss';
 
 /*
-  RenaiSens — papier découpé en couches.
+  RenaiSens — chaleur, lumière, espoir.
 
-  La règle qui gouverne tout : LA PROFONDEUR NE VIENT QUE DU RECOUVREMENT.
-  Aucune ombre portée, aucun dégradé, aucun flou. Une forme qui semble être devant une autre l'est
-  parce qu'un morceau de papier a été collé par-dessus — jamais parce qu'on a peint une ombre.
+  Direction retenue par l'utilisateur : le standard de la catégorie, joué droit et à fond. Cartes à
+  coins doux sur fond chaud, une couleur d'action saturée, photographie de femmes, accents
+  manuscrits. Pas d'ironie, pas de reste de l'ancien monde gardé en douce.
 
-  Ce que ça veut dire concrètement :
-  — les couleurs sont pleines et non mélangées, comme des feuilles de papier glacé ;
-  — chaque surface porte un grain de papier réel (turbulence SVG, pas une image) ;
-  — les bords sont coupés aux ciseaux : légèrement irréguliers, jamais un rayon uniforme ;
-  — les contrôles aussi sont du papier découpé : boutons, champs et barre basse portent leur coupe.
+  Le phénix arc-en-ciel est le symbole, et sa palette donne le ton : prune profond pour l'action,
+  magenta pour l'accent, vert forêt pour le display, crème et rose pâle pour les fonds, et quatre
+  teintes pastel pour les domaines.
 
-  Interdits tenus : pas d'eyebrow en capitales au-dessus d'un titre, pas de bordure gauche colorée
-  au-dessus d'1 px, pas d'ombre dure décalée, pas de dégradé sur du texte, pas de jauge de
-  pourcentage. La progression est de la matière ajoutée, pas une barre qui se remplit.
+  Ce qui ne change pas, parce que ce sont des décisions produit et non des choix visuels :
+  aucun score affiché, aucune série, aucun badge, le non-fait sans rouge, la couleur ne porte jamais
+  l'information seule, et aucun chiffre de traction inventé.
 */
 
 @theme {
-  /*
-    Les encres. Pleines, non mélangées — huit feuilles de papier, pas une palette de nuances.
+  /* — Les couleurs de marque, tirées du phénix — */
+  --color-prune: #8c2059;
+  --color-magenta: #b3286e;
+  --color-rose: #e05c92;
+  --color-foret: #17453a;
 
-    Règle de contraste, vérifiée au calcul et non à l'œil :
-    — `corail`, `souci`, `feuille` et `terre` sont des couleurs de REMPLISSAGE ;
-    — le texte posé dessus est d'encre (sur corail et souci) ou de papier clair (sur feuille et terre) ;
-    — le texte accentué sur fond papier est TOUJOURS indigo (11:1), jamais corail (2,8:1, illisible).
-    Le corail crème échouait à 3,14:1 sur le bouton d'action — le contrôle le plus important du
-    produit. Il garde sa couleur et prend un texte d'encre : 4,89:1.
-  */
-  --color-papier: #eee0c4;
-  --color-papier-clair: #f6ecd8;
-  --color-indigo: #1b2e58;
-  --color-corail: #e2574c;
-  --color-souci: #f0b429;
-  --color-feuille: #286c4e;
-  --color-terre: #a8502f;
-  --color-encre: #17161a;
-  /* Le papier non peint : la découpe existe avant la couleur. */
-  --color-kraft: #c7ab7c;
-  /* L'encre douce du texte secondaire. Jamais de gris : le gris vide la page de sa chaleur. */
-  --color-encre-douce: #57452b;
+  /* — Les fonds — */
+  --color-creme: #fdf7f2;
+  --color-rose-pale: #fbedf2;
+  --color-blanc: #ffffff;
 
-  /*
-    Ces deux entrées existent pour les utilitaires `font-*` de Tailwind.
-    Le CSS écrit à la main, lui, ne passe PAS par elles : Tailwind n'émet une variable de `@theme`
-    que s'il la voit employée dans un de ses utilitaires, et une variable jamais émise fait échouer
-    `var()` en silence — les titres retombaient sur une pile système sans qu'aucune erreur ne le
-    signale. Ailleurs on s'adresse directement à `--police-display` / `--police-texte`, que
-    next/font pose sur le body et qui héritent.
-  */
-  --font-display: var(--police-display), ui-sans-serif, system-ui, sans-serif;
-  --font-texte: var(--police-texte), ui-sans-serif, system-ui, sans-serif;
+  /* — Les quatre pastels des domaines — */
+  --color-tuile-rose: #fceaf0;
+  --color-tuile-menthe: #e9f6ed;
+  --color-tuile-peche: #fdefe2;
+  --color-tuile-lavande: #f2ecfa;
+
+  /* — Le texte — */
+  --color-encre: #23232a;
+  --color-encre-douce: #5c5560;
+
+  /* — Les accents des icônes de domaine — */
+  --color-icone-rose: #d1356f;
+  --color-icone-vert: #24824e;
+  --color-icone-orange: #c25f18;
+  --color-icone-violet: #7738ad;
 }
 
 :root {
   color-scheme: light;
-
-  /*
-    Le grain du papier. Une turbulence fractale, calculée par le navigateur : quelques centaines
-    d'octets, net à tout DPI, et c'est ce qui empêche les aplats de ressembler à du vectoriel froid.
-  */
-  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)' opacity='0.42'/%3E%3C/svg%3E");
 }
 
 html {
   -webkit-text-size-adjust: 100%;
 }
 
-/*
-  Le grain est mélangé AU FOND, jamais superposé au contenu.
-  Une couche de bruit en `mix-blend-mode: multiply` par-dessus l'élément assombrit aussi le texte :
-  sur un aplat indigo à texte clair, elle l'efface purement et simplement. `background-blend-mode`
-  ne touche que les couches de fond, ce qui est exactement ce qu'on veut.
-*/
 body {
-  background-color: var(--color-papier);
-  background-image: var(--grain);
-  background-blend-mode: multiply;
+  background-color: var(--color-creme);
   color: var(--color-encre);
   font-family: var(--police-texte), ui-sans-serif, system-ui, sans-serif;
   font-size: 1.0625rem;
-  line-height: 1.55;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
-
-/* --- Typographie ------------------------------------------------------- */
 
 @layer base {
   h1,
   h2,
   h3 {
     font-family: var(--police-display), ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.022em;
+    line-height: 1.12;
     text-wrap: balance;
-    color: var(--color-indigo);
+    color: var(--color-foret);
   }
 
   p {
     text-wrap: pretty;
-    max-width: 68ch;
+    max-width: 70ch;
   }
 }
 
 @layer components {
   /*
-    Le display est découpé : lourd, serré, coupé net.
-
-    Pas de capitales par défaut. La référence du monde est anglophone et courte ; en français, une
-    phrase entière en capitales crie et écrase les accents. Les capitales sont réservées aux titres
-    courts et aux libellés (classe `uppercase` ajoutée à la main), jamais au contenu qu'elle a écrit
-    ni aux titres d'archétype.
-
-    Cette classe ne décide PAS de la couleur. Elle partageait auparavant `font-family` ET `color`
-    avec la règle `h1, h2, h3` ; le compilateur CSS a fusionné les deux règles identiques, et la
-    règle fusionnée est sortie des calques. Une règle hors calque bat tous les utilitaires — un
-    `text-papier-clair` posé à la main devenait inopérant, et le titre du profil sortait indigo sur
-    fond indigo, illisible. Garder `font-family` ici et `color` là-bas suffit : sans déclaration
-    commune, il n'y a plus rien à fusionner.
+    L'écriture à la main. Elle porte les phrases qui relèvent de la voix et non de l'interface —
+    une citation, une liste d'intentions. Jamais un libellé de bouton, jamais une information dont
+    la lecture doit être sûre.
   */
-  .decoupe {
-    font-family: var(--police-display), ui-sans-serif, system-ui, sans-serif;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 0.98;
-  }
-
-  /* --- Le papier --------------------------------------------------------- */
-
-  /*
-    Une couche de papier. Sa couleur vient de `--teinte`, son grain est le même que celui de la page.
-    Aucune ombre : si elle doit sembler posée sur une autre, c'est qu'elle la recouvre vraiment.
-  */
-  /*
-    `--teinte` est redéclarée ici À CHAQUE couche, et ce n'est pas une redondance.
-    Les propriétés personnalisées s'héritent : sans cette ligne, un papier indigo repeignait en indigo
-    tous les papiers posés à l'intérieur de lui — y compris les boutons. Une couche qui ne dit pas sa
-    couleur reprend le papier clair, jamais celle de son parent.
-  */
-  .couche {
-    --teinte: var(--color-papier-clair);
-    position: relative;
-    background-color: var(--teinte);
-    background-image: var(--grain);
-    background-blend-mode: multiply;
+  .manuscrit {
+    font-family: var(--police-manuscrite), cursive;
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: 0;
   }
 
   /*
-    Bord coupé aux ciseaux. Les points sont volontairement non alignés : une coupe à la main n'est
-    jamais droite, et c'est cette irrégularité qui distingue le papier du rectangle.
+    La carte du monde : blanc sur fond chaud, coins doux, ombre très basse.
+    L'ombre porte un décalage ET un flou — un halo coloré sans décalage n'est pas de la profondeur,
+    c'est de la décoration.
   */
-  .coupe {
-    clip-path: polygon(
-      0.8% 1.6%,
-      26% 0%,
-      58% 2.2%,
-      82% 0.4%,
-      100% 2.6%,
-      98.6% 32%,
-      100% 71%,
-      98.4% 98%,
-      73% 100%,
-      41% 97.6%,
-      12% 100%,
-      0% 97.4%,
-      1.4% 64%,
-      0% 27%
-    );
+  .carte {
+    background: var(--color-blanc);
+    border-radius: 1.15rem;
+    box-shadow:
+      0 1px 2px rgb(35 35 42 / 0.04),
+      0 10px 26px -14px rgb(35 35 42 / 0.16);
   }
 
-  /*
-    La coupe d'un petit élément — case, pastille, champ. Les écarts sont donnés en pixels et non en
-    pourcentage : sur un carré de 28 px, 2 % ne fait pas un demi-pixel, et la coupe disparaît.
-  */
-  .coupe-petit {
-    clip-path: polygon(
-      2px 1px,
-      40% 0,
-      72% 2px,
-      100% 0,
-      calc(100% - 1px) 38%,
-      100% 74%,
-      calc(100% - 2px) 100%,
-      66% calc(100% - 2px),
-      30% 100%,
-      0 calc(100% - 1px),
-      2px 60%,
-      0 26%
-    );
-  }
-
-  /*
-    Le recouvrement — le mécanisme du monde, et non un ornement.
-    Une couche qui passe devant une autre le fait pour de vrai : elle mord dessus et elle est
-    au-dessus dans l'ordre de peinture. Sans une seule occurrence de ceci, le monde n'est pas tenu.
-  */
-  .recouvre {
-    position: relative;
-    z-index: 2;
-  }
-
-  .recouvre-bas {
-    margin-bottom: -2.75rem;
-  }
-
-  .recouvre-haut {
-    margin-top: -2.75rem;
-  }
-
-  /* Bord festonné : la coupe au ciseau cranté, réservée aux moments qui comptent. */
-  .feston {
-    --dent: 14px;
-    mask-image: radial-gradient(var(--dent) at 50% 0, transparent 99%, #000 100%);
-    mask-size: calc(var(--dent) * 2) 100%;
-    mask-repeat: repeat-x;
-    mask-position: 0 0;
-  }
-}
-
-/* --- Surfaces du navigateur -------------------------------------------- */
-/* Ce qu'on ne dessine pas porte quand même le design. */
-
-::selection {
-  background: var(--color-souci);
-  color: var(--color-encre);
-}
-
-:root {
-  accent-color: var(--color-corail);
-  caret-color: var(--color-corail);
-  scrollbar-color: var(--color-indigo) var(--color-papier);
-  scrollbar-width: thin;
-}
-
-:where(a, button, input, textarea, [tabindex]):focus-visible {
-  outline: 3px solid var(--color-corail);
-  outline-offset: 3px;
-}
-
-.sur-fond-sombre :where(a, button, input, textarea, [tabindex]):focus-visible {
-  outline-color: var(--color-souci);
-}
-
-a {
-  text-underline-offset: 0.22em;
-  text-decoration-thickness: 2px;
-}
-
-/* Les chiffres alignés partout où on compare des durées ou des semaines. */
-@layer components {
-  .chiffres {
-    font-variant-numeric: tabular-nums;
-  }
-}
-
-/* --- Mise en page ------------------------------------------------------ */
-
-@layer components {
   .colonne {
     width: 100%;
     max-width: 34rem;
@@ -264,40 +114,71 @@ a {
     padding-inline: 1.25rem;
   }
 
-  /* Le produit se tient à une main, mais un écran large ne doit pas être un désert de papier. */
   @media (min-width: 768px) {
     .colonne {
-      max-width: 42rem;
+      max-width: 44rem;
     }
   }
 
-  /* La seule surface qui s'ouvre vraiment en large : le premier écran, qui doit convaincre. */
+  /* La surface large : accueil et sections pleine page. */
   .colonne-large {
     width: 100%;
-    max-width: 34rem;
+    max-width: 80rem;
     margin-inline: auto;
     padding-inline: 1.25rem;
   }
 
   @media (min-width: 768px) {
     .colonne-large {
-      max-width: 72rem;
       padding-inline: 2.5rem;
     }
   }
+
+  .chiffres {
+    font-variant-numeric: tabular-nums;
+  }
 }
 
-/* --- Le seul moment orchestré ------------------------------------------ */
+/* --- Surfaces du navigateur ---------------------------------------------- */
+/* Ce qu'on ne dessine pas porte quand même le design. */
+
+::selection {
+  background: var(--color-rose);
+  color: #ffffff;
+}
+
+:root {
+  accent-color: var(--color-magenta);
+  caret-color: var(--color-magenta);
+  scrollbar-color: var(--color-rose) var(--color-rose-pale);
+  scrollbar-width: thin;
+}
+
+:where(a, button, input, textarea, [tabindex]):focus-visible {
+  outline: 3px solid var(--color-magenta);
+  outline-offset: 3px;
+}
+
+.sur-fond-sombre :where(a, button, input, textarea, [tabindex]):focus-visible {
+  outline-color: #ffffff;
+}
+
+a {
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 2px;
+}
+
+/* --- Le seul moment orchestré -------------------------------------------- */
 /*
   La révélation du profil, en CSS pur.
   Le contenu est visible PAR DÉFAUT : l'animation ne fait que retarder son arrivée, elle ne
   conditionne jamais sa visibilité. Une bibliothèque d'animation chargée en différé laissait
   auparavant cet écran blanc plus d'une seconde — au moment exact où elle attend son profil.
 */
-@keyframes coller {
+@keyframes apparait {
   from {
     opacity: 0;
-    transform: translateY(10px) rotate(-0.4deg);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -306,7 +187,7 @@ a {
 }
 
 .revelation > * {
-  animation: coller 520ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  animation: apparait 560ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
 
 .revelation > *:nth-child(1) { animation-delay: 60ms; }

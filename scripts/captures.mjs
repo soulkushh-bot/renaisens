@@ -41,7 +41,29 @@ async function stabiliser(page) {
   await page.addStyleTag({
     content: 'nav[aria-label="Navigation principale"]{position:static !important}',
   })
-  await attendre(1800)
+
+  /*
+    Les images en `loading="lazy"` ne se chargent pas si elles ne sont jamais entrées dans le
+    viewport. En capture pleine hauteur, elles ressortent vides — et une image vide dans une capture
+    se lit comme une image manquante dans la page. On déroule donc la page avant de photographier.
+  */
+  await page.evaluate(async () => {
+    const pas = window.innerHeight
+    for (let y = 0; y < document.body.scrollHeight; y += pas) {
+      window.scrollTo(0, y)
+      await new Promise((r) => setTimeout(r, 120))
+    }
+    window.scrollTo(0, 0)
+  })
+  await page.evaluate(() =>
+    Promise.all(
+      [...document.images].filter((i) => !i.complete).map((i) => new Promise((r) => {
+        i.addEventListener('load', r, { once: true })
+        i.addEventListener('error', r, { once: true })
+      })),
+    ),
+  )
+  await attendre(1500)
 }
 
 async function capturer(page, nom) {

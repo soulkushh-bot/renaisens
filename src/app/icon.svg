@@ -1,17 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="64" height="64">
-  <circle cx="100" cy="100" r="100" fill="#1B2E58"/>
-  <circle cx="100" cy="100" r="76" fill="#F6ECD8"/>
-  <g fill="#E2574C">
-    <path d="M100 46 C118 62 126 96 118 132 C112 152 104 162 100 166 Z"/>
-    <path d="M100 46 C118 62 126 96 118 132 C112 152 104 162 100 166 Z" transform="matrix(-1 0 0 1 200 0)"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="64" height="64">
+  <rect width="240" height="240" rx="52" fill="#FDF7F2"/>
+  <g>
+    <path d="M104 150 C110 172 108 196 96 214 C92 194 94 170 100 150 Z" fill="#B3286E"/>
+    <path d="M110 152 C122 172 126 196 118 216 C110 198 106 174 106 154 Z" fill="#2e7fc4"/>
+    <path d="M114 156 C130 170 140 190 138 208 C128 194 118 176 110 158 Z" fill="#f0921f"/>
   </g>
-  <g fill="#2E7D5B">
-    <path d="M100 82 C76 76 52 66 38 60 C44 86 64 108 100 114 Z"/>
-    <path d="M100 82 C76 76 52 66 38 60 C44 86 64 108 100 114 Z" transform="matrix(-1 0 0 1 200 0)"/>
+  <g id="aile">
+    <path d="M96 78 C82 56 74 38 76 22 C86 34 96 52 100 70 Z" fill="#E05C92"/>
+    <path d="M94 80 C74 62 58 46 52 30 C66 38 84 54 98 72 Z" fill="#b0459f"/>
+    <path d="M92 84 C68 74 46 62 34 48 C50 52 74 64 96 78 Z" fill="#f0921f"/>
+    <path d="M92 90 C66 86 40 80 24 70 C42 70 70 74 94 84 Z" fill="#f2c11c"/>
+    <path d="M92 96 C66 98 40 100 22 96 C40 90 70 88 94 92 Z" fill="#2f9e5f"/>
+    <path d="M94 104 C72 110 48 118 32 122 C46 110 70 102 96 100 Z" fill="#1f8f6f"/>
+    <path d="M96 110 C80 122 62 136 50 144 C58 128 76 114 98 106 Z" fill="#2e7fc4"/>
   </g>
-  <g fill="#F0B429">
-    <path d="M100 140 C96 156 88 172 74 180 C74 162 82 146 100 136 Z"/>
-    <path d="M100 140 C96 156 88 172 74 180 C74 162 82 146 100 136 Z" transform="matrix(-1 0 0 1 200 0)"/>
-  </g>
-  <circle cx="100" cy="58" r="17" fill="#A8502F"/>
+  <use href="#aile" transform="matrix(-1 0 0 1 240 0)"/>
+  <path d="M120 46 C136 62 142 92 138 124 C134 152 126 172 120 184 C114 172 106 152 102 124 C98 92 104 62 120 46 Z" fill="#B3286E"/>
+  <path d="M120 96 C128 116 130 148 126 176 C122 162 116 132 114 106 Z" fill="#8b45c4"/>
+  <circle cx="120" cy="52" r="20" fill="#B3286E"/>
+  <path d="M100 50 L78 58 L100 66 Z" fill="#f2a41c"/>
+  <circle cx="126" cy="47" r="4.2" fill="#23232a"/>
 </svg>

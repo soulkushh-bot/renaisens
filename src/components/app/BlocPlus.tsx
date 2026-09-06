@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { Couche } from '@/components/marque/Papier'
 import { Bouton } from '@/components/ui/base'
 
 /**
@@ -32,18 +31,18 @@ export function BlocPlus() {
 
   if (etat === 'ok') {
     return (
-      <Couche teinte="feuille" className="p-6">
-        <h2 className="decoupe uppercase text-[1.4rem] text-papier-clair">C’est noté</h2>
-        <p className="mt-3 text-[1rem] leading-relaxed text-papier-clair">
+      <div className="carte p-7" style={{ background: 'var(--color-tuile-menthe)' }}>
+        <h2 className="text-[1.35rem]">C’est noté</h2>
+        <p className="mt-3 text-[1rem] text-encre-douce">
           On t’écrira quand RenaiSens+ existera vraiment. Pas avant, et pas pour autre chose.
         </p>
-      </Couche>
+      </div>
     )
   }
 
   return (
-    <Couche teinte="papier-clair" className="p-6">
-      <h2 className="decoupe uppercase text-[1.4rem]">RenaiSens+</h2>
+    <div className="carte p-7">
+      <h2 className="text-[1.35rem]">RenaiSens+</h2>
       <p className="mt-3 text-[1rem] leading-relaxed text-encre">
         Un accompagnement plus poussé après les trente jours : des plans plus longs, et des échanges
         avec des femmes qui traversent la même chose. Ça n’existe pas encore. Si tu veux être
@@ -67,7 +66,7 @@ export function BlocPlus() {
       </form>
 
       {etat === 'erreur' ? (
-        <p className="mt-3 text-[0.9rem] text-terre">
+        <p className="mt-3 text-[0.92rem] font-medium text-magenta">
           Ça n’est pas passé. Tu es peut-être hors ligne — le reste de l’app fonctionne quand même.
         </p>
       ) : null}
@@ -75,6 +74,6 @@ export function BlocPlus() {
       <p className="mt-4 text-[0.86rem] leading-relaxed text-encre-douce">
         Ton adresse ne sert qu’à ça. Le reste de tes réponses ne quitte pas ton téléphone.
       </p>
-    </Couche>
+    </div>
   )
 }

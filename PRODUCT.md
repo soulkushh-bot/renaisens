@@ -78,10 +78,14 @@ spécifique au marché est centralisé dans `src/config/market.ts` — changer d
 
 - **Le nom.** « RenaiSens ». La graphie peut être normalisée ainsi ; la capitalisation interne de la
   version d'origine n'est pas contraignante.
-- **Le phénix reste le symbole du produit**, y compris redessiné dans un tout autre langage visuel.
+- **Le phénix arc-en-ciel est le symbole du produit.** L'utilisateur détient les droits du logo
+  fourni ; il est redessiné en vectoriel dans `src/components/marque/Phenix.tsx`. Ses couleurs
+  donnent la palette : prune, magenta, rose, vert forêt, crème, et quatre pastels.
+- **Le monde visuel est le standard de la catégorie, joué droit.** Choix explicite de l'utilisateur,
+  sur la base d'un modèle qu'il a fourni : cartes à coins doux sur fond chaud, une seule couleur
+  d'action saturée, photographies de femmes, accents manuscrits. Pas d'ironie, pas de quirk
+  contrebandé. Chaleur, couleurs lumineuses, espoir.
 - **Le produit reste gratuit et sans compte.** Aucune fonctionnalité réservée à un abonnement.
-- **La signature culturelle est un artisanat féminin ouest-africain, nommé et crédité précisément** —
-  jamais un vague « motif africain ». Quel artisanat exactement n'est pas encore décidé.
 - **La voix.** Français, tutoiement, voix active, phrases courtes. Une amie plus avancée qui sait de
   quoi elle parle : ni coach américain, ni thérapeute, ni institution. Elle n'est pas malade, elle est
   en transition. Les boutons disent ce qui se passe (« Voir mon plan »), jamais « Continuer ».
@@ -96,7 +100,14 @@ spécifique au marché est centralisé dans `src/config/market.ts` — changer d
 - **Aucune utilisatrice réelle à ce jour, aucun chiffre de traction, aucun partenariat.** Rien de tout
   cela ne doit être fabriqué pour les besoins d'une page.
 - Produit déployé : `renaisens.vercel.app`, dépôt `github.com/soulkushh-bot/renaisens`.
-- Photos : aucune à ce jour. À sourcer sous licence libre vérifiée, avec provenance enregistrée.
+- Photos : quatre, sous licence Unsplash vérifiée, avec provenance dans
+  `public/images/PROVENANCE.md`. **Aucune n'est attachée à un récit**, et la légende de la bande
+  d'ambiance dit explicitement qu'aucune de ces femmes n'utilise le produit ni n'a témoigné.
+- Un modèle de page d'accueil fourni par l'utilisateur affiche « 10 000+ femmes accompagnées »,
+  « 150+ formations », « 95 % de satisfaction » et des notes d'avis. **Aucun de ces chiffres n'est
+  vrai pour RenaiSens et aucun n'a été repris.** La rangée de chiffres de l'accueil porte des faits
+  vérifiables sur le produit lui-même : 8 minutes de bilan, 3 actions par semaine au maximum,
+  0 compte à créer.
 
 ## Product Principles
 
