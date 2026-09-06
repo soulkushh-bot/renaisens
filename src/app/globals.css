@@ -37,6 +37,10 @@
   --color-feuille: #286c4e;
   --color-terre: #a8502f;
   --color-encre: #17161a;
+  /* Le papier non peint : la découpe existe avant la couleur. */
+  --color-kraft: #c7ab7c;
+  /* L'encre douce du texte secondaire. Jamais de gris : le gris vide la page de sa chaleur. */
+  --color-encre-douce: #57452b;
 
   /*
     Ces deux entrées existent pour les utilitaires `font-*` de Tailwind.
@@ -148,21 +152,60 @@ body {
   */
   .coupe {
     clip-path: polygon(
-      0.4% 0.8%,
+      0.8% 1.6%,
       26% 0%,
-      58% 1.1%,
-      82% 0.2%,
-      100% 1.4%,
-      99.4% 32%,
+      58% 2.2%,
+      82% 0.4%,
+      100% 2.6%,
+      98.6% 32%,
       100% 71%,
-      99.2% 99%,
+      98.4% 98%,
       73% 100%,
-      41% 98.9%,
+      41% 97.6%,
       12% 100%,
-      0% 98.6%,
-      0.6% 64%,
+      0% 97.4%,
+      1.4% 64%,
       0% 27%
     );
+  }
+
+  /*
+    La coupe d'un petit élément — case, pastille, champ. Les écarts sont donnés en pixels et non en
+    pourcentage : sur un carré de 28 px, 2 % ne fait pas un demi-pixel, et la coupe disparaît.
+  */
+  .coupe-petit {
+    clip-path: polygon(
+      2px 1px,
+      40% 0,
+      72% 2px,
+      100% 0,
+      calc(100% - 1px) 38%,
+      100% 74%,
+      calc(100% - 2px) 100%,
+      66% calc(100% - 2px),
+      30% 100%,
+      0 calc(100% - 1px),
+      2px 60%,
+      0 26%
+    );
+  }
+
+  /*
+    Le recouvrement — le mécanisme du monde, et non un ornement.
+    Une couche qui passe devant une autre le fait pour de vrai : elle mord dessus et elle est
+    au-dessus dans l'ordre de peinture. Sans une seule occurrence de ceci, le monde n'est pas tenu.
+  */
+  .recouvre {
+    position: relative;
+    z-index: 2;
+  }
+
+  .recouvre-bas {
+    margin-bottom: -2.75rem;
+  }
+
+  .recouvre-haut {
+    margin-top: -2.75rem;
   }
 
   /* Bord festonné : la coupe au ciseau cranté, réservée aux moments qui comptent. */
@@ -219,6 +262,28 @@ a {
     max-width: 34rem;
     margin-inline: auto;
     padding-inline: 1.25rem;
+  }
+
+  /* Le produit se tient à une main, mais un écran large ne doit pas être un désert de papier. */
+  @media (min-width: 768px) {
+    .colonne {
+      max-width: 42rem;
+    }
+  }
+
+  /* La seule surface qui s'ouvre vraiment en large : le premier écran, qui doit convaincre. */
+  .colonne-large {
+    width: 100%;
+    max-width: 34rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .colonne-large {
+      max-width: 72rem;
+      padding-inline: 2.5rem;
+    }
   }
 }
 

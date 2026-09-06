@@ -6,7 +6,7 @@ export default function Introuvable() {
     <main className="colonne flex min-h-dvh flex-col justify-center py-16">
       <RosacePhenix couches={1} taille={104} />
       <h1 className="decoupe uppercase mt-8 text-[2.2rem]">Cette page n’existe pas.</h1>
-      <p className="mt-4 text-[1.06rem] leading-relaxed text-encre/80">
+      <p className="mt-4 text-[1.06rem] leading-relaxed text-encre">
         Rien de grave. Tes données sont intactes, elles sont sur ton téléphone.
       </p>
       <div className="mt-7 flex flex-wrap gap-5">

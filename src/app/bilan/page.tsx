@@ -69,7 +69,7 @@ export default function Bilan() {
       <main className="colonne flex min-h-dvh flex-col justify-center py-14">
         <RosacePhenix couches={0} taille={96} />
         <h1 className="decoupe uppercase mt-8 text-[2.3rem]">Avant de commencer</h1>
-        <div className="mt-6 flex flex-col gap-4 text-[1.05rem] leading-relaxed text-encre/85">
+        <div className="mt-6 flex flex-col gap-4 text-[1.05rem] leading-relaxed text-encre">
           <p>
             Tu vas répondre à des questions sur ton argent, ton travail et tes proches. C’est
             nécessaire pour que ton plan serve à quelque chose.
@@ -91,7 +91,7 @@ export default function Bilan() {
         <button
           type="button"
           onClick={() => router.push('/')}
-          className="mt-4 font-display text-[0.9rem] font-bold uppercase text-encre/60 underline"
+          className="mt-4 font-display text-[0.9rem] font-bold uppercase text-encre-douce underline"
         >
           Revenir à l’accueil
         </button>
@@ -117,7 +117,8 @@ export default function Bilan() {
   return (
     <main className="colonne pb-40 pt-8">
       {/* Six morceaux de papier qui se collent, pas une barre qui se remplit. */}
-      <div className="flex items-center gap-1.5" aria-hidden="true">
+      <div className="flex items-center gap-3">
+        <div className="flex flex-1 items-center gap-1.5" aria-hidden="true">
         {ECRANS.map((e, i) => (
           <span
             key={e.id}
@@ -132,12 +133,13 @@ export default function Bilan() {
             }}
           />
         ))}
+        </div>
+        <p className="chiffres shrink-0 font-display text-[0.82rem] font-bold uppercase text-encre-douce">
+          {etape + 1} / {ECRANS.length}
+        </p>
       </div>
-      <p className="chiffres mt-3 font-display text-[0.85rem] font-bold uppercase text-encre/60">
-        Écran {etape + 1} sur {ECRANS.length}
-      </p>
 
-      <h1 className="decoupe uppercase mt-7 text-[1.9rem]">{ecran.intention}</h1>
+      <h1 className="decoupe uppercase mt-8 text-[1.9rem]">{ecran.intention}</h1>
 
       <div className="mt-10 flex flex-col gap-11">
         {questions.map((q) => {
@@ -180,7 +182,7 @@ export default function Bilan() {
             <button
               type="button"
               onClick={() => setEtape(etape - 1)}
-              className="min-h-12 px-2 font-display text-[0.9rem] font-bold uppercase text-encre/65 underline"
+              className="min-h-12 px-2 font-display text-[0.9rem] font-bold uppercase text-encre-douce underline"
             >
               Revenir
             </button>
@@ -189,7 +191,7 @@ export default function Bilan() {
             </Bouton>
           </div>
           {manquantes.length > 0 ? (
-            <p className="colonne pb-3 text-[0.85rem] text-encre/65">
+            <p className="colonne pb-3 text-[0.85rem] text-encre-douce">
               Il reste {manquantes.length} question{manquantes.length > 1 ? 's' : ''} sur cet écran.
             </p>
           ) : null}

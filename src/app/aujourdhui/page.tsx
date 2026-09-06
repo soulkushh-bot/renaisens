@@ -30,7 +30,7 @@ export default function Aujourdhui() {
   if (!pret || !etat) {
     return (
       <main className="colonne py-20">
-        <p className="text-encre/60">Un instant…</p>
+        <p className="text-encre-douce">Un instant…</p>
       </main>
     )
   }
@@ -54,7 +54,7 @@ export default function Aujourdhui() {
           </Link>
         </div>
         {semaine ? (
-          <p className="mt-3 text-[1.08rem] leading-relaxed text-encre/80">{semaine.intention}</p>
+          <p className="mt-3 text-[1.08rem] leading-relaxed text-encre">{semaine.intention}</p>
         ) : null}
 
         <div className="mt-8">
@@ -69,12 +69,12 @@ export default function Aujourdhui() {
               <h2 className="decoupe uppercase text-[1.6rem] text-papier-clair">
                 Tu n’as rien à faire aujourd’hui.
               </h2>
-              <p className="mt-3 text-[1.02rem] leading-relaxed text-papier-clair/90">
+              <p className="mt-3 text-[1.02rem] leading-relaxed text-papier-clair">
                 Tout ce qui était prévu pour cette semaine est fait. Ne rien avoir à faire fait
                 partie du plan — ce n’est pas un vide à remplir.
               </p>
               {suivante ? (
-                <p className="mt-5 text-[0.98rem] text-papier-clair/85">
+                <p className="mt-5 text-[0.98rem] text-papier-clair">
                   La semaine prochaine : {suivante.intention.replace(/^Cette semaine, /, '')}
                 </p>
               ) : null}
@@ -84,7 +84,7 @@ export default function Aujourdhui() {
 
         {autres.length > 0 ? (
           <section className="mt-10">
-            <h2 className="decoupe uppercase text-[1.2rem] text-encre/70">Le reste de la semaine</h2>
+            <h2 className="decoupe uppercase text-[1.2rem] text-encre-douce">Le reste de la semaine</h2>
             <div className="mt-4 flex flex-col gap-3">
               {autres.map((a) => (
                 <CarteAction
@@ -101,7 +101,7 @@ export default function Aujourdhui() {
 
         {faites.length > 0 ? (
           <section className="mt-10">
-            <h2 className="decoupe uppercase text-[1.2rem] text-encre/70">Déjà fait cette semaine</h2>
+            <h2 className="decoupe uppercase text-[1.2rem] text-encre-douce">Déjà fait cette semaine</h2>
             <div className="mt-4 flex flex-col gap-3">
               {faites.map((a) => (
                 <CarteAction
@@ -119,12 +119,17 @@ export default function Aujourdhui() {
 
       <BandeDecoupee teinte="indigo" className="mt-14" />
 
-      <Couche teinte="indigo" coupe={false} className="pb-12 pt-10">
+      <Couche teinte="indigo" coupe={false} className="pb-12 pt-4">
         <div className="colonne">
-          <div className="flex items-center gap-5">
-            <RosacePhenix couches={etat.progress.semaines.length} taille={104} className="shrink-0" />
-            <div className="text-papier-clair">
-              <p className="decoupe text-[1.25rem] text-papier-clair">{etat.profile.titre}</p>
+          {/* La rosace remonte sur la bande festonnée : elle la recouvre. */}
+          <div className="flex items-start gap-5">
+            <RosacePhenix
+              couches={etat.progress.semaines.length}
+              taille={124}
+              className="recouvre -mt-12 shrink-0"
+            />
+            <div className="pt-2 text-papier-clair">
+              <p className="decoupe text-[1.3rem] text-papier-clair">{etat.profile.titre}</p>
               <div className="mt-3">
                 <CompteCouches couches={etat.progress.semaines.length} />
               </div>
@@ -135,7 +140,7 @@ export default function Aujourdhui() {
             <LienBouton href="/rituel" variante="action" className="w-full">
               Faire le rituel de la semaine {courante}
             </LienBouton>
-            <p className="mt-4 text-center text-[0.9rem] text-papier-clair/75">
+            <p className="mt-4 text-center text-[0.9rem] text-papier-clair">
               Trois minutes. Une fois par semaine, quand tu peux.
             </p>
           </div>

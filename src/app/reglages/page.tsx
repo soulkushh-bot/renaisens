@@ -40,7 +40,7 @@ export default function Reglages() {
 
         <section className="mt-9">
           <h2 className="decoupe uppercase text-[1.5rem]">Où sont tes réponses</h2>
-          <div className="mt-4 flex flex-col gap-4 text-[1.03rem] leading-relaxed text-encre/85">
+          <div className="mt-4 flex flex-col gap-4 text-[1.03rem] leading-relaxed text-encre">
             <p>
               Tout ce que tu as écrit — tes réponses, ton profil, ton plan, tes rituels — est
               enregistré dans le navigateur de cet appareil. Rien n’est envoyé sur un serveur.
@@ -62,7 +62,7 @@ export default function Reglages() {
       <div className="colonne mt-9">
         <section>
           <h2 className="decoupe uppercase text-[1.5rem]">Emporter tes données</h2>
-          <p className="mt-3 text-[1.02rem] leading-relaxed text-encre/85">
+          <p className="mt-3 text-[1.02rem] leading-relaxed text-encre">
             Un fichier lisible, avec tout ce que tu as écrit. Il t’appartient.
           </p>
           <Bouton variante="contour" className="mt-5 w-full" onClick={exporter} disabled={!pret || !etat}>
@@ -72,7 +72,7 @@ export default function Reglages() {
 
         <section className="mt-12">
           <h2 className="decoupe uppercase text-[1.5rem]">Tout effacer</h2>
-          <p className="mt-3 text-[1.02rem] leading-relaxed text-encre/85">
+          <p className="mt-3 text-[1.02rem] leading-relaxed text-encre">
             Ton bilan, ton profil, ton plan et tes rituels sont supprimés de cet appareil. Ce n’est
             pas annulable, et nous n’en avons aucune copie à te renvoyer.
           </p>
@@ -110,7 +110,7 @@ export default function Reglages() {
 
         <section className="mt-12">
           <h2 className="decoupe uppercase text-[1.5rem]">Recommencer le bilan</h2>
-          <p className="mt-3 text-[1.02rem] leading-relaxed text-encre/85">
+          <p className="mt-3 text-[1.02rem] leading-relaxed text-encre">
             Si ta situation a changé, tu peux refaire le point. Ton plan actuel sera remplacé.
           </p>
           <LienBouton href="/bilan" variante="discret" className="mt-3">
@@ -118,7 +118,7 @@ export default function Reglages() {
           </LienBouton>
         </section>
 
-        <p className="mt-14 text-[0.88rem] leading-relaxed text-encre/60">
+        <p className="mt-14 text-[0.88rem] leading-relaxed text-encre-douce">
           RenaiSens est gratuit. Aucune fonctionnalité n’est réservée à un abonnement.
         </p>
       </div>

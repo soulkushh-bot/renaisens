@@ -26,7 +26,7 @@ export default function PagePlan() {
   if (!pret || !etat) {
     return (
       <main className="colonne py-20">
-        <p className="text-encre/60">Un instant…</p>
+        <p className="text-encre-douce">Un instant…</p>
       </main>
     )
   }
@@ -38,7 +38,7 @@ export default function PagePlan() {
     <main className="pb-6">
       <div className="colonne pt-9">
         <h1 className="decoupe uppercase text-[2.3rem]">Ton plan de trente jours</h1>
-        <p className="mt-4 text-[1.05rem] leading-relaxed text-encre/80">
+        <p className="mt-4 text-[1.05rem] leading-relaxed text-encre">
           Trois actions par semaine au maximum, une seule prioritaire. Ce n’est pas peu : c’est ce
           qui tient quand la semaine se passe mal.
         </p>
@@ -60,16 +60,16 @@ export default function PagePlan() {
                     </span>
                   ) : null}
                   {passee ? (
-                    <span className="font-display text-[0.75rem] font-bold uppercase text-encre/45">
+                    <span className="font-display text-[0.75rem] font-bold uppercase text-encre-douce">
                       passée
                     </span>
                   ) : null}
                 </div>
-                <p className="mb-4 mt-2 text-[1rem] text-encre/75">{s.intention}</p>
+                <p className="mb-4 mt-2 text-[1rem] text-encre-douce">{s.intention}</p>
 
                 {s.actions.length === 0 ? (
                   <Couche teinte="papier-clair" className="p-5">
-                    <p className="text-[0.96rem] text-encre/70">
+                    <p className="text-[0.96rem] text-encre-douce">
                       Rien de prévu pour l’instant. Cette semaine se remplira au prochain rituel,
                       avec ce que tu n’auras pas eu le temps de faire.
                     </p>
@@ -98,7 +98,7 @@ export default function PagePlan() {
       <Couche teinte="feuille" coupe={false} className="pb-14 pt-10">
         <div className="colonne">
           <h2 className="decoupe uppercase text-[1.9rem] text-papier-clair">Après les trente jours</h2>
-          <p className="mt-3 text-[0.96rem] text-papier-clair/80">
+          <p className="mt-3 text-[0.96rem] text-papier-clair">
             Esquissé, pas figé. Ces jalons se réécriront à partir de ce que tu auras réellement fait.
           </p>
           <ul className="mt-8 flex flex-col gap-7">
@@ -110,14 +110,14 @@ export default function PagePlan() {
                 {j.actionIds.length > 0 ? (
                   <ul className="mt-3 flex flex-col gap-2.5">
                     {j.actionIds.map((id) => (
-                      <li key={id} className="flex gap-3 text-[1rem] text-papier-clair/95">
+                      <li key={id} className="flex gap-3 text-[1rem] text-papier-clair">
                         <FeuilleDecoupee taille={16} teinte="souci" className="mt-1 shrink-0" />
                         <span>{action(id).titre}</span>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <p className="mt-2 text-[1rem] text-papier-clair/90">{j.detail}</p>
+                  <p className="mt-2 text-[1rem] text-papier-clair">{j.detail}</p>
                 )}
               </li>
             ))}
@@ -128,7 +128,7 @@ export default function PagePlan() {
       <div className="colonne mt-14">
         <h2 className="decoupe uppercase text-[1.9rem]">Dans un an</h2>
         <p className="decoupe mt-4 text-[1.5rem] leading-[1.15] text-indigo">{plan.horizon}</p>
-        <p className="mt-4 text-[0.9rem] text-encre/65">
+        <p className="mt-4 text-[0.9rem] text-encre-douce">
           Ta phrase, écrite le premier jour. On ne l’a pas reformulée.
         </p>
       </div>
@@ -140,8 +140,8 @@ export default function PagePlan() {
             {[...plan.historique].reverse().map((c, i) => (
               <li key={`${c.revision}-${c.actionId}-${i}`}>
                 <Couche teinte="papier-clair" className="p-4">
-                  <p className="text-[0.99rem] leading-relaxed text-encre/85">{c.texte}</p>
-                  <p className="chiffres mt-2 text-[0.8rem] text-encre/50">Révision {c.revision}</p>
+                  <p className="text-[0.99rem] leading-relaxed text-encre">{c.texte}</p>
+                  <p className="chiffres mt-2 text-[0.8rem] text-encre-douce">Révision {c.revision}</p>
                 </Couche>
               </li>
             ))}

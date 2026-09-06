@@ -4,14 +4,18 @@
  * Découpée dans une feuille pliée : chaque forme est dessinée une seule fois, puis reflétée. C'est
  * ainsi qu'on découpe vraiment une rosace, et ça divise par deux le tracé.
  *
- * `couches` va de 0 à 4 et vaut le nombre de rituels qu'elle a faits. À zéro, il n'y a que le socle
- * et la silhouette nue — un papier prêt à recevoir. À quatre, l'oiseau est entier.
+ * LA PROFONDEUR NE VIENT QUE DU RECOUVREMENT. Concrètement, ici :
  *
- * LA PROFONDEUR NE VIENT QUE DU RECOUVREMENT : aucune ombre, aucun dégradé, aucun flou. Une couche
- * paraît devant une autre parce qu'elle la recouvre réellement.
+ *  — la feuille de base en papier kraft porte l'oiseau ENTIER, dès la première seconde ;
+ *  — chaque couche de couleur est posée PAR-DESSUS, un peu plus petite, si bien que le kraft dépasse
+ *    tout autour : c'est ce liseré qui fait voir qu'il y a plusieurs épaisseurs ;
+ *  — les ailes recouvrent le corps, la queue recouvre le bas du corps, la crête recouvre la tête.
  *
- * C'est ce qui remplace l'ancienne barre de progression et l'ancienne carte qui « fonçait » : elle
- * ne regarde pas un pourcentage monter, elle regarde un objet se faire.
+ * Aucune ombre, aucun dégradé, aucun contour tracé. Une première version dessinait l'oiseau au trait
+ * fin : c'était un diagramme vectoriel, exactement la froideur qu'on cherchait à éviter.
+ *
+ * `couches` va de 0 à 4 et vaut le nombre de rituels faits. À zéro, la découpe kraft attend d'être
+ * peinte. À quatre, l'oiseau est entier.
  */
 
 const FESTONS = Array.from({ length: 26 }, (_, i) => {
@@ -22,12 +26,42 @@ const FESTONS = Array.from({ length: 26 }, (_, i) => {
   }
 })
 
+/*
+  Les formes de l'oiseau, en demi-tracés. Le pli de la feuille fait le reste.
+
+  Les bords des ailes et de la queue sont CRANTÉS, pas lisses : une aile en lobe lisse se lit comme
+  une feuille d'arbre, et une première version de cette rosace ressemblait à du végétal plutôt qu'à
+  un oiseau. Le cou étroit, la tête ronde et le bec triangulaire finissent de lever le doute.
+
+  Tout tient dans le disque intérieur (rayon 66 depuis le centre) : rien ne déborde sur le feston.
+*/
+const CORPS = 'M100 64 C114 82 120 110 114 132 C110 145 104 152 100 156 Z'
+const AILE = 'M100 86 C80 79 58 68 42 62 L51 78 L38 83 L57 98 L48 106 L71 110 L100 112 Z'
+const QUEUE = 'M100 138 L93 158 L85 150 L80 164 L70 155 L100 147 Z'
+const CRETE = 'M100 26 L109 39 L100 44 Z'
+const BEC = 'M100 52 L105 63 L100 65 Z'
+
 /** Une demi-forme et son reflet. C'est le pli de la feuille. */
 function Pliee({ d, fill }: { d: string; fill: string }) {
   return (
     <>
       <path d={d} fill={fill} />
       <path d={d} fill={fill} transform="matrix(-1 0 0 1 200 0)" />
+    </>
+  )
+}
+
+/** L'oiseau entier dans une seule couleur. Sert de feuille de base en kraft. */
+function OiseauPlein({ fill }: { fill: string }) {
+  return (
+    <>
+      <Pliee d={AILE} fill={fill} />
+      <Pliee d={QUEUE} fill={fill} />
+      <Pliee d={CORPS} fill={fill} />
+      <Pliee d={CRETE} fill={fill} />
+      <circle cx="100" cy="50" r="13" fill={fill} />
+      <rect x="94" y="56" width="12" height="14" fill={fill} />
+      <Pliee d={BEC} fill={fill} />
     </>
   )
 }
@@ -47,8 +81,8 @@ export function RosacePhenix({
   const etiquette =
     titre ??
     (n === 0
-      ? 'Rosace de papier, encore nue : aucune couche collée.'
-      : `Rosace de papier, ${n} couche${n > 1 ? 's' : ''} collée${n > 1 ? 's' : ''} sur quatre.`)
+      ? 'Rosace de papier : la découpe est faite, aucune couleur n’est encore posée.'
+      : `Rosace de papier, ${n} couche${n > 1 ? 's' : ''} de couleur collée${n > 1 ? 's' : ''} sur quatre.`)
 
   return (
     <svg
@@ -59,7 +93,7 @@ export function RosacePhenix({
       aria-label={etiquette}
       className={className}
     >
-      {/* — Le socle : toujours là, même à zéro semaine — */}
+      {/* — Le socle festonné, toujours là — */}
       {FESTONS.map((p, i) => (
         <circle key={i} cx={p.x} cy={p.y} r="14" fill="var(--color-indigo)" />
       ))}
@@ -67,61 +101,35 @@ export function RosacePhenix({
       <circle cx="100" cy="100" r="66" fill="var(--color-papier-clair)" />
 
       {/*
-        La découpe nue : le TRAIT DE COUPE, pas un aplat.
-        Un papier clair sur un papier clair donnait 1,1:1 de contraste — invisible. Ici la forme est
-        découpée mais pas encore peinte, et c'est exactement ce que le trait raconte.
+        La feuille de base en kraft, légèrement agrandie : c'est elle qui dépasse autour de chaque
+        couche de couleur et qui rend les épaisseurs visibles.
       */}
-      {n === 0 && (
-        <g
-          fill="none"
-          stroke="var(--color-indigo)"
-          strokeWidth="2.6"
-          strokeLinejoin="round"
-          opacity="0.75"
-        >
-          <Pliee d="M100 82 C76 76 52 66 38 60 C44 86 64 108 100 114 Z" fill="none" />
-          <Pliee d="M100 140 C96 156 88 172 74 180 C74 162 82 146 100 136 Z" fill="none" />
-          <Pliee d="M100 46 C118 62 126 96 118 132 C112 152 104 162 100 166 Z" fill="none" />
-          <circle cx="100" cy="58" r="17" fill="none" />
-        </g>
-      )}
+      <g transform="translate(100 100) scale(1.06) translate(-100 -100)">
+        <OiseauPlein fill="var(--color-kraft)" />
+      </g>
 
-      {/*
-        — Couche 1 : le corps ET la tête —
-        Le corps seul se lisait comme un noyau, pas comme un oiseau. Chaque état intermédiaire doit
-        déjà ressembler à quelque chose : elle le regarde pendant une semaine entière.
-      */}
+      {/* — Couche 1 : le corps, le cou et la tête, posés sur le kraft — */}
       {n >= 1 && (
         <>
-          <Pliee d="M100 46 C118 62 126 96 118 132 C112 152 104 162 100 166 Z" fill="var(--color-corail)" />
-          <circle cx="100" cy="58" r="17" fill="var(--color-corail)" />
+          <Pliee d={CORPS} fill="var(--color-corail)" />
+          <rect x="94" y="56" width="12" height="14" fill="var(--color-corail)" />
+          <circle cx="100" cy="50" r="13" fill="var(--color-corail)" />
         </>
       )}
 
-      {/* — Couche 2 : les ailes, qui se lèvent — */}
-      {n >= 2 && (
-        <>
-          <Pliee d="M100 82 C76 76 52 66 38 60 C44 86 64 108 100 114 Z" fill="var(--color-feuille)" />
-          <Pliee d="M100 104 C82 104 62 110 50 120 C64 132 84 136 100 130 Z" fill="var(--color-feuille)" />
-        </>
-      )}
+      {/* — Couche 2 : les ailes, qui recouvrent le corps — */}
+      {n >= 2 && <Pliee d={AILE} fill="var(--color-feuille)" />}
 
-      {/* — Couche 3 : la queue, en éventail — */}
-      {n >= 3 && (
-        <>
-          <Pliee d="M100 140 C96 156 88 172 74 180 C74 162 82 146 100 136 Z" fill="var(--color-souci)" />
-          <Pliee d="M100 146 C100 162 98 176 94 184 L100 186 Z" fill="var(--color-souci)" />
-        </>
-      )}
+      {/* — Couche 3 : la queue, qui recouvre le bas du corps — */}
+      {n >= 3 && <Pliee d={QUEUE} fill="var(--color-souci)" />}
 
-      {/* — Couche 4 : la crête, l'œil, la collerette — */}
+      {/* — Couche 4 : la crête, le bec et l'œil, qui recouvrent la tête — */}
       {n >= 4 && (
         <>
-          <Pliee d="M100 22 C106 28 108 38 104 46 L100 48 Z" fill="var(--color-terre)" />
-          <circle cx="100" cy="58" r="17" fill="var(--color-terre)" />
-          <circle cx="93" cy="55" r="3.4" fill="var(--color-papier-clair)" />
-          <circle cx="107" cy="55" r="3.4" fill="var(--color-papier-clair)" />
-          <Pliee d="M100 74 C108 78 112 86 110 94 L100 92 Z" fill="var(--color-souci)" />
+          <Pliee d={CRETE} fill="var(--color-terre)" />
+          <Pliee d={BEC} fill="var(--color-souci)" />
+          <circle cx="94" cy="47" r="2.8" fill="var(--color-papier-clair)" />
+          <circle cx="106" cy="47" r="2.8" fill="var(--color-papier-clair)" />
         </>
       )}
     </svg>
@@ -136,7 +144,7 @@ export function CompteCouches({ couches }: { couches: number }) {
   const n = Math.min(Math.max(Math.trunc(couches), 0), 4)
   const phrase =
     n === 0
-      ? 'Ta rosace est encore nue. La première couche se colle à ton premier rituel.'
+      ? 'Ta découpe est faite. La première couleur se colle à ton premier rituel.'
       : n >= 4
         ? 'Quatre couches. Ta rosace est entière — tu l’as faite en trente jours.'
         : `${n === 1 ? 'Une couche collée' : `${n} couches collées`}. Il en reste ${4 - n}.`
@@ -147,7 +155,7 @@ export function CompteCouches({ couches }: { couches: number }) {
         {[0, 1, 2, 3].map((i) => (
           <span
             key={i}
-            className="block h-3.5 w-3.5"
+            className="coupe block h-4 w-4"
             style={{
               background: i < n ? 'currentColor' : 'transparent',
               border: '2px solid currentColor',
@@ -155,7 +163,7 @@ export function CompteCouches({ couches }: { couches: number }) {
           />
         ))}
       </div>
-      <p className="text-[0.86rem] opacity-85">{phrase}</p>
+      <p className="text-[0.9rem]">{phrase}</p>
     </div>
   )
 }

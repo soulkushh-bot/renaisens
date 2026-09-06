@@ -103,7 +103,7 @@ export function NavBasse() {
                   </span>
                   <span
                     className={`font-display text-[0.72rem] font-bold uppercase tracking-[-0.005em] ${
-                      actif ? 'text-souci' : 'text-papier-clair/70'
+                      actif ? 'text-souci' : 'text-papier-clair'
                     }`}
                   >
                     {e.libelle}

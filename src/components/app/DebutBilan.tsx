@@ -29,7 +29,7 @@ export function DebutBilan() {
         className="couche coupe sur-fond-sombre p-6"
         style={{ ['--teinte' as never]: 'var(--color-indigo)' }}
       >
-        <p className="text-[0.95rem] text-papier-clair/80">Tu as déjà fait le point.</p>
+        <p className="text-[0.95rem] text-papier-clair">Tu as déjà fait le point.</p>
         <p className="decoupe mt-2 text-[1.5rem] text-papier-clair">{etat.profile.titre}</p>
         <div className="mt-6 flex flex-wrap gap-3">
           <LienBouton href="/aujourdhui" variante="action">
@@ -58,7 +58,7 @@ export function DebutBilan() {
       <label htmlFor="vision" className="decoupe block text-[1.35rem] text-papier-clair">
         {q.type === 'texte' ? q.texte : ''}
       </label>
-      <p className="mt-3 text-[0.95rem] text-papier-clair/75">
+      <p className="mt-3 text-[0.95rem] text-papier-clair">
         Écris-le comme tu le dirais à une amie. Tu pourras le corriger, et tu le reliras dans un mois.
       </p>
       <textarea
@@ -68,13 +68,13 @@ export function DebutBilan() {
         value={texte}
         onChange={(e) => setTexte(e.target.value)}
         placeholder="Dans un an, je veux…"
-        className="couche coupe mt-4 w-full resize-y p-4 text-[1.05rem] text-encre placeholder:text-encre/40"
+        className="couche coupe mt-4 w-full resize-y p-4 text-[1.05rem] text-encre placeholder:text-encre-douce"
         style={{ ['--teinte' as never]: 'var(--color-papier-clair)' }}
       />
       <Bouton onClick={commencer} variante="action" className="mt-4 w-full">
         Faire le point
       </Bouton>
-      <p className="chiffres mt-4 text-[0.86rem] text-papier-clair/70">
+      <p className="chiffres mt-4 text-[0.86rem] text-papier-clair">
         Huit minutes, vingt-deux questions. Tu peux t’arrêter et reprendre.
       </p>
     </div>

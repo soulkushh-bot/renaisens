@@ -28,12 +28,21 @@ const TEINTES: Record<Variante, { teinte: string; texte: string; extra?: string 
 }
 
 const BASE =
-  'couche coupe inline-flex min-h-[3rem] items-center justify-center gap-2 px-6 py-3 font-display text-[1rem] font-bold uppercase tracking-[-0.01em] transition-opacity hover:opacity-85 disabled:cursor-not-allowed disabled:opacity-45'
+  'couche coupe inline-flex min-h-[3rem] items-center justify-center gap-2 px-6 py-3 font-display text-[1rem] font-bold uppercase tracking-[-0.01em] transition-opacity hover:opacity-88 disabled:cursor-not-allowed'
 
-function habits(variante: Variante) {
-  const v = TEINTES[variante]
+/*
+  L'état désactivé n'est PAS une opacité.
+  Baisser l'opacité d'un bouton corail à texte d'encre donne du corail pâle sur du corail pâle :
+  l'audit de contraste porte sur les paires de la palette, pas sur les états, et celui-ci passait
+  entre les mailles. Un bouton désactivé est un papier kraft à encre douce — lisible, et visiblement
+  inactif.
+*/
+const DESACTIVE = { teinte: 'var(--color-kraft)', texte: 'var(--color-encre-douce)' }
+
+function habits(variante: Variante, desactive = false) {
+  const v = desactive ? DESACTIVE : TEINTES[variante]
   return {
-    className: `${BASE} ${v.extra ?? ''}`,
+    className: `${BASE} ${desactive ? '' : (TEINTES[variante].extra ?? '')}`,
     style: { ['--teinte' as never]: v.teinte, color: v.texte },
   }
 }
@@ -44,7 +53,7 @@ export function Bouton({
   style,
   ...props
 }: React.ButtonHTMLAttributes<HTMLButtonElement> & { variante?: Variante }) {
-  const h = habits(variante)
+  const h = habits(variante, props.disabled === true)
   return <button {...props} className={`${h.className} ${className}`} style={{ ...h.style, ...style }} />
 }
 
@@ -84,7 +93,7 @@ export function TitreSection({
   return (
     <header className="mb-5">
       <H className="decoupe text-[1.6rem]">{children}</H>
-      {sous ? <p className="mt-2 text-[0.98rem] text-encre/75">{sous}</p> : null}
+      {sous ? <p className="mt-2 text-[0.98rem] text-encre-douce">{sous}</p> : null}
     </header>
   )
 }

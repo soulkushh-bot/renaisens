@@ -5,7 +5,15 @@
  * coupé. Rien n'a d'ombre — ce qui est devant est ce qui recouvre.
  */
 
-type Teinte = 'papier' | 'papier-clair' | 'indigo' | 'corail' | 'souci' | 'feuille' | 'terre'
+type Teinte =
+  | 'papier'
+  | 'papier-clair'
+  | 'indigo'
+  | 'corail'
+  | 'souci'
+  | 'feuille'
+  | 'terre'
+  | 'kraft'
 
 const VARIABLE: Record<Teinte, string> = {
   papier: 'var(--color-papier)',
@@ -15,6 +23,7 @@ const VARIABLE: Record<Teinte, string> = {
   souci: 'var(--color-souci)',
   feuille: 'var(--color-feuille)',
   terre: 'var(--color-terre)',
+  kraft: 'var(--color-kraft)',
 }
 
 /** Les teintes sur lesquelles le texte doit passer en papier clair. */
@@ -93,6 +102,46 @@ export function PetiteFleur({
       <circle cx="18.5" cy="12" r="5" fill={VARIABLE[petale]} />
       <circle cx="12" cy="12" r="4.2" fill={VARIABLE[coeur]} />
     </svg>
+  )
+}
+
+/**
+ * Une photographie glissée SOUS une découpe de papier.
+ *
+ * Le papier kraft dépasse tout autour : l'image n'est pas collée par-dessus, elle apparaît par
+ * l'ouverture. C'est le seul traitement de photo que ce monde autorise — un masque géométrique
+ * posé sur une image serait la version bon marché de l'effet.
+ *
+ * `legende` est obligatoire, et elle sert à autre chose qu'à décorer : sur ce produit, une photo
+ * mal située peut se lire comme un témoignage. Elle doit dire ce que l'image est, et ce qu'elle
+ * n'est pas.
+ */
+export function PhotoDecoupee({
+  src,
+  alt,
+  legende,
+  className = '',
+}: {
+  src: string
+  alt: string
+  legende: string
+  className?: string
+}) {
+  return (
+    <figure className={className}>
+      <div
+        className="couche coupe p-2.5"
+        style={{ ['--teinte' as never]: VARIABLE.kraft }}
+      >
+        <div className="coupe overflow-hidden">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={src} alt={alt} className="block w-full object-cover" loading="lazy" />
+        </div>
+      </div>
+      <figcaption className="mt-3 text-[0.86rem] leading-relaxed text-encre-douce">
+        {legende}
+      </figcaption>
+    </figure>
   )
 }
 

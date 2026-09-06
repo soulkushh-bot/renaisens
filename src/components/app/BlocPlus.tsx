@@ -34,7 +34,7 @@ export function BlocPlus() {
     return (
       <Couche teinte="feuille" className="p-6">
         <h2 className="decoupe uppercase text-[1.4rem] text-papier-clair">C’est noté</h2>
-        <p className="mt-3 text-[1rem] leading-relaxed text-papier-clair/90">
+        <p className="mt-3 text-[1rem] leading-relaxed text-papier-clair">
           On t’écrira quand RenaiSens+ existera vraiment. Pas avant, et pas pour autre chose.
         </p>
       </Couche>
@@ -44,7 +44,7 @@ export function BlocPlus() {
   return (
     <Couche teinte="papier-clair" className="p-6">
       <h2 className="decoupe uppercase text-[1.4rem]">RenaiSens+</h2>
-      <p className="mt-3 text-[1rem] leading-relaxed text-encre/85">
+      <p className="mt-3 text-[1rem] leading-relaxed text-encre">
         Un accompagnement plus poussé après les trente jours : des plans plus longs, et des échanges
         avec des femmes qui traversent la même chose. Ça n’existe pas encore. Si tu veux être
         prévenue quand ce sera prêt, laisse ton adresse.
@@ -58,7 +58,7 @@ export function BlocPlus() {
           onChange={(e) => setEmail(e.target.value)}
           placeholder="ton@adresse.com"
           aria-label="Ton adresse e-mail"
-          className="couche coupe min-h-[3rem] flex-1 px-4 text-[1.02rem] text-encre placeholder:text-encre/40"
+          className="couche coupe min-h-[3rem] flex-1 px-4 text-[1.02rem] text-encre placeholder:text-encre-douce"
           style={{ ['--teinte' as never]: 'var(--color-papier)' }}
         />
         <Bouton type="submit" disabled={etat === 'envoi'}>
@@ -72,7 +72,7 @@ export function BlocPlus() {
         </p>
       ) : null}
 
-      <p className="mt-4 text-[0.86rem] leading-relaxed text-encre/60">
+      <p className="mt-4 text-[0.86rem] leading-relaxed text-encre-douce">
         Ton adresse ne sert qu’à ça. Le reste de tes réponses ne quitte pas ton téléphone.
       </p>
     </Couche>

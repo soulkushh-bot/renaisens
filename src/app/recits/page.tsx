@@ -23,13 +23,13 @@ export default function PageRecits() {
     <main className="pb-6">
       <div className="colonne pt-9">
         <h1 className="decoupe uppercase text-[2.3rem]">Récits</h1>
-        <p className="mt-4 text-[1.08rem] leading-relaxed text-encre/85">
+        <p className="mt-4 text-[1.08rem] leading-relaxed text-encre">
           Onze transitions, racontées avec ce qui a coincé et ce qui n’est toujours pas réglé. Une
           histoire sans reste n’est pas une histoire à laquelle on croit.
         </p>
 
         <Couche teinte="papier-clair" className="mt-6 p-4">
-          <p className="text-[0.92rem] leading-relaxed text-encre/75">{AVERTISSEMENT_RECITS}</p>
+          <p className="text-[0.92rem] leading-relaxed text-encre-douce">{AVERTISSEMENT_RECITS}</p>
         </Couche>
       </div>
 
@@ -44,8 +44,8 @@ export default function PageRecits() {
                   <p className="decoupe text-indigo text-[1.2rem]">
                     {r.prenom}, {r.age} ans, {r.ville}
                   </p>
-                  <p className="mt-2.5 text-[1rem] leading-relaxed text-encre/80">{r.accroche}</p>
-                  <p className="mt-4 font-display text-[0.78rem] font-bold uppercase text-encre/55">
+                  <p className="mt-2.5 text-[1rem] leading-relaxed text-encre">{r.accroche}</p>
+                  <p className="mt-4 font-display text-[0.78rem] font-bold uppercase text-encre-douce">
                     {NOM_DIMENSION[r.dimension]} · {r.duree}
                   </p>
                 </Couche>

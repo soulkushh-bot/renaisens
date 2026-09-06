@@ -1,0 +1,13 @@
+Provenance de public/images/dakar-matin.webp
+
+Source    : Unsplash — https://images.unsplash.com/photo-1612365245546-d424d47bfdb5
+Auteur    : Carles Martinez
+Licence   : Unsplash License (usage commercial autorise, attribution non requise)
+Recuperee : 2026-09-06
+Traitement: redimensionnee a 900 px de large, convertie en WebP (ffmpeg)
+
+Usage dans le produit : ambiance sur la page d'accueil, posee sous une decoupe de papier.
+Elle n'est JAMAIS attachee a un recit : les onze recits sont illustratifs et fictifs, et un visage
+reel a cote d'une histoire inventee la transformerait en faux temoignage.
+
+Aucune legende ne revendique un lieu precis : la photo n'est pas verifiee quant a sa localisation.

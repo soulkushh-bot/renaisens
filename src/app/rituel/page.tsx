@@ -47,7 +47,7 @@ export default function Rituel() {
   if (!pret || !etat) {
     return (
       <main className="colonne py-20">
-        <p className="text-encre/60">Un instant…</p>
+        <p className="text-encre-douce">Un instant…</p>
       </main>
     )
   }
@@ -88,10 +88,10 @@ export default function Rituel() {
 
     return (
       <main className="pb-6">
-        <Couche teinte="indigo" coupe={false} className="pb-12 pt-10">
+        <Couche teinte="indigo" coupe={false} className="pb-12 pt-6">
           <div className="colonne revelation flex flex-col gap-7">
-            <div className="flex justify-center">
-              <RosacePhenix couches={couches} taille={176} />
+            <div className="recouvre -mt-16 flex justify-center">
+              <RosacePhenix couches={couches} taille={190} />
             </div>
             <div className="text-papier-clair">
               <CompteCouches couches={couches} />
@@ -103,7 +103,7 @@ export default function Rituel() {
           <h1 className="decoupe uppercase text-[2.1rem]">Ce qui change</h1>
 
           {changements.length === 0 ? (
-            <p className="mt-5 text-[1.05rem] text-encre/85">
+            <p className="mt-5 text-[1.05rem] text-encre">
               Rien à réécrire cette semaine. Ton plan tient tel quel.
             </p>
           ) : (
@@ -111,7 +111,7 @@ export default function Rituel() {
               {changements.map((c, i) => (
                 <li key={`${c.actionId}-${i}`}>
                   <Couche teinte={c.type === 'montee' ? 'souci' : 'papier-clair'} className="p-5">
-                    <p className="text-[1.02rem] leading-relaxed text-encre/90">{c.texte}</p>
+                    <p className="text-[1.02rem] leading-relaxed text-encre">{c.texte}</p>
                   </Couche>
                 </li>
               ))}
@@ -124,13 +124,13 @@ export default function Rituel() {
             <BandeDecoupee teinte="corail" className="mt-16" />
             <div className="colonne mt-10">
               <h2 className="decoupe uppercase text-[1.9rem]">Un mois plus tôt, tu écrivais ça</h2>
-              <p className="mt-3 text-[0.96rem] text-encre/70">
+              <p className="mt-3 text-[0.96rem] text-encre-douce">
                 Mot pour mot, sans rien changer. C’est ton avant et ton après, dans ta langue.
               </p>
 
               {typeof frein === 'string' && frein.trim() ? (
                 <figure className="mt-8">
-                  <figcaption className="font-display text-[0.85rem] font-bold uppercase text-encre/55">
+                  <figcaption className="font-display text-[0.85rem] font-bold uppercase text-encre-douce">
                     Ce qui t’arrêtait, le premier jour
                   </figcaption>
                   <blockquote className="decoupe mt-2 text-[1.35rem] leading-[1.15] text-indigo">
@@ -141,7 +141,7 @@ export default function Rituel() {
 
               {typeof vision === 'string' && vision.trim() ? (
                 <figure className="mt-7">
-                  <figcaption className="font-display text-[0.85rem] font-bold uppercase text-encre/55">
+                  <figcaption className="font-display text-[0.85rem] font-bold uppercase text-encre-douce">
                     Ce que tu voulais voir changer
                   </figcaption>
                   <blockquote className="decoupe mt-2 text-[1.35rem] leading-[1.15] text-indigo">
@@ -152,7 +152,7 @@ export default function Rituel() {
 
               {reponse.trim() ? (
                 <figure className="mt-10">
-                  <figcaption className="font-display text-[0.85rem] font-bold uppercase text-encre/55">
+                  <figcaption className="font-display text-[0.85rem] font-bold uppercase text-encre-douce">
                     Ce que tu viens d’écrire, aujourd’hui
                   </figcaption>
                   <blockquote className="decoupe mt-2 text-[1.35rem] leading-[1.15] text-indigo">
@@ -161,7 +161,7 @@ export default function Rituel() {
                 </figure>
               ) : null}
 
-              <p className="mt-10 text-[1rem] leading-relaxed text-encre/80">
+              <p className="mt-10 text-[1rem] leading-relaxed text-encre">
                 On ne va pas te dire si c’est bien. Relis les deux, et décide toi-même.
               </p>
             </div>
@@ -184,11 +184,11 @@ export default function Rituel() {
   if (etape === 'question') {
     return (
       <main className="colonne pb-36 pt-9">
-        <p className="chiffres font-display text-[0.85rem] font-bold uppercase text-encre/55">
+        <h1 className="decoupe uppercase text-[1.9rem]">{reflexion.texte}</h1>
+        {reflexion.aide ? <p className="mt-3 text-[1rem] text-encre-douce">{reflexion.aide}</p> : null}
+        <p className="chiffres mt-4 font-display text-[0.85rem] font-bold uppercase text-encre-douce">
           Rituel de la semaine {semaine} · 2 sur 3
         </p>
-        <h1 className="decoupe uppercase mt-5 text-[1.9rem]">{reflexion.texte}</h1>
-        {reflexion.aide ? <p className="mt-3 text-[1rem] text-encre/75">{reflexion.aide}</p> : null}
 
         <textarea
           rows={4}
@@ -197,10 +197,10 @@ export default function Rituel() {
           onChange={(e) => setReponse(e.target.value)}
           placeholder="Deux lignes suffisent."
           aria-label={reflexion.texte}
-          className="couche coupe mt-7 w-full resize-y p-4 text-[1.05rem] leading-relaxed text-encre placeholder:text-encre/40"
+          className="couche coupe mt-7 w-full resize-y p-4 text-[1.05rem] leading-relaxed text-encre placeholder:text-encre-douce"
           style={{ ['--teinte' as never]: 'var(--color-papier-clair)' }}
         />
-        <p className="chiffres mt-1.5 text-right text-[0.8rem] text-encre/55">{reponse.length} / 280</p>
+        <p className="chiffres mt-1.5 text-right text-[0.8rem] text-encre-douce">{reponse.length} / 280</p>
 
         <div className="fixed inset-x-0 bottom-0 z-20">
           <BandeDecoupee teinte="papier-clair" />
@@ -209,7 +209,7 @@ export default function Rituel() {
               <button
                 type="button"
                 onClick={() => setEtape('coches')}
-                className="min-h-12 px-2 font-display text-[0.9rem] font-bold uppercase text-encre/65 underline"
+                className="min-h-12 px-2 font-display text-[0.9rem] font-bold uppercase text-encre-douce underline"
               >
                 Revenir
               </button>
@@ -226,18 +226,21 @@ export default function Rituel() {
   // ————————————————————————— 1. Ce que tu as fait —————————————————————————
   return (
     <main className="colonne pb-36 pt-9">
-      <p className="chiffres font-display text-[0.85rem] font-bold uppercase text-encre/55">
+      <p className="chiffres font-display text-[0.85rem] font-bold uppercase text-encre-douce">
         Rituel de la semaine {semaine} · 1 sur 3
       </p>
       <h1 className="decoupe uppercase mt-5 text-[1.9rem]">Qu’est-ce que tu as fait cette semaine ?</h1>
-      <p className="mt-3 text-[1rem] leading-relaxed text-encre/75">
+      <p className="mt-3 text-[1rem] leading-relaxed text-encre-douce">
         Ce que tu n’as pas fait n’est pas un échec, et ne sera pas répété tel quel. Coche juste ce
         qui est vrai.
+      </p>
+      <p className="chiffres mt-4 font-display text-[0.85rem] font-bold uppercase text-encre-douce">
+        Rituel de la semaine {semaine} · 1 sur 3
       </p>
 
       {actions.length === 0 ? (
         <Couche teinte="papier-clair" className="mt-7 p-5">
-          <p className="text-[1rem] text-encre/75">
+          <p className="text-[1rem] text-encre-douce">
             Il n’y avait rien de prévu cette semaine. Tu peux passer à la question.
           </p>
         </Couche>
@@ -274,7 +277,7 @@ export default function Rituel() {
                     </span>
                     <span
                       className={`mt-1.5 block font-display text-[0.82rem] font-bold uppercase ${
-                        coche ? 'text-souci' : 'text-encre/55'
+                        coche ? 'text-souci' : 'text-encre-douce'
                       }`}
                     >
                       {coche ? 'Fait' : 'Pas cette semaine'}
