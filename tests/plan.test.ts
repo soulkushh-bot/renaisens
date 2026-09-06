@@ -81,6 +81,27 @@ describe('plan.ts — les invariants de charge', () => {
         expect(plan.jalons90.map((j) => j.jour)).toEqual([30, 60, 90])
         expect(plan.jalons90.some((j) => j.actionIds.length > 0)).toBe(true)
       })
+
+      it('propose à trois mois des actions plus exigeantes qu’à trente jours, jamais l’inverse', () => {
+        const effort = (ids: string[]) =>
+          ids.length === 0 ? 0 : Math.max(...ids.map((id) => action(id).difficulte))
+        const j30 = effort(plan.jalons90[0]!.actionIds)
+        const j90 = effort(plan.jalons90[2]!.actionIds)
+        expect(j90).toBeGreaterThanOrEqual(j30)
+
+        // Et jamais une action d'entrée de gamme : un jalon à trois mois qui propose « lis ton
+        // relevé » décrédibilise tout le reste du plan.
+        for (const j of plan.jalons90) {
+          for (const id of j.actionIds) expect(action(id).difficulte).toBeGreaterThanOrEqual(2)
+        }
+      })
+
+      it('ne renvoie jamais dans les jalons une action déjà au plan', () => {
+        const dansLePlan = new Set(actionsDuPlan(plan))
+        for (const j of plan.jalons90) {
+          for (const id of j.actionIds) expect(dansLePlan.has(id)).toBe(false)
+        }
+      })
     })
   }
 })

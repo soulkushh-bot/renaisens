@@ -331,11 +331,20 @@ function construireJalons(
   suiteParDimension: Map<DimensionId, Action[]>,
   placees: Set<string>,
 ): Milestone[] {
-  const suite: Action[] = []
+  // Un jalon à trois mois doit demander PLUS que le plan à trente jours, jamais moins.
+  // On retient donc les actions les plus exigeantes de chaque dimension, en préférant celles dont
+  // les prérequis auront été posés pendant le mois — puis on les range du plus doux au plus dur,
+  // pour que J30, J60 et J90 montent vraiment.
+  const candidats: Action[] = []
   for (const d of ordre) {
-    const restantes = (suiteParDimension.get(d) ?? []).filter((a) => !placees.has(a.id))
-    suite.push(...restantes.slice(0, 2))
+    const restantes = (suiteParDimension.get(d) ?? []).filter(
+      (a) => !placees.has(a.id) && a.difficulte >= 2,
+    )
+    const debloquees = restantes.filter((a) => a.prerequis.every((p) => placees.has(p)))
+    const source = debloquees.length >= 2 ? debloquees : restantes
+    candidats.push(...source.slice(-2))
   }
+  const suite = candidats.sort(comparer)
 
   return ([30, 60, 90] as const).map((jour, i) => {
     const lot = suite.slice(i * 2, i * 2 + 2)

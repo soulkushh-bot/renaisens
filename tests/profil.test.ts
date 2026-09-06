@@ -42,7 +42,10 @@ describe('score.ts', () => {
 describe('profile.ts — sa phrase lui est rendue, jamais réécrite en autre chose', () => {
   it('passe à la deuxième personne quand c’est sûr', () => {
     expect(reformulerVision('Je veux ouvrir ma boutique')).toBe(
-      'Dans un an, tu veux ouvrir ma boutique.',
+      'Dans un an, tu veux ouvrir ta boutique.',
+    )
+    expect(reformulerVision('Je veux avoir quitté mon poste et vivre de mon activité')).toBe(
+      'Dans un an, tu veux avoir quitté ton poste et vivre de ton activité.',
     )
     expect(reformulerVision('Dans un an, j’aimerais retravailler')).toBe(
       'Dans un an, tu aimerais retravailler.',
@@ -53,6 +56,13 @@ describe('profile.ts — sa phrase lui est rendue, jamais réécrite en autre ch
     const r = reformulerVision('Ma fille sera scolarisée et j’aurai déménagé')
     expect(r).toContain('«')
     expect(r).toContain('Ma fille sera scolarisée')
+  })
+
+  it('cite aussi dès qu’un second verbe à la première personne traîne dans la phrase', () => {
+    // « tu veux … et que je sois fière » serait bancal : on ne prend pas le risque.
+    const r = reformulerVision('Je veux lancer mon activité et que je sois fière de moi')
+    expect(r).toContain('«')
+    expect(r).not.toContain('Dans un an, tu veux lancer')
   })
 
   it('ne fabrique rien quand elle n’a rien écrit', () => {

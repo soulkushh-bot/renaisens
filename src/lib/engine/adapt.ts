@@ -59,6 +59,15 @@ export function adapterPlan(args: {
     ...s,
     actions: s.actions.map((a) => ({ ...a })),
   }))
+
+  /** Où chaque action se trouvait avant réécriture. Sert à ne raconter chaque mouvement qu'une fois. */
+  const positionAvant = new Map<string, number>()
+  for (const s of plan.semaines) {
+    if (s.index <= log.semaine) continue
+    for (const a of s.actions) positionAvant.set(a.actionId, s.index)
+  }
+  for (const id of log.nonFaites) positionAvant.set(id, log.semaine)
+
   const suivante = assurerSemaine(semaines, log.semaine + 1)
   const courante = semaines.find((s) => s.index === log.semaine)
 
@@ -111,13 +120,9 @@ export function adapterPlan(args: {
       continue
     }
 
+    // Aucun message ici : le déplacement réel est décrit une seule fois, plus bas, quand on sait
+    // dans quelle semaine l'action a fini par atterrir.
     ajouter(actionId, false, true)
-    changements.push({
-      revision,
-      type: 'glissee',
-      actionId,
-      texte: `« ${titreLisible(actionId)} » passe à la semaine prochaine. Rien n’est perdu.`,
-    })
   }
 
   // 3 — deux semaines pleines de suite : une marche de plus, jamais une action de plus.
@@ -162,18 +167,57 @@ export function adapterPlan(args: {
     const apres = assurerSemaine(semaines, s.index + 1)
     for (const a of surplus) {
       if (!apres.actions.some((x) => x.actionId === a.actionId)) apres.actions.push(a)
-      changements.push({
-        revision,
-        type: 'glissee',
-        actionId: a.actionId,
-        texte: `${capacite} actions par semaine, pas plus. « ${titreLisible(a.actionId)} » attendra la semaine d’après.`,
-      })
     }
     i = -1 // on repart du début : le débordement peut se propager de semaine en semaine
   }
 
   // Exactement une action prioritaire par semaine.
   for (const s of semaines) retablirPriorite(s, ordre)
+
+  /*
+    Les déplacements sont racontés UNE seule fois, à la fin, quand on connaît la destination réelle.
+    Sans ça, une action qui glisse de la semaine 2 à la 3 puis de la 3 à la 4 produisait trois
+    messages pour un seul mouvement.
+
+    Et surtout : une semaine où elle n'a rien coché ne doit pas lui rendre un mur de dix lignes
+    expliquant tout ce qui est repoussé. Au-delà de trois déplacements, on résume en une phrase.
+    Le plan glisse, il ne s'écroule pas.
+  */
+  const deplacements = [...positionAvant.entries()]
+    .map(([id, avant]) => ({ id, avant, apres: positionDe(semaines, id, log.semaine) }))
+    .filter((d) => d.apres !== undefined && d.apres !== d.avant)
+    .filter((d) => !changements.some((c) => c.actionId === d.id))
+
+  // Ce qu'elle n'a pas fait est nommé, une ligne chacun : c'est l'information.
+  const reportees = deplacements.filter((d) => log.nonFaites.includes(d.id))
+  for (const d of reportees) {
+    changements.push({
+      revision,
+      type: 'glissee',
+      actionId: d.id,
+      texte: `« ${titreLisible(d.id)} » passe à la semaine ${d.apres}. Rien n’est perdu.`,
+    })
+  }
+
+  // Le reste du plan décale par simple conséquence du plafond. Ce n'est pas une information par
+  // action — c'est une information par plan, et ça tient en une phrase.
+  const decalees = deplacements.filter((d) => !log.nonFaites.includes(d.id))
+  if (decalees.length === 1) {
+    const d = decalees[0]!
+    changements.push({
+      revision,
+      type: 'glissee',
+      actionId: d.id,
+      texte: `« ${titreLisible(d.id)} » attendra la semaine ${d.apres} : jamais plus de ${capacite} actions dans une semaine.`,
+    })
+  } else if (decalees.length > 1) {
+    changements.push({
+      revision,
+      type: 'glissee',
+      actionId: decalees[0]!.id,
+      texte: `Le reste du plan décale d’une semaine — ${decalees.length} actions attendront un peu. Jamais plus de ${capacite} par semaine, et tu n’as rien à rattraper.`,
+    })
+  }
 
   if (courante && courante.actions.length > 0 && log.nonFaites.length === 0) {
     changements.push({
@@ -193,6 +237,21 @@ export function adapterPlan(args: {
     },
     changements,
   }
+}
+
+/**
+ * Où l'action se trouve DANS LES SEMAINES A VENIR.
+ * Les semaines passées gardent leur liste telle quelle — c'est l'historique de ce qui a été proposé,
+ * et le chercher là fausserait tout calcul de déplacement.
+ */
+function positionDe(
+  semaines: PlanWeek[],
+  actionId: string,
+  apresLaSemaine: number,
+): number | undefined {
+  return semaines.find(
+    (s) => s.index > apresLaSemaine && s.actions.some((a) => a.actionId === actionId),
+  )?.index
 }
 
 function estTension(d: DimensionId, ordre: DimensionId[]): boolean {

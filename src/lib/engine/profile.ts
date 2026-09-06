@@ -37,6 +37,21 @@ const CONVERSIONS: [RegExp, string][] = [
 
 const AMORCE = /^(dans un an,?|d['’]ici un an,?|en un an,?)\s*/i
 
+/** Convertir le verbe de tête ne suffit pas : « tu veux quitter mon poste » ne se lit pas. */
+const POSSESSIFS: [RegExp, string][] = [
+  [/\bmon\b/gi, 'ton'],
+  [/\bma\b/gi, 'ta'],
+  [/\bmes\b/gi, 'tes'],
+  [/\bmoi\b/gi, 'toi'],
+  [/\bm['’]/gi, 't’'],
+]
+
+/**
+ * S'il reste une marque de première personne après conversion, c'est qu'il y a un deuxième verbe
+ * conjugué qu'on ne sait pas accorder. On cite alors, plutôt que de lui rendre une phrase bancale.
+ */
+const RESTE_PREMIERE = /\bje\b|\bj['’]|\bme\b|\bmien/i
+
 /**
  * Sa phrase, rendue à la deuxième personne quand c'est sûr — citée sinon.
  * Le repli n'est pas un échec : citer ses mots vaut toujours mieux que lui prêter les nôtres.
@@ -49,10 +64,11 @@ export function reformulerVision(texte: string | undefined): string {
 
   const sansAmorce = brut.replace(AMORCE, '')
   for (const [motif, remplacement] of CONVERSIONS) {
-    if (motif.test(sansAmorce)) {
-      const converti = sansAmorce.replace(motif, remplacement)
-      return `Dans un an, ${terminer(converti)}`
-    }
+    if (!motif.test(sansAmorce)) continue
+    let converti = sansAmorce.replace(motif, remplacement)
+    for (const [m, r] of POSSESSIFS) converti = converti.replace(m, r)
+    if (RESTE_PREMIERE.test(converti)) break
+    return `Dans un an, ${terminer(converti)}`
   }
   return `Tu l’as écrit toi-même : « ${terminer(brut)} »`
 }
