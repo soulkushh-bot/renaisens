@@ -82,9 +82,16 @@ export function RosacePhenix({
         </g>
       )}
 
-      {/* — Couche 1 : le corps — */}
+      {/*
+        — Couche 1 : le corps ET la tête —
+        Le corps seul se lisait comme un noyau, pas comme un oiseau. Chaque état intermédiaire doit
+        déjà ressembler à quelque chose : elle le regarde pendant une semaine entière.
+      */}
       {n >= 1 && (
-        <Pliee d="M100 46 C118 62 126 96 118 132 C112 152 104 162 100 166 Z" fill="var(--color-corail)" />
+        <>
+          <Pliee d="M100 46 C118 62 126 96 118 132 C112 152 104 162 100 166 Z" fill="var(--color-corail)" />
+          <circle cx="100" cy="58" r="17" fill="var(--color-corail)" />
+        </>
       )}
 
       {/* — Couche 2 : les ailes, qui se lèvent — */}
@@ -103,7 +110,7 @@ export function RosacePhenix({
         </>
       )}
 
-      {/* — Couche 4 : la tête, la crête, et l'œil — */}
+      {/* — Couche 4 : la crête, l'œil, la collerette — */}
       {n >= 4 && (
         <>
           <Pliee d="M100 22 C106 28 108 38 104 46 L100 48 Z" fill="var(--color-terre)" />
