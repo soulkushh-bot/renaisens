@@ -33,6 +33,20 @@
   --font-texte: var(--police-texte), ui-sans-serif, system-ui, sans-serif;
 }
 
+/*
+  Les deux piles de polices sont écrites ici EN CLAIR, et pas via les variables de thème.
+  Tailwind n'émet une variable de `@theme` que s'il la voit employée dans un de ses utilitaires ;
+  celles-ci ne le sont que dans du CSS écrit à la main, donc elles n'étaient jamais générées et
+  `var(--font-display)` ne résolvait rien. Les titres retombaient silencieusement sur une pile
+  système — le monde perdait sa voix sans qu'aucune erreur ne le signale.
+
+  `--police-display` et `--police-texte` sont posées par next/font sur le body ; elles héritent.
+*/
+:root {
+  --pile-display: var(--police-display), ui-sans-serif, system-ui, sans-serif;
+  --pile-texte: var(--police-texte), ui-sans-serif, system-ui, sans-serif;
+}
+
 :root {
   color-scheme: light;
 
@@ -58,7 +72,7 @@ body {
   background-image: var(--grain);
   background-blend-mode: multiply;
   color: var(--color-encre);
-  font-family: var(--font-texte);
+  font-family: var(--pile-texte);
   font-size: 1.0625rem;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
@@ -71,7 +85,7 @@ body {
   h1,
   h2,
   h3 {
-    font-family: var(--font-display);
+    font-family: var(--pile-display);
     text-wrap: balance;
     color: var(--color-indigo);
   }
@@ -99,7 +113,7 @@ body {
     commune, il n'y a plus rien à fusionner.
   */
   .decoupe {
-    font-family: var(--font-display);
+    font-family: var(--pile-display);
     font-weight: 800;
     letter-spacing: -0.03em;
     line-height: 0.98;
