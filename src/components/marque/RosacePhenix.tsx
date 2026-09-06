@@ -66,12 +66,20 @@ export function RosacePhenix({
       <circle cx="100" cy="100" r="86" fill="var(--color-indigo)" />
       <circle cx="100" cy="100" r="66" fill="var(--color-papier-clair)" />
 
-      {/* La découpe nue : un papier posé, pas encore peint. */}
+      {/*
+        La découpe nue : l'oiseau ENTIER, dans un papier non peint.
+        Montrer seulement le corps et les ailes donnait une forme vague qu'on ne reconnaissait pas.
+        Elle doit voir dès l'accueil ce qu'elle va fabriquer, pas une tache.
+      */}
       {n === 0 && (
-        <>
-          <Pliee d="M100 46 C118 62 126 96 118 132 C112 152 104 162 100 166 Z" fill="var(--color-papier)" />
+        <g fill="var(--color-papier)">
           <Pliee d="M100 82 C76 76 52 66 38 60 C44 86 64 108 100 114 Z" fill="var(--color-papier)" />
-        </>
+          <Pliee d="M100 104 C82 104 62 110 50 120 C64 132 84 136 100 130 Z" fill="var(--color-papier)" />
+          <Pliee d="M100 140 C96 156 88 172 74 180 C74 162 82 146 100 136 Z" fill="var(--color-papier)" />
+          <Pliee d="M100 46 C118 62 126 96 118 132 C112 152 104 162 100 166 Z" fill="var(--color-papier)" />
+          <Pliee d="M100 22 C106 28 108 38 104 46 L100 48 Z" fill="var(--color-papier)" />
+          <circle cx="100" cy="58" r="17" fill="var(--color-papier)" />
+        </g>
       )}
 
       {/* — Couche 1 : le corps — */}
