@@ -113,14 +113,18 @@ Budget tenu, mesuré sur le build de production :
 `motion` n'est chargé que sur `/profil`, en import dynamique. `prefers-reduced-motion` coupe toute
 animation.
 
-**Hors ligne — ce qui est vérifié, et ce qui ne l'est pas.** Le rituel a été joué de bout en bout avec
-`fetch`, `XMLHttpRequest` et `sendBeacon` instrumentés : **zéro appel réseau**, y compris pour
-réécrire le plan. Tout est calculé sur l'appareil, et l'état vit dans `localStorage`. Le service
-worker (`public/sw.js`, écrit à la main) met la coquille en cache pour couvrir le cas du retour sur
-l'app sans réseau ; il est servi correctement (`application/javascript`, `no-store`) et son script est
-valide, **mais son enregistrement n'a pas pu être vérifié de bout en bout** — le seul navigateur
-pilotable dans cet environnement bloque l'enregistrement des service workers. À confirmer sur un
-appareil réel : c'est la première ligne de la section technique de [ROADMAP.md](ROADMAP.md).
+**Hors ligne — vérifié en production.** Deux mesures, pas une intention :
+
+1. Le rituel a été joué de bout en bout avec `fetch`, `XMLHttpRequest` et `sendBeacon` instrumentés :
+   **zéro appel réseau**, y compris pour réécrire le plan. Tout est calculé sur l'appareil, et l'état
+   vit dans `localStorage`.
+2. Sur `renaisens.vercel.app`, le service worker (`public/sw.js`, écrit à la main) **s'enregistre,
+   s'active sur la portée `/`, et met en cache les six routes de la coquille** — `/`, `/aujourdhui`,
+   `/plan`, `/rituel`, `/recits`, `/reglages`. Vérifié : `/rituel` revient du cache en 200
+   `text/html`.
+
+Stratégie : réseau d'abord avec repli sur le cache pour les navigations, cache d'abord pour
+`/_next/static` (noms hachés, donc immuables).
 
 ## Mesure
 

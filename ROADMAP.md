@@ -92,13 +92,11 @@ première variable d'environnement du projet — jusque-là, le déploiement res
 les navigateurs Android. Générer des PNG 192/512 depuis `public/icons/phoenix.svg` améliorerait
 l'installation sur l'écran d'accueil. Le mode hors ligne, lui, ne dépend pas de ça.
 
-**Vérifier le service worker sur un appareil réel — à faire en premier.** Le rituel ne fait aucun
-appel réseau, c'est mesuré. Mais l'enregistrement du service worker n'a pas pu être vérifié de bout
-en bout pendant le build : le navigateur d'aperçu utilisé bloque les service workers. Le script est
-valide et correctement servi ; il reste à confirmer, sur un Android réel en mode avion, que
-`/aujourdhui`, `/plan` et `/rituel` s'ouvrent bien après fermeture de l'app. Tant que ce n'est pas
-confirmé, le produit ne doit pas promettre « fonctionne hors ligne » sans nuance — la page d'accueil
-dit aujourd'hui « calculés sur ton téléphone », ce qui est exact.
+**Confirmer le hors ligne en mode avion, sur un vrai Android.** Le service worker s'enregistre bien
+en production et met la coquille en cache — c'est vérifié. Ce qui ne l'est pas encore : le
+comportement réel d'un appareil d'entrée de gamme, application fermée puis rouverte sans réseau,
+notamment la mise en cache des assets `/_next/static` qui se remplit à la navigation et non à
+l'installation.
 
 **Vérification réseau réelle.** Le budget (< 200 Ko de JS par route, LCP < 2,5 s en 3G lente) est
 tenu au build ; il n'a pas encore été mesuré sur un vrai appareil d'entrée de gamme sur un vrai

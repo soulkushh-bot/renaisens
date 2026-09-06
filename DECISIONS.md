@@ -104,16 +104,16 @@ six glyphes.
 Le manifeste déclare une icône SVG. Le support des icônes SVG de manifeste est correct sur Chrome
 Android mais inégal pour le mode `maskable` ; générer des PNG 192/512 demanderait une chaîne de
 rastérisation qui n'apporte rien au MVP. Le mode hors ligne ne dépend pas de l'installabilité : il
-vient du service worker, dont la vérification reste ouverte (voir ci-dessous). À reprendre — noté
-dans `ROADMAP.md`.
+vient du service worker, qui est vérifié actif en production. À reprendre — noté dans `ROADMAP.md`.
 
-**Le hors ligne est revendiqué à hauteur de ce qui a été mesuré.**
+**Le hors ligne a d'abord été sous-promis, puis vérifié.**
 Le rituel a été joué en entier avec `fetch`, `XMLHttpRequest` et `sendBeacon` instrumentés : aucun
-appel réseau. En revanche, l'enregistrement du service worker n'a pas pu être vérifié — le navigateur
-d'aperçu disponible ici le bloque, et le Chrome de l'utilisateur n'était pas joignable. Plutôt que
-d'écrire « fonctionne hors ligne » sur la page d'accueil sans l'avoir constaté, la formulation retenue
-est « calculés sur ton téléphone, sans connexion », qui est exacte. Le point est ouvert en tête de la
-section technique de `ROADMAP.md`.
+appel réseau. En revanche, l'enregistrement du service worker échouait dans le navigateur d'aperçu
+local — j'ai donc retiré « fonctionne hors ligne » de la page d'accueil plutôt que d'affirmer une
+chose non constatée. Après déploiement, la vérification sur `renaisens.vercel.app` a montré que le
+blocage venait bien de l'environnement d'aperçu : le service worker s'enregistre, s'active, et met
+les six routes de la coquille en cache. La formulation d'origine est rétablie parce qu'elle est
+maintenant vraie — pas l'inverse.
 
 **Node.js a été installé sur la machine de build.**
 Il n'était pas présent. Installé via `winget install OpenJS.NodeJS.LTS` (24.19.0), après accord.
