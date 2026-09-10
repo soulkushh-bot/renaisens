@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Caveat, Figtree } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import { NavBasse } from '@/components/app/NavBasse'
+import { Coque } from '@/components/app/Coque'
 import { ServiceWorker } from '@/components/app/ServiceWorker'
 import { FournisseurEtat } from '@/lib/etat'
 import './globals.css'
@@ -63,8 +63,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         style={{ ['--police-texte' as never]: 'var(--police-display)' }}
       >
         <FournisseurEtat>
-          <div className="flex-1">{children}</div>
-          <NavBasse />
+          <div className="flex-1">
+            <Coque>{children}</Coque>
+          </div>
           <ServiceWorker />
         </FournisseurEtat>
         <Analytics />

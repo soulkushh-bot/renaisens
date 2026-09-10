@@ -1,9 +1,11 @@
 import Link from 'next/link'
 import { DebutBilan } from '@/components/app/DebutBilan'
-import { Logo, Phenix } from '@/components/marque/Phenix'
+import { LienReprendre } from '@/components/app/LienReprendre'
+import { MarqueDomaine, accentDomaine, fondDomaine } from '@/components/marque/Domaines'
+import { Logo } from '@/components/marque/Phenix'
 import { Carte, Fleche, LienBouton } from '@/components/ui/base'
 import { AVERTISSEMENT_RECITS, RECITS } from '@/content/stories'
-import { DIMENSIONS, NOM_DIMENSION } from '@/types'
+import { DIMENSIONS, NOM_DIMENSION, type DimensionId } from '@/types'
 
 /**
  * L'accueil — mode Persuade.
@@ -20,43 +22,13 @@ import { DIMENSIONS, NOM_DIMENSION } from '@/types'
  * retourne contre lui.
  */
 
-const DOMAINES: {
-  dimension: (typeof DIMENSIONS)[number]
-  texte: string
-  fond: string
-  accent: string
-}[] = [
-  {
-    dimension: 'soi',
-    texte: 'Confiance, énergie, limites, place que tu prends',
-    fond: 'var(--color-tuile-rose)',
-    accent: 'var(--color-icone-rose)',
-  },
-  {
-    dimension: 'carriere',
-    texte: 'Sens, compétences, salaire, direction à deux ans',
-    fond: 'var(--color-tuile-lavande)',
-    accent: 'var(--color-icone-violet)',
-  },
-  {
-    dimension: 'finances',
-    texte: 'Visibilité, épargne, dettes, coussin de sécurité',
-    fond: 'var(--color-tuile-menthe)',
-    accent: 'var(--color-icone-vert)',
-  },
-  {
-    dimension: 'projet',
-    texte: 'Offre, première cliente, prix, mise en route',
-    fond: 'var(--color-tuile-peche)',
-    accent: 'var(--color-icone-orange)',
-  },
-  {
-    dimension: 'entourage',
-    texte: 'Soutien, charge portée, femmes qui font pareil',
-    fond: 'var(--color-tuile-rose)',
-    accent: 'var(--color-icone-rose)',
-  },
-]
+const TEXTE_DOMAINE: Record<DimensionId, string> = {
+  soi: 'Confiance, énergie, limites, place que tu prends',
+  carriere: 'Sens, compétences, salaire, direction à deux ans',
+  finances: 'Visibilité, épargne, dettes, coussin de sécurité',
+  projet: 'Offre, première cliente, prix, mise en route',
+  entourage: 'Soutien, charge portée, femmes qui font pareil',
+}
 
 /** Des faits vrais sur le produit, à la place des chiffres de traction qu'on n'a pas. */
 const FAITS = [
@@ -99,6 +71,7 @@ export default function Accueil() {
           <Link href="/recits" className="text-[0.98rem] font-medium text-encre">
             Récits
           </Link>
+          <LienReprendre />
         </nav>
         <LienBouton href="/bilan" className="shrink-0">
           Faire le point
@@ -131,7 +104,7 @@ export default function Accueil() {
             <dl className="mt-10 flex flex-wrap gap-x-10 gap-y-5">
               {FAITS.map((f) => (
                 <div key={f.libelle}>
-                  <dt className="chiffres font-display text-[1.7rem] font-extrabold leading-none text-prune">
+                  <dt className="chiffres font-display text-[1.7rem] font-extrabold leading-none text-foret">
                     {f.valeur}
                   </dt>
                   <dd className="mt-1.5 max-w-[18ch] text-[0.9rem] text-encre-douce">{f.libelle}</dd>
@@ -160,13 +133,9 @@ export default function Accueil() {
             {/* Les cinq domaines, en carte flottante. */}
             <Carte className="absolute -bottom-6 left-4 right-4 p-4 md:-right-6 md:left-auto md:w-[17rem]">
               <ul className="flex flex-col gap-2.5">
-                {DIMENSIONS.map((d, i) => (
+                {DIMENSIONS.map((d) => (
                   <li key={d} className="flex items-center gap-3">
-                    <span
-                      aria-hidden="true"
-                      className="block h-2.5 w-2.5 shrink-0 rounded-full"
-                      style={{ background: DOMAINES[i]!.accent }}
-                    />
+                    <MarqueDomaine dimension={d} taille={22} className="shrink-0" />
                     <span className="text-[0.94rem] font-medium text-encre">{NOM_DIMENSION[d]}</span>
                   </li>
                 ))}
@@ -184,17 +153,18 @@ export default function Accueil() {
           cinq, et met le plus de poids là où ça coince.
         </p>
 
-        <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {DOMAINES.map((d) => (
-            <li key={d.dimension}>
-              <div className="carte-douce h-full p-6" style={{ background: d.fond }}>
-                <span
-                  aria-hidden="true"
-                  className="block h-9 w-9 rounded-[0.6rem]"
-                  style={{ background: d.accent }}
-                />
-                <h3 className="mt-4 text-[1.2rem]">{NOM_DIMENSION[d.dimension]}</h3>
-                <p className="mt-2 text-[0.96rem] text-encre-douce">{d.texte}</p>
+        {/*
+          Cinq cartes dans une grille de six colonnes : trois de deux colonnes, puis deux de trois.
+          Cinq éléments dans une grille de trois laissent un trou en bas à droite, et un trou dans
+          une grille se lit comme un élément manquant.
+        */}
+        <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-6">
+          {DIMENSIONS.map((d, i) => (
+            <li key={d} className={i >= 3 ? 'sm:col-span-2 lg:col-span-3' : 'lg:col-span-2'}>
+              <div className="carte-douce h-full p-6" style={{ background: fondDomaine(d) }}>
+                <MarqueDomaine dimension={d} taille={30} />
+                <h3 className="mt-4 text-[1.2rem]">{NOM_DIMENSION[d]}</h3>
+                <p className="mt-2 text-[0.96rem] text-encre-douce">{TEXTE_DOMAINE[d]}</p>
               </div>
             </li>
           ))}
@@ -202,15 +172,43 @@ export default function Accueil() {
       </section>
 
       {/* — Comment ça marche — */}
-      <section id="comment" className="colonne-large scroll-mt-8 pt-20">
-        <h2 className="text-[1.75rem] md:text-[2rem]">Comment ça marche</h2>
-        <ol className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {ETAPES.map((e) => (
-            <li key={e.titre}>
-              <Carte className="h-full p-6">
-                <h3 className="text-[1.15rem]">{e.titre}</h3>
-                <p className="mt-2.5 text-[0.96rem] text-encre-douce">{e.texte}</p>
-              </Carte>
+      {/*
+        Quatre temps qui s'enchaînent : une suite reliée par un fil, pas une deuxième grille de
+        cartes icône-titre-texte. Deux grilles identiques à la file, c'est le gabarit qu'on refuse.
+      */}
+      <section
+        id="comment"
+        className="colonne-large scroll-mt-8 pt-20 lg:grid lg:grid-cols-[0.85fr_1.15fr] lg:gap-16"
+      >
+        <div>
+          <h2 className="text-[1.75rem] md:text-[2rem]">Comment ça marche</h2>
+          <p className="mt-3 max-w-[46ch] text-[1rem] text-encre-douce">
+            Quatre temps. Le quatrième est celui qui compte : c’est lui qui fait tenir les trois
+            autres, et il prend trois minutes par semaine.
+          </p>
+        </div>
+
+        <ol className="mt-9 flex flex-col lg:mt-1">
+          {ETAPES.map((e, i) => (
+            <li key={e.titre} className="relative flex gap-5 pb-9 last:pb-0">
+              {i < ETAPES.length - 1 ? (
+                <span
+                  aria-hidden="true"
+                  className="absolute bottom-0 left-[1.37rem] top-12 w-px"
+                  style={{ background: '#e6d9d1' }}
+                />
+              ) : null}
+              <span
+                aria-hidden="true"
+                className="chiffres z-10 flex h-11 w-11 shrink-0 items-center justify-center rounded-full font-display text-[1.05rem] font-bold text-white"
+                style={{ background: 'var(--color-foret)' }}
+              >
+                {i + 1}
+              </span>
+              <div className="pt-1.5">
+                <h3 className="text-[1.2rem]">{e.titre}</h3>
+                <p className="mt-2 max-w-[54ch] text-[0.98rem] text-encre-douce">{e.texte}</p>
+              </div>
             </li>
           ))}
         </ol>

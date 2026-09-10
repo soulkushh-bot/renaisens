@@ -2,11 +2,10 @@
  * Captures d'écran pour la revue de finition.
  *
  * Pilote Edge (Chromium) déjà installé via puppeteer-core : aucun navigateur n'est téléchargé.
- * Cible le site déployé, pas un serveur local — c'est ce que voient les utilisatrices.
  *
- * Les captures sont l'évidence de la revue : elles doivent montrer l'état RÉEL, animations
- * d'entrée terminées. Une animation en cours se lit comme un élément manquant et se ferait
- * corriger en régression.
+ * Les captures sont l'évidence de la revue. Une capture qui montre un état que le produit n'a pas
+ * atteint, ou du contenu masqué par une barre flottante, fait perdre toute la ronde — et pire, elle
+ * fait juger le produit sur une image fausse.
  *
  *   node scripts/captures.mjs [url]
  */
@@ -23,30 +22,23 @@ const MOBILE = { width: 390, height: 844, deviceScaleFactor: 2 }
 const DESKTOP = { width: 1440, height: 900, deviceScaleFactor: 1 }
 
 const attendre = (ms) => new Promise((r) => setTimeout(r, ms))
+const ouvrir = (page, chemin) =>
+  page.goto(`${BASE}${chemin}`, { waitUntil: 'domcontentloaded', timeout: 60000 })
 
 /**
- * Laisse les animations d'entrée se terminer et les polices se poser.
- * On n'attend PAS `networkidle` : les balises de mesure gardent des connexions ouvertes et il ne
- * se stabilise jamais. On attend ce qui compte vraiment pour une capture : les polices et le
- * dernier délai d'animation.
+ * Prépare la page pour une capture pleine hauteur honnête.
+ *
+ * 1. On attend les polices et les animations d'entrée.
+ * 2. On déroule la page : les images en `loading="lazy"` ne se chargent jamais si elles n'entrent
+ *    pas dans le viewport, et ressortent vides.
+ * 3. On fige TOUT ce qui est `fixed` ou `sticky`. Une barre flottante se colle au milieu du document
+ *    quand le viewport est étiré pour la capture, et recouvre du contenu. Cibler la seule barre de
+ *    navigation ne suffisait pas : le bilan et le rituel ont leur propre barre d'actions, et c'est
+ *    exactement celle-là qui masquait une question dans une capture précédente.
  */
 async function stabiliser(page) {
   await page.evaluate(() => document.fonts.ready)
-  /*
-    La barre basse est `position: sticky`. En capture pleine hauteur, le viewport est étiré et elle
-    se retrouve collée au milieu du document, où elle masque du contenu. Ce n'est pas un défaut de
-    la page — c'est un artefact de capture, et une capture qui montre du contenu masqué fait perdre
-    toute la ronde de revue. On la fige en flux le temps de la photo.
-  */
-  await page.addStyleTag({
-    content: 'nav[aria-label="Navigation principale"]{position:static !important}',
-  })
 
-  /*
-    Les images en `loading="lazy"` ne se chargent pas si elles ne sont jamais entrées dans le
-    viewport. En capture pleine hauteur, elles ressortent vides — et une image vide dans une capture
-    se lit comme une image manquante dans la page. On déroule donc la page avant de photographier.
-  */
   await page.evaluate(async () => {
     const pas = window.innerHeight
     for (let y = 0; y < document.body.scrollHeight; y += pas) {
@@ -55,15 +47,29 @@ async function stabiliser(page) {
     }
     window.scrollTo(0, 0)
   })
+
   await page.evaluate(() =>
     Promise.all(
-      [...document.images].filter((i) => !i.complete).map((i) => new Promise((r) => {
-        i.addEventListener('load', r, { once: true })
-        i.addEventListener('error', r, { once: true })
-      })),
+      [...document.images]
+        .filter((i) => !i.complete)
+        .map(
+          (i) =>
+            new Promise((r) => {
+              i.addEventListener('load', r, { once: true })
+              i.addEventListener('error', r, { once: true })
+            }),
+        ),
     ),
   )
-  await attendre(1500)
+
+  await page.evaluate(() => {
+    for (const el of document.querySelectorAll('*')) {
+      const p = getComputedStyle(el).position
+      if (p === 'fixed' || p === 'sticky') el.style.setProperty('position', 'static', 'important')
+    }
+  })
+
+  await attendre(1400)
 }
 
 async function capturer(page, nom) {
@@ -81,10 +87,8 @@ async function faireLeBilan(page) {
     [2, 2, 4],
     [3, 4, 1, 1],
   ]
-  // Le premier champ est la vision, déjà saisie sur l'accueil. On la répète ici plutôt que de
-  // laisser `null` : le brouillon se charge de façon asynchrone, et un champ encore vide au moment
-  // du remplissage se faisait écraser par une chaîne vide — la capture montrait alors le repli
-  // « à écrire », pas le vrai profil.
+  // Le premier champ est la vision, déjà saisie sur l'accueil. On la répète : le brouillon se charge
+  // de façon asynchrone, et un champ encore vide se faisait écraser par une chaîne vide.
   const LIBRES = [
     'Je veux avoir quitté mon poste et vivre de mon activité, sans avoir peur de la fin du mois.',
     'Ce qui m’arrête, c’est la peur de perdre un salaire que tout le monde m’envie.',
@@ -102,10 +106,7 @@ async function faireLeBilan(page) {
         el.dispatchEvent(new Event('input', { bubbles: true }))
       }
 
-      setTA(
-        document.querySelector('textarea'),
-        'Je veux avoir quitté mon poste et vivre de mon activité, sans avoir peur de la fin du mois.',
-      )
+      setTA(document.querySelector('textarea'), LIBRES[0])
       await A(250)
       P('Faire le point').click()
       await A(900)
@@ -127,14 +128,55 @@ async function faireLeBilan(page) {
             await A(60)
           }
         await A(220)
-        ;[...document.querySelector('.fixed').querySelectorAll('button')].pop().click()
+        const barres = [...document.querySelectorAll('div')].filter((d) =>
+          typeof d.className === 'string' ? d.className.includes('fixed') : false,
+        )
+        const boutons = barres.length
+          ? [...barres[barres.length - 1].querySelectorAll('button')]
+          : [...document.querySelectorAll('button')]
+        boutons[boutons.length - 1].click()
         await A(900)
       }
     },
     CHOIX,
     LIBRES,
   )
-  await page.waitForFunction(() => location.pathname === '/profil', { timeout: 20000 })
+  await page.waitForFunction(() => location.pathname === '/profil', { timeout: 25000 })
+}
+
+/**
+ * Joue un rituel entier. C'est ce qui fait regagner une couleur au phénix.
+ * Sans ça, toutes les captures montraient l'état zéro et le dispositif de progression n'était
+ * visible nulle part — c'est-à-dire invérifiable.
+ */
+async function faireUnRituel(page, toutCocher) {
+  await ouvrir(page, '/rituel')
+  await attendre(1300)
+  await page.evaluate(async (toutCocher) => {
+    const A = (ms = 400) => new Promise((r) => setTimeout(r, ms))
+    const P = (p) =>
+      [...document.querySelectorAll('button,a')].find((e) => e.textContent.trim().startsWith(p))
+
+    for (const c of [...document.querySelectorAll('button[aria-pressed]')]) {
+      const coche = c.getAttribute('aria-pressed') === 'true'
+      if (toutCocher !== coche) {
+        c.click()
+        await A(140)
+      }
+    }
+    await A(250)
+    P('Passer à la question')?.click()
+    await A(900)
+    const s = Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype, 'value').set
+    const ta = document.querySelector('textarea')
+    if (ta) {
+      s.call(ta, 'J’ai fait ce que je pouvais, et c’est déjà plus que le mois dernier.')
+      ta.dispatchEvent(new Event('input', { bubbles: true }))
+    }
+    await A(250)
+    P('Voir ce qui change')?.click()
+    await A(1300)
+  }, toutCocher)
 }
 
 const navigateur = await puppeteer.launch({
@@ -148,12 +190,11 @@ const navigateur = await puppeteer.launch({
 try {
   await mkdir(SORTIE, { recursive: true })
   const page = await navigateur.newPage()
-
   console.log(`Captures depuis ${BASE}`)
 
-  // — Landing, mobile puis desktop, à l'état vierge —
+  // — L'accueil, à l'état vierge —
   await page.setViewport(MOBILE)
-  await page.goto(BASE, { waitUntil: 'domcontentloaded', timeout: 60000 })
+  await ouvrir(page, '/')
   await page.evaluate(() => localStorage.clear())
   await page.reload({ waitUntil: 'domcontentloaded', timeout: 60000 })
   await capturer(page, 'mobile')
@@ -162,52 +203,69 @@ try {
   await page.reload({ waitUntil: 'domcontentloaded', timeout: 60000 })
   await capturer(page, 'desktop')
 
-  // — Le bilan, en cours de réponse —
+  // — Le bilan, une question répondue —
+  const preparerBilan = async () => {
+    await ouvrir(page, '/bilan')
+    await attendre(800)
+    await page.evaluate(async () => {
+      const b = [...document.querySelectorAll('button')].find((e) =>
+        e.textContent.trim().startsWith('J’ai compris'),
+      )
+      if (b) b.click()
+      await new Promise((r) => setTimeout(r, 900))
+      const fs = [...document.querySelectorAll('fieldset')]
+      const r = fs[0] ? [...fs[0].querySelectorAll('[role="radio"]')] : []
+      if (r[3]) r[3].click()
+    })
+  }
   await page.setViewport(MOBILE)
-  await page.goto(`${BASE}/bilan`, { waitUntil: 'domcontentloaded', timeout: 60000 })
-  await page.evaluate(async () => {
-    const b = [...document.querySelectorAll('button')].find((e) =>
-      e.textContent.trim().startsWith('J’ai compris'),
-    )
-    if (b) b.click()
-    await new Promise((r) => setTimeout(r, 700))
-    const fs = [...document.querySelectorAll('fieldset')]
-    const r = fs[0] ? [...fs[0].querySelectorAll('[role="radio"]')] : []
-    if (r[3]) r[3].click()
-  })
+  await preparerBilan()
   await capturer(page, 'mobile-bilan')
+  await page.setViewport(DESKTOP)
+  await preparerBilan()
+  await capturer(page, 'desktop-bilan')
 
-  // — Le parcours complet, pour peupler les écrans applicatifs —
-  await page.goto(BASE, { waitUntil: 'domcontentloaded', timeout: 60000 })
+  // — Le parcours complet, puis DEUX rituels : le phénix doit avoir regagné deux parts —
+  await page.setViewport(MOBILE)
+  await ouvrir(page, '/')
   await page.evaluate(() => localStorage.clear())
   await page.reload({ waitUntil: 'domcontentloaded', timeout: 60000 })
   await faireLeBilan(page)
-  await capturer(page, 'mobile-profil')
 
-  // Une action cochée, deux non faites : c'est ce qui permet de juger « le non-fait sans rouge ».
-  await page.goto(`${BASE}/aujourdhui`, { waitUntil: 'domcontentloaded', timeout: 60000 })
-  await page.evaluate(async () => {
-    const c = document.querySelector('button[aria-pressed="false"]')
-    if (c) c.click()
-    await new Promise((r) => setTimeout(r, 500))
-  })
-  await capturer(page, 'mobile-aujourdhui')
+  await faireUnRituel(page, true)
+  await faireUnRituel(page, false)
 
-  await page.setViewport(DESKTOP)
-  await page.reload({ waitUntil: 'domcontentloaded', timeout: 60000 })
-  await capturer(page, 'desktop-aujourdhui')
+  for (const [chemin, nom] of [
+    ['/profil', 'profil'],
+    ['/aujourdhui', 'aujourdhui'],
+    ['/plan', 'plan'],
+    ['/rituel', 'rituel'],
+  ]) {
+    await page.setViewport(MOBILE)
+    await ouvrir(page, chemin)
+    await capturer(page, `mobile-${nom}`)
+    await page.setViewport(DESKTOP)
+    await ouvrir(page, chemin)
+    await capturer(page, `desktop-${nom}`)
+  }
 
+  // — Deux rituels de plus : le phénix entier, pour que la progression soit jugeable de bout en bout —
   await page.setViewport(MOBILE)
-  await page.goto(`${BASE}/plan`, { waitUntil: 'domcontentloaded', timeout: 60000 })
-  await capturer(page, 'mobile-plan')
+  await faireUnRituel(page, true)
+  await faireUnRituel(page, true)
 
-  await page.goto(`${BASE}/rituel`, { waitUntil: 'domcontentloaded', timeout: 60000 })
-  await page.evaluate(async () => {
-    const c = document.querySelector('button[aria-pressed="false"]')
-    if (c) c.click()
-    await new Promise((r) => setTimeout(r, 500))
-  })
-  await capturer(page, 'mobile-rituel')
+  /*
+    On est encore sur l'écran de clôture, et c'est le seul écran animé du produit : la part de
+    couleur qu'elle vient de gagner vient d'arriver sur le phénix. Une image ne montre pas le
+    mouvement, mais elle montre ce que le mouvement a produit — sans elle, l'unique moment
+    orchestré n'existe que dans le code.
+  */
+  await capturer(page, 'mobile-rituel-cloture')
+
+  await ouvrir(page, '/aujourdhui')
+  await capturer(page, 'mobile-aujourdhui-semaine4')
+  await ouvrir(page, '/profil')
+  await capturer(page, 'mobile-profil-semaine4')
 
   console.log('Terminé.')
 } finally {

@@ -17,6 +17,10 @@ import { semaineCourante, useEtat } from '@/lib/etat'
  *
  * Quand tout est fait, l'écran ne propose RIEN. Ne rien avoir à faire est un état légitime, pas un
  * vide à remplir avec un badge ou une suggestion.
+ *
+ * À partir de 1024 px l'écran se compose en deux : la semaine à gauche, le phénix et l'entrée du
+ * rituel à droite, collés en haut. Sous ce seuil, la bande rose reste en pleine largeur au bas de
+ * la page — c'est la même page, pas une variante de bureau plaquée par-dessus.
  */
 export default function Aujourdhui() {
   const router = useRouter()
@@ -44,8 +48,8 @@ export default function Aujourdhui() {
   const suivante = semaineDuPlan(etat.plan, courante + 1)
 
   return (
-    <main className="pb-8">
-      <div className="colonne pt-9">
+    <main className="pb-8 lg:mx-auto lg:grid lg:max-w-[74rem] lg:grid-cols-[1.35fr_1fr] lg:items-start lg:gap-10 lg:px-9 lg:pt-10">
+      <div className="colonne-app pt-9 lg:max-w-none lg:px-0 lg:pt-0">
         <div className="flex items-baseline justify-between gap-4">
           <h1 className="chiffres text-[2.1rem]">Semaine {courante}</h1>
           <Link href="/plan" className="text-[0.95rem] font-semibold text-magenta">
@@ -114,8 +118,11 @@ export default function Aujourdhui() {
         ) : null}
       </div>
 
-      <section className="mt-14 py-10" style={{ background: 'var(--color-rose-pale)' }}>
-        <div className="colonne">
+      <section
+        className="mt-14 py-10 lg:sticky lg:top-8 lg:mt-0 lg:rounded-[1.4rem] lg:py-8"
+        style={{ background: 'var(--color-rose-pale)' }}
+      >
+        <div className="colonne lg:max-w-none lg:px-7">
           <div className="flex items-center gap-5">
             <Phenix taille={104} couches={etat.progress.semaines.length} className="shrink-0" />
             <div>

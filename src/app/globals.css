@@ -28,21 +28,32 @@
   --color-rose-pale: #fbedf2;
   --color-blanc: #ffffff;
 
-  /* — Les quatre pastels des domaines — */
+  /* — Les cinq pastels des domaines. Cinq domaines, cinq teintes : deux domaines qui
+     partagent une couleur, c'est un système d'identité qui ne tient pas. — */
   --color-tuile-rose: #fceaf0;
   --color-tuile-menthe: #e9f6ed;
   --color-tuile-peche: #fdefe2;
   --color-tuile-lavande: #f2ecfa;
+  --color-tuile-ciel: #e7f0f9;
 
   /* — Le texte — */
   --color-encre: #23232a;
   --color-encre-douce: #5c5560;
 
-  /* — Les accents des icônes de domaine — */
+  /* — Les accents des marques de domaine. Le bleu vient de l'aile du phénix. — */
   --color-icone-rose: #d1356f;
   --color-icone-vert: #24824e;
   --color-icone-orange: #c25f18;
   --color-icone-violet: #7738ad;
+  --color-icone-bleu: #1c6598;
+
+  /*
+    Le bord de la coche au repos.
+    Un gris à 2:1 sur blanc fait de la case la chose la plus pâle de sa ligne — or c'est le seul
+    geste dont dépend le chiffre de succès du produit. Cette teinte est un prune désaturé, à
+    3,85:1 sur blanc : présente sans être déjà cochée.
+  */
+  --color-coche-repos: #a07689;
 }
 
 :root {
@@ -75,9 +86,15 @@ body {
     color: var(--color-foret);
   }
 
+  /*
+    La mesure de ligne. L'unité `ch` vaut la largeur du chiffre zéro, sensiblement plus large que
+    la lettre moyenne : 70ch rendaient près de cent caractères par ligne, soit un tiers de plus que
+    le plancher. 58ch en rendent une soixantaine-dix. Cap invisible sur téléphone, décisif dès que
+    la colonne s'ouvre à 58 rem.
+  */
   p {
     text-wrap: pretty;
-    max-width: 70ch;
+    max-width: 58ch;
   }
 }
 
@@ -107,6 +124,18 @@ body {
       0 10px 26px -14px rgb(35 35 42 / 0.16);
   }
 
+  /*
+    La carte posée : un aplat pastel, même rayon que la carte blanche, sans élévation.
+    Deux traitements de carte dans ce monde, et deux seulement — blanche surélevée pour ce qu'on
+    peut ouvrir, pastel posée pour ce qui informe. Un troisième serait du bruit.
+
+    Elle était appelée à quatre endroits et n'existait nulle part : ces blocs rendaient à angles
+    droits. Une classe absente ne lève aucune erreur, elle abîme juste la page en silence.
+  */
+  .carte-douce {
+    border-radius: 1.15rem;
+  }
+
   .colonne {
     width: 100%;
     max-width: 34rem;
@@ -117,6 +146,30 @@ body {
   @media (min-width: 768px) {
     .colonne {
       max-width: 44rem;
+    }
+  }
+
+  /*
+    La colonne des écrans d'usage. Elle s'ouvre au-delà de 1024 px, où le rail de navigation
+    remplace la barre d'onglets : sans ça, le bureau n'est qu'un téléphone agrandi.
+  */
+  .colonne-app {
+    width: 100%;
+    max-width: 34rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .colonne-app {
+      max-width: 44rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .colonne-app {
+      max-width: 58rem;
+      padding-inline: 2.25rem;
     }
   }
 
@@ -196,13 +249,45 @@ a {
 .revelation > *:nth-child(4) { animation-delay: 430ms; }
 .revelation > *:nth-child(5) { animation-delay: 530ms; }
 
+/*
+  Le seul moment d'auteur du produit : à la clôture du rituel, la part de couleur qu'elle vient de
+  gagner revient sur le phénix.
+
+  La plume neuve est dessinée DEUX FOIS — grise dessous, en couleur dessus — et c'est la couleur
+  qui apparaît. Une transition de `fill` depuis une valeur qu'on ne connaît pas ne se déclare pas ;
+  une superposition, si. Rien d'autre n'est animé dans ce produit, et c'est voulu : un seul moment
+  orchestré se remarque, dix ne se remarquent plus.
+*/
+@keyframes couleur-revient {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.plume-neuve {
+  animation: couleur-revient 900ms cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+/* Le décalage de chaque plume est posé en ligne : `nth-of-type` compterait aussi les jumelles
+   grises, et la cascade partirait de travers. */
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation-duration: 0.001ms !important;
+    /*
+      Le décalage compte autant que la durée. Sans cette ligne, une cascade posée en `backwards`
+      se déroule quand même : chaque élément apparaît d'un coup, mais échelonné sur des centaines
+      de millisecondes. Pour qui a demandé moins de mouvement, ça reste du mouvement.
+    */
+    animation-delay: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
+    transition-delay: 0.001ms !important;
     scroll-behavior: auto !important;
   }
 }

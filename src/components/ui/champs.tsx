@@ -7,7 +7,9 @@ import type { QuestionChoix, QuestionEchelle, QuestionTemps, QuestionTexte } fro
   Les champs de l'onboarding.
 
   La case à cocher est l'affordance principale du produit : c'est ce qu'elle touche chaque semaine.
-  Elle doit donc être l'élément le plus visible de sa ligne, jamais le plus pâle.
+  Elle doit donc être l'élément le plus visible de sa ligne, jamais le plus pâle. Son bord au repos
+  est un prune désaturé à 3,85:1 sur blanc, jamais un gris à 2:1 : au repos aussi, une case doit se
+  voir.
 
   L'état sélectionné n'est jamais porté par la couleur seule : la ligne choisie change de fond ET
   reçoit une pastille pleine avec sa coche.
@@ -20,9 +22,9 @@ function Pastille({ coche }: { coche: boolean }) {
   return (
     <span
       aria-hidden="true"
-      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 transition-colors"
+      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 transition-colors"
       style={{
-        borderColor: coche ? 'var(--color-prune)' : '#cfc4bd',
+        borderColor: coche ? 'var(--color-prune)' : 'var(--color-coche-repos)',
         background: coche ? 'var(--color-prune)' : '#ffffff',
       }}
     >

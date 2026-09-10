@@ -20,7 +20,12 @@ import type { PlanChange } from '@/types'
  * Aucun appel réseau : tout tourne en local, y compris la réécriture du plan.
  *
  * Le troisième temps rend une couleur de plus au phénix. C'est la récompense, et elle est visible :
- * un oiseau qui reprend vie, jamais une barre qui se remplit.
+ * un oiseau qui reprend vie, jamais une barre qui se remplit. C'est aussi le SEUL moment animé du
+ * produit — la part de couleur qu'elle vient de gagner arrive sous ses yeux (`eclosion`). Un seul
+ * moment orchestré se remarque ; dix ne se remarquent plus.
+ *
+ * À partir de 1024 px la barre d'actions cesse de flotter et se pose à la suite des cases : un
+ * bandeau collé en bas d'une fenêtre de bureau ne sert plus le pouce de personne.
  */
 
 type Etape = 'coches' | 'question' | 'resultat'
@@ -88,15 +93,15 @@ export default function Rituel() {
     return (
       <main className="pb-10">
         <section className="py-10" style={{ background: 'var(--color-rose-pale)' }}>
-          <div className="colonne revelation flex flex-col items-center text-center">
-            <Phenix taille={168} couches={semaines} />
+          <div className="colonne-app revelation flex flex-col items-center text-center">
+            <Phenix taille={168} couches={semaines} eclosion />
             <div className="mt-6">
               <CompteSemaines couches={semaines} />
             </div>
           </div>
         </section>
 
-        <div className="colonne mt-12">
+        <div className="colonne-app mt-12">
           <h1 className="text-[2rem]">Ce qui change</h1>
 
           {changements.length === 0 ? (
@@ -120,7 +125,7 @@ export default function Rituel() {
         </div>
 
         {quatrieme ? (
-          <div className="colonne mt-16">
+          <div className="colonne-app mt-16">
             <h2 className="text-[1.8rem]">Un mois plus tôt, tu écrivais ça</h2>
             <p className="mt-3 text-[0.98rem] text-encre-douce">
               Mot pour mot, sans rien changer. C’est ton avant et ton après, dans ta langue.
@@ -161,7 +166,7 @@ export default function Rituel() {
           </div>
         ) : null}
 
-        <div className="colonne mt-12 flex flex-col gap-3">
+        <div className="colonne-app mt-12 flex flex-col gap-3">
           <LienBouton href="/aujourdhui" className="w-full">
             Revenir à ma semaine
           </LienBouton>
@@ -176,7 +181,7 @@ export default function Rituel() {
   // ————————————————————————— 2. Une question —————————————————————————
   if (etape === 'question') {
     return (
-      <main className="colonne pb-36 pt-9">
+      <main className="colonne-app pb-36 pt-9 lg:pb-14">
         <h1 className="text-[1.9rem]">{reflexion.texte}</h1>
         {reflexion.aide ? (
           <p className="mt-3 text-[1rem] text-encre-douce">{reflexion.aide}</p>
@@ -200,10 +205,10 @@ export default function Rituel() {
         </p>
 
         <div
-          className="fixed inset-x-0 bottom-0 z-20 border-t bg-white"
+          className="fixed inset-x-0 bottom-0 z-20 border-t bg-white lg:static lg:mt-10 lg:border-0 lg:bg-transparent"
           style={{ borderColor: '#efe4dd' }}
         >
-          <div className="colonne flex items-center gap-3 py-3">
+          <div className="colonne-app flex items-center gap-3 py-3 lg:px-0">
             <button
               type="button"
               onClick={() => setEtape('coches')}
@@ -222,7 +227,7 @@ export default function Rituel() {
 
   // ————————————————————————— 1. Ce que tu as fait —————————————————————————
   return (
-    <main className="colonne pb-36 pt-9">
+    <main className="colonne-app pb-36 pt-9 lg:pb-14">
       <h1 className="text-[1.9rem]">Qu’est-ce que tu as fait cette semaine ?</h1>
       <p className="mt-3 text-[1rem] text-encre-douce">
         Ce que tu n’as pas fait n’est pas un échec, et ne sera pas répété tel quel. Coche juste ce
@@ -257,14 +262,14 @@ export default function Rituel() {
                 >
                   <span
                     aria-hidden="true"
-                    className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2"
+                    className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2"
                     style={{
-                      borderColor: coche ? 'var(--color-icone-vert)' : '#cfc4bd',
+                      borderColor: coche ? 'var(--color-icone-vert)' : 'var(--color-coche-repos)',
                       background: coche ? 'var(--color-icone-vert)' : '#ffffff',
                     }}
                   >
                     {coche ? (
-                      <svg width="17" height="17" viewBox="0 0 18 18" aria-hidden="true">
+                      <svg width="22" height="22" viewBox="0 0 18 18" aria-hidden="true">
                         <path
                           d="M4 9.5 7.5 13 14 5"
                           fill="none"
@@ -292,10 +297,10 @@ export default function Rituel() {
       )}
 
       <div
-        className="fixed inset-x-0 bottom-0 z-20 border-t bg-white"
+        className="fixed inset-x-0 bottom-0 z-20 border-t bg-white lg:static lg:mt-10 lg:border-0 lg:bg-transparent"
         style={{ borderColor: '#efe4dd' }}
       >
-        <div className="colonne flex items-center gap-3 py-3">
+        <div className="colonne-app flex items-center gap-3 py-3 lg:px-0">
           <LienBouton href="/aujourdhui" variante="discret">
             Plus tard
           </LienBouton>

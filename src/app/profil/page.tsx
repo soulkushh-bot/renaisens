@@ -17,6 +17,9 @@ import { SUJET_DIMENSION, type DimensionId } from '@/types'
  * La révélation est en CSS pur (`.revelation`) : le contenu est visible par défaut et l'animation
  * ne fait que le retarder. Une version précédente le masquait derrière une bibliothèque chargée en
  * différé, ce qui laissait cet écran blanc plus d'une seconde.
+ *
+ * C'est le seul écran d'application sans rail de navigation, à tous les formats. On ne met pas de
+ * sortie de secours à côté du moment où elle se reconnaît.
  */
 
 function deux(dims: DimensionId[]): string {
@@ -48,7 +51,7 @@ export default function Profil() {
   return (
     <main className="pb-10">
       <section className="py-10" style={{ background: 'var(--color-rose-pale)' }}>
-        <div className="colonne flex flex-col items-center text-center">
+        <div className="colonne-app flex flex-col items-center text-center">
           <Phenix taille={168} couches={semaines} />
           <h1 className="mt-6 text-[1.9rem]">{profile.titre}</h1>
           <p className="mt-4 text-[1.05rem] text-encre-douce">{profile.visionReformulee}</p>
@@ -58,25 +61,25 @@ export default function Profil() {
         </div>
       </section>
 
-      <div className="colonne revelation mt-10 flex flex-col gap-8">
-        <section>
+      <div className="colonne-app revelation mt-10 flex flex-col gap-8 lg:grid lg:grid-cols-2 lg:items-start lg:gap-8">
+        <section className="lg:col-span-2">
           <h2 className="text-[1.5rem]">Ta situation</h2>
           <p className="mt-3 text-[1.06rem] leading-relaxed text-encre-douce">{profile.situation}</p>
         </section>
 
-        <section className="carte-douce p-6" style={{ background: 'var(--color-tuile-peche)' }}>
+        <section className="carte-douce h-full p-6" style={{ background: 'var(--color-tuile-peche)' }}>
           <h2 className="text-[1.5rem]">Par où on commence</h2>
           <p className="mt-3 text-[1.06rem] leading-relaxed text-encre">{profile.levier}</p>
         </section>
 
-        <section className="carte p-6">
+        <section className="carte h-full p-6">
           <p className="text-[1.04rem] leading-relaxed">
             <span className="text-encre-douce">Ce qui te retient le plus en ce moment :</span>{' '}
-            <span className="font-semibold text-prune">{deux(profile.tensions)}</span>.
+            <span className="font-semibold text-foret">{deux(profile.tensions)}</span>.
           </p>
           <p className="mt-4 text-[1.04rem] leading-relaxed">
             <span className="text-encre-douce">Ce sur quoi tu peux t’appuyer :</span>{' '}
-            <span className="font-semibold text-prune">{deux(profile.forces)}</span>.
+            <span className="font-semibold text-foret">{deux(profile.forces)}</span>.
           </p>
           <p className="mt-5 text-[0.9rem] leading-relaxed text-encre-douce">
             Pas de note, pas de pourcentage. Ces deux phrases servent à décider quelles actions tu
@@ -84,7 +87,7 @@ export default function Profil() {
           </p>
         </section>
 
-        <section>
+        <section className="lg:col-span-2">
           <h2 className="text-[1.5rem]">Ton année, dans tes mots</h2>
           <p className="manuscrit mt-4 text-[1.8rem] text-magenta">{profile.horizonUnAn}</p>
           <p className="mt-4 text-[0.9rem] text-encre-douce">
@@ -93,7 +96,7 @@ export default function Profil() {
         </section>
       </div>
 
-      <div className="colonne mt-12">
+      <div className="colonne-app mt-12">
         <LienBouton href="/plan" className="w-full">
           Voir mon plan de trente jours
         </LienBouton>

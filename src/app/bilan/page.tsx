@@ -18,6 +18,10 @@ import type { AnswerValue } from '@/types'
  *
  * La progression est une suite de segments avec son compte écrit à côté : la couleur n'est jamais
  * seule à dire où elle en est.
+ *
+ * À partir de 1024 px, l'intention de l'écran et la progression passent dans une colonne de gauche
+ * qui reste sous les yeux pendant qu'elle répond, et la barre d'actions cesse de flotter : sur un
+ * grand écran, tout tient sans qu'on ait à coller un bandeau en bas de la fenêtre.
  */
 
 const ETAPE_CONFIDENTIALITE = -1
@@ -74,7 +78,7 @@ export default function Bilan() {
             nécessaire pour que ton plan serve à quelque chose.
           </p>
           <p>
-            Tout est enregistré <strong className="text-prune">sur ton téléphone</strong>, dans ton
+            Tout est enregistré <strong className="text-foret">sur ton téléphone</strong>, dans ton
             navigateur. Rien n’est envoyé sur un serveur, il n’y a pas de compte à créer et personne
             d’autre ne peut le lire.
           </p>
@@ -114,28 +118,33 @@ export default function Bilan() {
   }
 
   return (
-    <main className="colonne pb-40 pt-8">
-      <div className="flex items-center gap-3">
-        <div className="flex flex-1 items-center gap-1.5" aria-hidden="true">
-          {ECRANS.map((e, i) => (
-            <span
-              key={e.id}
-              className="h-2 flex-1 rounded-full"
-              style={{
-                background:
-                  i <= etape ? 'var(--color-prune)' : '#e8ded7',
-              }}
-            />
-          ))}
+    <main className="colonne pb-40 pt-8 lg:mx-auto lg:grid lg:max-w-[68rem] lg:grid-cols-[19rem_1fr] lg:items-start lg:gap-14 lg:px-10 lg:pb-16 lg:pt-12">
+      <div className="lg:sticky lg:top-10">
+        <div className="flex items-center gap-3">
+          <div className="flex flex-1 items-center gap-1.5" aria-hidden="true">
+            {ECRANS.map((e, i) => (
+              <span
+                key={e.id}
+                className="h-2 flex-1 rounded-full"
+                style={{ background: i <= etape ? 'var(--color-prune)' : '#e8ded7' }}
+              />
+            ))}
+          </div>
+          <p className="chiffres shrink-0 text-[0.85rem] font-semibold text-encre-douce">
+            {etape + 1} / {ECRANS.length}
+          </p>
         </div>
-        <p className="chiffres shrink-0 text-[0.85rem] font-semibold text-encre-douce">
-          {etape + 1} / {ECRANS.length}
+
+        <h1 className="mt-8 text-[1.9rem]">{ecran.intention}</h1>
+        {/* Sur grand écran seulement : la colonne de gauche a la place de redire pourquoi elle
+            peut répondre honnêtement. Sur téléphone, ce serait du bruit au-dessus des questions. */}
+        <p className="mt-6 hidden text-[0.94rem] leading-relaxed text-encre-douce lg:block">
+          Tes réponses restent sur ton téléphone. Tu peux t’arrêter à n’importe quelle question et
+          reprendre plus tard : rien n’est perdu.
         </p>
       </div>
 
-      <h1 className="mt-8 text-[1.9rem]">{ecran.intention}</h1>
-
-      <div className="mt-10 flex flex-col gap-11">
+      <div className="mt-10 flex flex-col gap-11 lg:mt-0">
         {questions.map((q) => {
           const v = reponses[q.id]
           if (q.type === 'echelle') {
@@ -167,26 +176,29 @@ export default function Bilan() {
             />
           )
         })}
-      </div>
 
-      <div className="fixed inset-x-0 bottom-0 z-20 border-t bg-white" style={{ borderColor: '#efe4dd' }}>
-        <div className="colonne flex items-center gap-3 py-3">
-          <button
-            type="button"
-            onClick={() => setEtape(etape - 1)}
-            className="min-h-12 px-2 text-[0.94rem] font-semibold text-encre-douce underline"
-          >
-            Revenir
-          </button>
-          <Bouton className="flex-1" onClick={avancer} disabled={manquantes.length > 0}>
-            {LIBELLES[etape] ?? 'Voir mon profil'}
-          </Bouton>
+        <div
+          className="fixed inset-x-0 bottom-0 z-20 border-t bg-white lg:static lg:mt-4 lg:border-0 lg:bg-transparent"
+          style={{ borderColor: '#efe4dd' }}
+        >
+          <div className="colonne flex items-center gap-3 py-3 lg:max-w-none lg:px-0">
+            <button
+              type="button"
+              onClick={() => setEtape(etape - 1)}
+              className="min-h-12 px-2 text-[0.94rem] font-semibold text-encre-douce underline"
+            >
+              Revenir
+            </button>
+            <Bouton className="flex-1 lg:flex-none lg:px-12" onClick={avancer} disabled={manquantes.length > 0}>
+              {LIBELLES[etape] ?? 'Voir mon profil'}
+            </Bouton>
+          </div>
+          {manquantes.length > 0 ? (
+            <p className="colonne pb-3 text-[0.88rem] text-encre-douce lg:max-w-none lg:px-0">
+              Il reste {manquantes.length} question{manquantes.length > 1 ? 's' : ''} sur cet écran.
+            </p>
+          ) : null}
         </div>
-        {manquantes.length > 0 ? (
-          <p className="colonne pb-3 text-[0.88rem] text-encre-douce">
-            Il reste {manquantes.length} question{manquantes.length > 1 ? 's' : ''} sur cet écran.
-          </p>
-        ) : null}
       </div>
     </main>
   )

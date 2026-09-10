@@ -12,6 +12,10 @@ import { semaineCourante, useEtat } from '@/lib/etat'
  * Le plan : trente jours détaillés, quatre-vingt-dix jours esquissés, un an en une phrase.
  *
  * La semaine en cours porte une étiquette écrite, pas seulement une couleur.
+ *
+ * À partir de 1024 px les semaines se posent en deux colonnes : c'est la seule page du produit qui
+ * a vraiment quelque chose à faire d'une grande largeur, puisqu'elle montre un mois entier d'un
+ * coup.
  */
 export default function PagePlan() {
   const router = useRouter()
@@ -34,25 +38,28 @@ export default function PagePlan() {
 
   return (
     <main className="pb-8">
-      <div className="colonne pt-9">
+      <div className="colonne-app pt-9">
         <h1 className="text-[2.2rem]">Ton plan de trente jours</h1>
         <p className="mt-4 text-[1.05rem] text-encre-douce">
           Trois actions par semaine au maximum, une seule prioritaire. Ce n’est pas peu : c’est ce
           qui tient quand la semaine se passe mal.
         </p>
 
-        <div className="mt-10 flex flex-col gap-11">
-          {plan.semaines.map((s) => {
+        <div className="mt-10 flex flex-col gap-11 lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-10 lg:gap-y-12">
+          {plan.semaines.map((s, i) => {
             const active = s.index === courante
             const passee = s.index < courante
+            /* Une dernière semaine seule sur sa rangée prend les deux colonnes : une colonne vide
+               sur sept cents pixels se lit comme un morceau de page qui n'a pas chargé. */
+            const orpheline = i === plan.semaines.length - 1 && plan.semaines.length % 2 === 1
             return (
-              <section key={s.index}>
+              <section key={s.index} className={orpheline ? 'lg:col-span-2' : undefined}>
                 <div className="flex flex-wrap items-baseline gap-3">
                   <h2 className="chiffres text-[1.5rem]">Semaine {s.index}</h2>
                   {active ? (
                     <span
-                      className="rounded-full px-3 py-1 text-[0.76rem] font-bold uppercase text-white"
-                      style={{ background: 'var(--color-prune)' }}
+                      className="rounded-full px-3 py-1 text-[0.8rem] font-semibold text-foret"
+                      style={{ background: 'var(--color-rose-pale)' }}
                     >
                       en cours
                     </span>
@@ -90,7 +97,7 @@ export default function PagePlan() {
       </div>
 
       <section className="mt-16 py-12" style={{ background: 'var(--color-tuile-lavande)' }}>
-        <div className="colonne">
+        <div className="colonne-app">
           <h2 className="text-[1.8rem]">Après les trente jours</h2>
           <p className="mt-3 text-[0.98rem] text-encre-douce">
             Esquissé, pas figé. Ces jalons se réécriront à partir de ce que tu auras réellement fait.
@@ -98,7 +105,7 @@ export default function PagePlan() {
           <ul className="mt-8 flex flex-col gap-7">
             {plan.jalons90.map((j) => (
               <li key={j.jour}>
-                <p className="chiffres font-display text-[1.15rem] font-bold text-prune">
+                <p className="chiffres font-display text-[1.15rem] font-bold text-foret">
                   Jour {j.jour} — {j.titre}
                 </p>
                 {j.actionIds.length > 0 ? (
@@ -123,7 +130,7 @@ export default function PagePlan() {
         </div>
       </section>
 
-      <div className="colonne mt-14">
+      <div className="colonne-app mt-14">
         <h2 className="text-[1.8rem]">Dans un an</h2>
         <p className="manuscrit mt-4 text-[1.9rem] text-magenta">{plan.horizon}</p>
         <p className="mt-4 text-[0.92rem] text-encre-douce">
@@ -132,7 +139,7 @@ export default function PagePlan() {
       </div>
 
       {plan.historique.length > 0 ? (
-        <div className="colonne mt-16">
+        <div className="colonne-app mt-16">
           <h2 className="text-[1.8rem]">Ce que ton plan a changé</h2>
           <ul className="mt-6 flex flex-col gap-3">
             {[...plan.historique].reverse().map((c, i) => (
@@ -149,13 +156,13 @@ export default function PagePlan() {
         </div>
       ) : null}
 
-      <div className="colonne mt-14">
-        <LienBouton href="/rituel" variante="contour" className="w-full">
+      <div className="colonne-app mt-14">
+        <LienBouton href="/rituel" variante="contour" className="w-full lg:w-auto">
           Faire le rituel de la semaine {courante}
         </LienBouton>
       </div>
 
-      <div className="colonne mt-12">
+      <div className="colonne-app mt-12">
         <BlocPlus />
       </div>
     </main>

@@ -14,6 +14,11 @@
  * regarde son phénix reprendre ses couleurs — et c'est elle qui les lui rend.
  *
  * Par défaut `couches` vaut 4 : le logo est toujours complet.
+ *
+ * `eclosion` est le seul moment de mouvement du produit. Posé à la clôture du rituel, il fait
+ * APPARAÎTRE la part de couleur qu'elle vient de gagner, par-dessus sa jumelle grise. On ne fait
+ * pas transiter un `fill` depuis une valeur qu'on ne connaît pas ; on superpose, et c'est la
+ * couleur qui monte.
  */
 
 const GRIS = '#ddd2cc'
@@ -45,16 +50,44 @@ export function Phenix({
   couches = 4,
   className,
   avecNid = true,
+  eclosion = false,
   titre,
 }: {
   taille?: number
   couches?: number
   className?: string
   avecNid?: boolean
+  eclosion?: boolean
   titre?: string
 }) {
   const n = Math.min(Math.max(Math.trunc(couches), 0), 4)
-  const teinte = (couleur: string, seuil: number) => (n >= seuil ? couleur : GRIS)
+
+  /*
+    Un compteur de plumes neuves, pour décaler leur arrivée. Il est remis à zéro à chaque rendu :
+    c'est une variable de construction du SVG, jamais un état.
+  */
+  let rang = 0
+
+  /**
+   * Une forme du phénix, à son état juste.
+   * Grise tant que la semaine n'est pas tenue ; en couleur ensuite ; et, le soir du rituel, la
+   * part tout juste gagnée arrive par-dessus sa jumelle grise.
+   */
+  const forme = (cle: string, d: string, couleur: string, seuil: number) => {
+    if (n < seuil) return <path key={cle} d={d} fill={GRIS} />
+    if (!eclosion || seuil !== n) return <path key={cle} d={d} fill={couleur} />
+    const retard = 260 + rang++ * 85
+    return [
+      <path key={`${cle}-gris`} d={d} fill={GRIS} />,
+      <path
+        key={cle}
+        d={d}
+        fill={couleur}
+        className="plume-neuve"
+        style={{ animationDelay: `${retard}ms` }}
+      />,
+    ]
+  }
 
   const etiquette =
     titre ??
@@ -76,41 +109,42 @@ export function Phenix({
       {avecNid ? (
         <>
           {/* Les deux feuilles, et le nid posé dessus. */}
-          <path d="M118 214 C88 214 58 200 40 176 C66 172 96 182 116 202 Z" fill={teinte('#3f9e4d', 1)} />
-          <path d="M122 214 C152 214 182 200 200 176 C174 172 144 182 124 202 Z" fill={teinte('#3f9e4d', 1)} />
-          <path d="M74 206 L166 206 L154 226 L86 226 Z" fill={teinte('#9a5c2a', 1)} />
+          {forme('f1', 'M118 214 C88 214 58 200 40 176 C66 172 96 182 116 202 Z', '#3f9e4d', 1)}
+          {forme('f2', 'M122 214 C152 214 182 200 200 176 C174 172 144 182 124 202 Z', '#3f9e4d', 1)}
+          {forme('nid', 'M74 206 L166 206 L154 226 L86 226 Z', '#9a5c2a', 1)}
         </>
       ) : null}
 
       {/* La queue passe derrière le corps. */}
-      {QUEUE.map((p, i) => (
-        <path key={`q${i}`} d={p.d} fill={teinte(p.couleur, 4)} />
-      ))}
+      {QUEUE.map((p, i) => forme(`q${i}`, p.d, p.couleur, 4))}
 
       {/* Les ailes, dessinées une fois et reflétées : l'oiseau est symétrique. */}
       {[1, -1].map((sens) => (
         <g key={sens} transform={sens === -1 ? 'matrix(-1 0 0 1 240 0)' : undefined}>
-          {PLUMES_HAUTES.map((p, i) => (
-            <path key={`h${i}`} d={p.d} fill={teinte(p.couleur, 2)} />
-          ))}
-          {PLUMES_BASSES.map((p, i) => (
-            <path key={`b${i}`} d={p.d} fill={teinte(p.couleur, 3)} />
-          ))}
+          {PLUMES_HAUTES.map((p, i) => forme(`h${i}`, p.d, p.couleur, 2))}
+          {PLUMES_BASSES.map((p, i) => forme(`b${i}`, p.d, p.couleur, 3))}
         </g>
       ))}
 
       {/* Le corps, du magenta vers le violet. */}
-      <path
-        d="M120 46 C136 62 142 92 138 124 C134 152 126 172 120 184 C114 172 106 152 102 124 C98 92 104 62 120 46 Z"
-        fill={teinte('var(--color-magenta)', 1)}
-      />
-      <path d="M120 96 C128 116 130 148 126 176 C122 162 116 132 114 106 Z" fill={teinte('#8b45c4', 1)} />
+      {forme(
+        'corps',
+        'M120 46 C136 62 142 92 138 124 C134 152 126 172 120 184 C114 172 106 152 102 124 C98 92 104 62 120 46 Z',
+        'var(--color-magenta)',
+        1,
+      )}
+      {forme('ombre', 'M120 96 C128 116 130 148 126 176 C122 162 116 132 114 106 Z', '#8b45c4', 1)}
 
       {/* La tête, le bec, l'œil, la huppe. */}
-      <circle cx="120" cy="52" r="20" fill={teinte('var(--color-magenta)', 1)} />
-      <path d="M100 50 L78 58 L100 66 Z" fill={teinte('#f2a41c', 1)} />
-      <circle cx="126" cy="47" r="4.2" fill={n >= 4 ? '#23232a' : GRIS} />
-      <path d="M126 30 C134 24 140 26 142 32 C136 32 130 34 126 38 Z" fill={teinte('var(--color-rose)', 4)} />
+      {forme('tete', 'M100 52 A20 20 0 1 1 140 52 A20 20 0 1 1 100 52 Z', 'var(--color-magenta)', 1)}
+      {forme('bec', 'M100 50 L78 58 L100 66 Z', '#f2a41c', 1)}
+      {/*
+        L'œil n'est jamais absent : un œil manquant se lit comme un rendu inachevé, pas comme une
+        attente. Avant la quatrième semaine il est simplement clair, comme tout ce qui n'a pas
+        encore repris sa couleur.
+      */}
+      <circle cx="126" cy="47" r="4.2" fill={n >= 4 ? '#23232a' : '#b3a49d'} />
+      {forme('huppe', 'M126 30 C134 24 140 26 142 32 C136 32 130 34 126 38 Z', 'var(--color-rose)', 4)}
     </svg>
   )
 }
