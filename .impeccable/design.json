@@ -1,0 +1,413 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-10T00:00:00.000Z",
+  "title": "Design System: RenaiSens",
+  "extensions": {
+    "colorMeta": {
+      "prune": {
+        "role": "primary",
+        "displayName": "Prune profond",
+        "canonical": "#8c2059",
+        "tonalRamp": ["#2c0a1c", "#47102d", "#63163e", "#8c2059", "#b03372", "#d06a9c", "#e6a8c4", "#f7e0ea"]
+      },
+      "coche-repos": {
+        "role": "primary",
+        "displayName": "Prune désaturé de repos",
+        "canonical": "#a07689",
+        "tonalRamp": ["#241a1f", "#3d2b33", "#584049", "#755764", "#a07689", "#bf9aa9", "#dcc4cf", "#f2e7ec"]
+      },
+      "magenta": {
+        "role": "secondary",
+        "displayName": "Magenta d'accent",
+        "canonical": "#b3286e",
+        "tonalRamp": ["#31071e", "#500c31", "#7a1449", "#b3286e", "#cf4f8d", "#e284b0", "#f0b8d0", "#fae4ee"]
+      },
+      "rose": {
+        "role": "secondary",
+        "displayName": "Rose de marque",
+        "canonical": "#e05c92",
+        "tonalRamp": ["#3d1225", "#611d3a", "#8b2c54", "#b53f70", "#e05c92", "#ec8bb2", "#f5b8ce", "#fce4ed"]
+      },
+      "foret": {
+        "role": "tertiary",
+        "displayName": "Vert forêt",
+        "canonical": "#17453a",
+        "tonalRamp": ["#08201a", "#0f3128", "#17453a", "#22604f", "#2f8168", "#4ba88b", "#8bcdb7", "#d6efe5"]
+      },
+      "creme": {
+        "role": "neutral",
+        "displayName": "Crème chaud",
+        "canonical": "#fdf7f2",
+        "tonalRamp": ["#2b2320", "#4a3c36", "#6b584f", "#948075", "#bcaaa0", "#ddcdc4", "#f2e6de", "#fdf7f2"]
+      },
+      "rose-pale": {
+        "role": "neutral",
+        "displayName": "Rose pâle",
+        "canonical": "#fbedf2",
+        "tonalRamp": ["#2c1c22", "#4a2e39", "#6b4353", "#946071", "#bd8a99", "#dcb5c1", "#efd8e0", "#fbedf2"]
+      },
+      "blanc": {
+        "role": "neutral",
+        "displayName": "Blanc de carte",
+        "canonical": "#ffffff",
+        "tonalRamp": ["#242424", "#3f3f3f", "#5c5c5c", "#818181", "#a8a8a8", "#cccccc", "#e9e9e9", "#ffffff"]
+      },
+      "encre": {
+        "role": "neutral",
+        "displayName": "Encre",
+        "canonical": "#23232a",
+        "tonalRamp": ["#0d0d11", "#16161b", "#23232a", "#3b3b45", "#5c5c69", "#8b8b97", "#c0c0c9", "#eaeaee"]
+      },
+      "encre-douce": {
+        "role": "neutral",
+        "displayName": "Encre douce",
+        "canonical": "#5c5560",
+        "tonalRamp": ["#191619", "#2b262d", "#3f3942", "#5c5560", "#7e7583", "#a49caa", "#cbc6cf", "#ece9ef"]
+      },
+      "bord-champ": {
+        "role": "neutral",
+        "displayName": "Bord de champ",
+        "canonical": "#eadfd8",
+        "tonalRamp": ["#2a221e", "#463b34", "#63544b", "#877568", "#ab9a8e", "#cdbfb5", "#eadfd8", "#f8f2ee"]
+      },
+      "bord-coque": {
+        "role": "neutral",
+        "displayName": "Bord de coque",
+        "canonical": "#efe4dd",
+        "tonalRamp": ["#2c2420", "#493d36", "#67584e", "#8b796c", "#b0a093", "#d2c4ba", "#efe4dd", "#faf5f2"]
+      },
+      "desactive": {
+        "role": "neutral",
+        "displayName": "Aplat désactivé",
+        "canonical": "#ece5df",
+        "tonalRamp": ["#29241f", "#443d36", "#61574e", "#857a6f", "#a99e93", "#cbc2b8", "#ece5df", "#f8f4f1"]
+      },
+      "tuile-rose": {
+        "role": "tertiary",
+        "displayName": "Tuile rose — Soi",
+        "canonical": "#fceaf0",
+        "tonalRamp": ["#2d1a21", "#4b2c37", "#6c414f", "#94606f", "#bd8b98", "#dcb4c1", "#f0d6de", "#fceaf0"]
+      },
+      "tuile-menthe": {
+        "role": "tertiary",
+        "displayName": "Tuile menthe — Finances",
+        "canonical": "#e9f6ed",
+        "tonalRamp": ["#132318", "#1f3a28", "#2d543a", "#417454", "#639a76", "#93c1a2", "#c3ded0", "#e9f6ed"]
+      },
+      "tuile-peche": {
+        "role": "tertiary",
+        "displayName": "Tuile pêche — Projet",
+        "canonical": "#fdefe2",
+        "tonalRamp": ["#2e2015", "#4c3623", "#6d4e33", "#946f4c", "#bd9670", "#dcbc9c", "#f0dac4", "#fdefe2"]
+      },
+      "tuile-lavande": {
+        "role": "tertiary",
+        "displayName": "Tuile lavande — Carrière",
+        "canonical": "#f2ecfa",
+        "tonalRamp": ["#1e192a", "#332a45", "#4b3e63", "#68588a", "#8d7fb0", "#b3a9cd", "#d6cfe6", "#f2ecfa"]
+      },
+      "tuile-ciel": {
+        "role": "tertiary",
+        "displayName": "Tuile ciel — Entourage",
+        "canonical": "#e7f0f9",
+        "tonalRamp": ["#12202c", "#1d3547", "#2b4d67", "#3d6b8d", "#6191b3", "#93b7d2", "#c2d7e9", "#e7f0f9"]
+      },
+      "icone-rose": {
+        "role": "tertiary",
+        "displayName": "Accent rose — Soi",
+        "canonical": "#d1356f",
+        "tonalRamp": ["#390d1e", "#5c1531", "#832046", "#aa2a5b", "#d1356f", "#e0709b", "#eea9c3", "#f9dde8"]
+      },
+      "icone-vert": {
+        "role": "tertiary",
+        "displayName": "Accent vert — Finances",
+        "canonical": "#24824e",
+        "tonalRamp": ["#0a2417", "#113a25", "#1a5b39", "#24824e", "#31a866", "#5ec48c", "#9adcb6", "#d7f1e2"]
+      },
+      "icone-orange": {
+        "role": "tertiary",
+        "displayName": "Accent orange — Projet",
+        "canonical": "#c25f18",
+        "tonalRamp": ["#361a06", "#54290b", "#7a3c11", "#9d4d15", "#c25f18", "#dd8541", "#eeb37f", "#f9e0c8"]
+      },
+      "icone-violet": {
+        "role": "tertiary",
+        "displayName": "Accent violet — Carrière",
+        "canonical": "#7738ad",
+        "tonalRamp": ["#211031", "#35194e", "#4d246f", "#622c8e", "#7738ad", "#9a68c6", "#c09fdd", "#e5d7f2"]
+      },
+      "icone-bleu": {
+        "role": "tertiary",
+        "displayName": "Accent bleu — Entourage",
+        "canonical": "#1c6598",
+        "tonalRamp": ["#071d2c", "#0c3049", "#12466a", "#1c6598", "#2a86c3", "#5ea9db", "#9bcaeb", "#d6e8f7"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Le titre du héros uniquement, en deux tons : forêt puis magenta sur la seconde moitié de la phrase."
+      },
+      "headline": {
+        "displayName": "Titre de section",
+        "purpose": "Titres de section de l'accueil et h1 des écrans d'usage. Jamais d'étiquette au-dessus."
+      },
+      "title": {
+        "displayName": "Titre de carte",
+        "purpose": "Titres de cartes, de jalons et d'encarts. Vert forêt par défaut."
+      },
+      "body": {
+        "displayName": "Texte courant",
+        "purpose": "Le corps du produit, plafonné à 58ch de mesure."
+      },
+      "manuscrite": {
+        "displayName": "Manuscrite",
+        "purpose": "Citations, horizon à un an, freins et visions relus. Jamais un libellé, un nombre ou une information dont la lecture doit être sûre."
+      },
+      "meta": {
+        "displayName": "Méta",
+        "purpose": "Durées, compteurs, légendes et avertissements, en encre douce, sans couleur saturée."
+      }
+    },
+    "shadows": [
+      {
+        "name": "elevation-carte",
+        "value": "0 1px 2px rgb(35 35 42 / 0.04), 0 10px 26px -14px rgb(35 35 42 / 0.16)",
+        "purpose": "La seule ombre du produit : un contact net d'un pixel plus une diffusion large et remontée. Réservée à .carte, la surface blanche de ce qui s'ouvre."
+      }
+    ],
+    "motion": [
+      {
+        "name": "eclosion",
+        "value": "couleur-revient 900ms cubic-bezier(0.22, 1, 0.36, 1) backwards",
+        "purpose": "Le seul moment orchestré du produit : à la clôture du rituel, la part de couleur gagnée apparaît par-dessus une jumelle grise. Jamais une transition de fill."
+      },
+      {
+        "name": "eclosion-cascade",
+        "value": "animation-delay: 260ms + rang * 85ms, posé en ligne",
+        "purpose": "Le décalage de chaque plume neuve. Posé en ligne parce que nth-of-type compterait aussi les jumelles grises et décalerait la cascade."
+      },
+      {
+        "name": "apparait",
+        "value": "apparait 560ms cubic-bezier(0.16, 1, 0.3, 1) backwards",
+        "purpose": "La révélation du profil et de la clôture, en CSS pur. Le contenu est visible par défaut : l'animation retarde son arrivée, elle ne conditionne jamais sa visibilité."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "animation-duration, animation-delay, transition-duration, transition-delay: 0.001ms !important",
+        "purpose": "Le décalage compte autant que la durée : sans lui, une cascade en backwards se déroule quand même, échelonnée sur des centaines de millisecondes."
+      },
+      {
+        "name": "survol-bouton",
+        "value": "transition-[filter,background-color]; hover:brightness(1.08)",
+        "purpose": "Le seul retour de survol du système. Aucun déplacement, aucune ombre qui grandit."
+      }
+    ],
+    "breakpoints": [
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" }
+    ],
+    "containers": [
+      { "name": "colonne", "value": "34rem / 44rem (768px)", "purpose": "Tâche linéaire : le bilan, les états d'attente." },
+      { "name": "colonne-app", "value": "34rem / 44rem (768px) / 58rem (1024px)", "purpose": "Écrans d'usage. L'ouverture à 1024px est solidaire du rail latéral." },
+      { "name": "colonne-large", "value": "80rem", "purpose": "Accueil et sections pleine page." },
+      { "name": "rail", "value": "15rem", "purpose": "Navigation latérale au-dessus de 1024px ; absente de /, /bilan et /profil." }
+    ]
+  },
+  "components": [
+    {
+      "name": "Bouton d'action",
+      "kind": "button",
+      "refersTo": "bouton-action",
+      "description": "Le bouton principal : la seule surface saturée du produit, réservée à ce qui agit.",
+      "html": "<button class=\"ds-btn-action\">Commencer mon bilan</button>",
+      "css": ".ds-btn-action { display: inline-flex; min-height: 3rem; align-items: center; justify-content: center; gap: 0.5rem; border: none; border-radius: 0.7rem; padding: 0.75rem 1.5rem; font-family: var(--police-display), ui-sans-serif, system-ui, sans-serif; font-size: 1rem; font-weight: 600; background-color: var(--color-prune, #8c2059); color: #ffffff; cursor: pointer; transition: filter 0.15s, background-color 0.15s; } .ds-btn-action:hover { filter: brightness(1.08); } .ds-btn-action:focus-visible { outline: 3px solid var(--color-magenta, #b3286e); outline-offset: 3px; } .ds-btn-action:disabled { cursor: not-allowed; background-color: #ece5df; color: var(--color-encre-douce, #5c5560); filter: none; }"
+    },
+    {
+      "name": "Bouton de contour",
+      "kind": "button",
+      "refersTo": "bouton-contour",
+      "description": "La seconde action d'un même bloc. Anneau intérieur prune, aucun aplat.",
+      "html": "<button class=\"ds-btn-contour\">Comment ça marche</button>",
+      "css": ".ds-btn-contour { display: inline-flex; min-height: 3rem; align-items: center; justify-content: center; gap: 0.5rem; border: none; border-radius: 0.7rem; padding: 0.75rem 1.5rem; font-family: var(--police-display), ui-sans-serif, system-ui, sans-serif; font-size: 1rem; font-weight: 600; background-color: transparent; color: var(--color-prune, #8c2059); box-shadow: inset 0 0 0 1.5px var(--color-prune, #8c2059); cursor: pointer; transition: filter 0.15s, background-color 0.15s; } .ds-btn-contour:hover { filter: brightness(1.08); } .ds-btn-contour:focus-visible { outline: 3px solid var(--color-magenta, #b3286e); outline-offset: 3px; }"
+    },
+    {
+      "name": "Carte d'action avec sa coche",
+      "kind": "custom",
+      "refersTo": "coche-repos",
+      "description": "La ligne la plus contrainte du produit : la coche fait 48 px, elle est posée avant le texte, et son bord au repos est un prune désaturé à 3,85:1 sur blanc.",
+      "html": "<article class=\"ds-carte-action\"><button class=\"ds-coche\" aria-pressed=\"false\" aria-label=\"Marquer comme fait\"></button><div class=\"ds-carte-action-corps\"><p class=\"ds-carte-action-titre\">Écrire les trois dépenses qui te surprennent le plus ce mois-ci.</p><p class=\"ds-carte-action-pourquoi\">Voir où part l'argent avant de décider quoi que ce soit.</p><p class=\"ds-carte-action-meta\"><span>10 min</span><span class=\"ds-fort\">Faisable ce soir</span></p></div></article>",
+      "css": ".ds-carte-action { display: flex; align-items: flex-start; gap: 1rem; background: #ffffff; border-radius: 1.15rem; padding: 1.25rem; box-shadow: 0 1px 2px rgb(35 35 42 / 0.04), 0 10px 26px -14px rgb(35 35 42 / 0.16); font-family: var(--police-display), ui-sans-serif, system-ui, sans-serif; } .ds-coche { flex-shrink: 0; display: flex; align-items: center; justify-content: center; height: 3rem; width: 3rem; border-radius: 9999px; border: 2px solid var(--color-coche-repos, #a07689); background: #ffffff; cursor: pointer; transition: background-color 0.15s, border-color 0.15s; } .ds-coche:hover { border-color: var(--color-icone-vert, #24824e); } .ds-coche:focus-visible { outline: 3px solid var(--color-magenta, #b3286e); outline-offset: 3px; } .ds-coche[aria-pressed=\"true\"] { border-color: var(--color-icone-vert, #24824e); background: var(--color-icone-vert, #24824e); } .ds-carte-action-corps { min-width: 0; flex: 1; } .ds-carte-action-titre { margin: 0; font-size: 1.06rem; line-height: 1.375; color: var(--color-encre, #23232a); } .ds-carte-action-pourquoi { margin: 0.625rem 0 0; font-size: 0.95rem; line-height: 1.6; color: var(--color-encre-douce, #5c5560); } .ds-carte-action-meta { margin: 0.75rem 0 0; display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; font-variant-numeric: tabular-nums; font-size: 0.86rem; color: var(--color-encre-douce, #5c5560); } .ds-fort { font-weight: 600; color: var(--color-encre, #23232a); }"
+    },
+    {
+      "name": "Carte d'action prioritaire",
+      "kind": "custom",
+      "refersTo": "carte",
+      "description": "La priorité se signale par le fond rose pâle, un titre display agrandi et une phrase dans le flux. Jamais par une étiquette en capitales.",
+      "html": "<article class=\"ds-carte-prio\"><span class=\"ds-coche-prio\"></span><div><p class=\"ds-carte-prio-titre\">Appeler la banque pour faire baisser les frais de tenue de compte.</p><p class=\"ds-carte-prio-phrase\">À faire en premier cette semaine.</p></div></article>",
+      "css": ".ds-carte-prio { display: flex; align-items: flex-start; gap: 1rem; background: var(--color-rose-pale, #fbedf2); border-radius: 1.15rem; padding: 1.25rem; box-shadow: 0 1px 2px rgb(35 35 42 / 0.04), 0 10px 26px -14px rgb(35 35 42 / 0.16); font-family: var(--police-display), ui-sans-serif, system-ui, sans-serif; } .ds-coche-prio { flex-shrink: 0; display: block; height: 3rem; width: 3rem; border-radius: 9999px; border: 2px solid var(--color-coche-repos, #a07689); background: #ffffff; } .ds-carte-prio-titre { margin: 0; font-size: 1.24rem; font-weight: 700; line-height: 1.375; letter-spacing: -0.022em; color: var(--color-foret, #17453a); } .ds-carte-prio-phrase { margin: 0.375rem 0 0; font-size: 0.92rem; font-weight: 600; color: var(--color-foret, #17453a); }"
+    },
+    {
+      "name": "Carte douce",
+      "kind": "card",
+      "refersTo": "carte-douce",
+      "description": "Un aplat pastel, même rayon que la carte blanche, sans élévation. Pour ce qui informe et ne s'ouvre pas.",
+      "html": "<section class=\"ds-carte-douce\"><h2 class=\"ds-carte-douce-titre\">Ce que tu écris reste chez toi</h2><p class=\"ds-carte-douce-texte\">Tes réponses sont enregistrées sur ton téléphone, et nulle part ailleurs. Pas de compte, pas de mot de passe, aucun serveur.</p></section>",
+      "css": ".ds-carte-douce { border-radius: 1.15rem; background: var(--color-tuile-menthe, #e9f6ed); padding: 1.75rem; font-family: var(--police-display), ui-sans-serif, system-ui, sans-serif; } .ds-carte-douce-titre { margin: 0; font-size: 1.5rem; font-weight: 700; line-height: 1.12; letter-spacing: -0.022em; color: var(--color-foret, #17453a); } .ds-carte-douce-texte { margin: 0.75rem 0 0; max-width: 58ch; font-size: 1rem; line-height: 1.6; color: var(--color-encre-douce, #5c5560); }"
+    },
+    {
+      "name": "Option de choix unique",
+      "kind": "input",
+      "refersTo": "champ-texte",
+      "description": "La ligne sélectionnée change de fond ET reçoit une pastille pleine avec sa coche : la couleur ne porte jamais l'état seule.",
+      "html": "<div class=\"ds-options\" role=\"radiogroup\"><button class=\"ds-option\" role=\"radio\" aria-checked=\"true\"><span class=\"ds-pastille\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"M3.5 8.5 6.5 11.5 12.5 4.5\" fill=\"none\" stroke=\"#ffffff\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg></span><span>Plutôt d'accord</span></button><button class=\"ds-option\" role=\"radio\" aria-checked=\"false\"><span class=\"ds-pastille\"></span><span>Pas vraiment</span></button></div>",
+      "css": ".ds-options { display: flex; flex-direction: column; gap: 0.5rem; font-family: var(--police-display), ui-sans-serif, system-ui, sans-serif; } .ds-option { display: flex; min-height: 3.4rem; align-items: center; gap: 0.875rem; border-radius: 0.8rem; border: 2px solid #eadfd8; background: #ffffff; padding: 0.75rem 1rem; text-align: left; font-size: 1.02rem; color: var(--color-encre, #23232a); cursor: pointer; transition: background-color 0.15s, border-color 0.15s; } .ds-option:focus-visible { outline: 3px solid var(--color-magenta, #b3286e); outline-offset: 3px; } .ds-option[aria-checked=\"true\"] { border-color: var(--color-prune, #8c2059); background: var(--color-rose-pale, #fbedf2); } .ds-pastille { display: flex; height: 2rem; width: 2rem; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 9999px; border: 2px solid var(--color-coche-repos, #a07689); background: #ffffff; } .ds-option[aria-checked=\"true\"] .ds-pastille { border-color: var(--color-prune, #8c2059); background: var(--color-prune, #8c2059); }"
+    },
+    {
+      "name": "Champ de texte",
+      "kind": "input",
+      "refersTo": "champ-texte",
+      "description": "Fond blanc, bordure chaude de 2 px, coins à 0,8 rem, compteur en chiffres tabulaires aligné à droite.",
+      "html": "<div class=\"ds-champ-bloc\"><label class=\"ds-champ-label\" for=\"ds-champ\">Qu'est-ce qui te retient le plus en ce moment ?</label><textarea id=\"ds-champ\" class=\"ds-champ\" rows=\"3\" placeholder=\"Écris-le comme ça vient.\"></textarea><p class=\"ds-champ-compteur\">0 / 280</p></div>",
+      "css": ".ds-champ-bloc { font-family: var(--police-display), ui-sans-serif, system-ui, sans-serif; } .ds-champ-label { display: block; margin-bottom: 0.5rem; font-size: 1.2rem; font-weight: 600; line-height: 1.375; color: var(--color-foret, #17453a); } .ds-champ { width: 100%; resize: vertical; border-radius: 0.8rem; border: 2px solid #eadfd8; background: #ffffff; padding: 1rem; font-family: inherit; font-size: 1.05rem; line-height: 1.625; color: var(--color-encre, #23232a); } .ds-champ::placeholder { color: rgb(92 85 96 / 0.6); } .ds-champ:focus-visible { outline: 3px solid var(--color-magenta, #b3286e); outline-offset: 3px; } .ds-champ-compteur { margin: 0.375rem 0 0; text-align: right; font-variant-numeric: tabular-nums; font-size: 0.82rem; color: var(--color-encre-douce, #5c5560); }"
+    },
+    {
+      "name": "Rail de navigation",
+      "kind": "nav",
+      "refersTo": "onglet-actif",
+      "description": "Au-dessus de 1024 px. L'onglet actif porte le prune ET une pastille rose pâle : la couleur ne suffit jamais.",
+      "html": "<nav class=\"ds-rail\" aria-label=\"Navigation principale\"><a class=\"ds-rail-lien\" href=\"#\" aria-current=\"page\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3.4c4.3 4.5 6 9.8 0 17.2-6-7.4-4.3-12.7 0-17.2Z\"/></svg>Aujourd'hui</a><a class=\"ds-rail-lien\" href=\"#\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4.2 6.6h15.6M4.2 12h10.6M4.2 17.4h6.4\"/></svg>Plan</a><a class=\"ds-rail-lien\" href=\"#\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"9.4\" cy=\"9.4\" r=\"5.1\"/><circle cx=\"15.1\" cy=\"15.1\" r=\"5.1\"/></svg>Récits</a></nav>",
+      "css": ".ds-rail { display: flex; flex-direction: column; gap: 0.25rem; width: 15rem; border-right: 1px solid #efe4dd; background: #ffffff; padding: 1.5rem 1rem; font-family: var(--police-display), ui-sans-serif, system-ui, sans-serif; } .ds-rail-lien { display: flex; min-height: 3rem; align-items: center; gap: 0.75rem; border-radius: 0.7rem; padding: 0.625rem 0.75rem; font-size: 0.98rem; font-weight: 600; text-decoration: none; background: transparent; color: var(--color-encre-douce, #5c5560); } .ds-rail-lien svg { color: #9a8f95; } .ds-rail-lien:hover { background: rgb(251 237 242 / 0.6); } .ds-rail-lien:focus-visible { outline: 3px solid var(--color-magenta, #b3286e); outline-offset: 3px; } .ds-rail-lien[aria-current=\"page\"] { background: var(--color-rose-pale, #fbedf2); color: var(--color-prune, #8c2059); } .ds-rail-lien[aria-current=\"page\"] svg { color: var(--color-prune, #8c2059); }"
+    },
+    {
+      "name": "Compte des semaines",
+      "kind": "custom",
+      "refersTo": "carte",
+      "description": "Le dispositif de progression écrit : quatre pastilles pleines ou creuses ET une phrase. C'est ce qui remplace la barre de pourcentage, avec le phénix.",
+      "html": "<div class=\"ds-compte\"><div class=\"ds-compte-pastilles\" aria-hidden=\"true\"><span class=\"ds-pt ds-pt-pleine\"></span><span class=\"ds-pt ds-pt-pleine\"></span><span class=\"ds-pt\"></span><span class=\"ds-pt\"></span></div><p class=\"ds-compte-phrase\">2 semaines tenues. Il en reste 2.</p></div>",
+      "css": ".ds-compte { display: flex; align-items: flex-start; gap: 0.75rem; font-family: var(--police-display), ui-sans-serif, system-ui, sans-serif; } .ds-compte-pastilles { display: flex; flex-shrink: 0; gap: 0.375rem; margin-top: 0.375rem; } .ds-pt { display: block; height: 0.75rem; width: 0.75rem; border-radius: 9999px; border: 2px solid var(--color-magenta, #b3286e); background: transparent; } .ds-pt-pleine { background: var(--color-magenta, #b3286e); } .ds-compte-phrase { margin: 0; font-size: 0.92rem; line-height: 1.6; color: var(--color-encre-douce, #5c5560); }"
+    },
+    {
+      "name": "Marque de domaine",
+      "kind": "chip",
+      "refersTo": "carte-douce",
+      "description": "Cinq domaines, cinq teintes, cinq accents. Aucun partage : deux domaines sur une même couleur, c'est une identité qui ment.",
+      "html": "<div class=\"ds-domaine\" style=\"background: var(--color-tuile-lavande, #f2ecfa)\"><svg width=\"30\" height=\"30\" viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"none\" stroke=\"var(--color-icone-violet, #7738ad)\" stroke-width=\"1.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"8.6\"/><path d=\"M8.7 15.3 14 13.4 15.3 8.7 10 10.6Z\"/></svg><h3 class=\"ds-domaine-titre\">Carrière</h3><p class=\"ds-domaine-texte\">Sens, compétences, salaire, direction à deux ans</p></div>",
+      "css": ".ds-domaine { border-radius: 1.15rem; padding: 1.5rem; font-family: var(--police-display), ui-sans-serif, system-ui, sans-serif; } .ds-domaine-titre { margin: 0.75rem 0 0; font-size: 1.15rem; font-weight: 700; line-height: 1.12; letter-spacing: -0.022em; color: var(--color-foret, #17453a); } .ds-domaine-texte { margin: 0.5rem 0 0; max-width: 58ch; font-size: 0.94rem; line-height: 1.6; color: var(--color-encre-douce, #5c5560); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Le phénix qui reprend ses couleurs",
+    "overview": "RenaiSens joue le standard de sa catégorie droit et à fond : fond crème chaud, cartes blanches à coins doux posées dessus, photographies de femmes ouest-africaines, une seule couleur saturée pour l'action. Il n'y a ni ironie, ni citation d'un monde précédent, ni matériau décoratif conservé « au cas où ». Ce que la retenue achète, c'est de la place pour le seul objet d'auteur du produit : le phénix arc-en-ciel, qui donne la palette entière — prune, magenta, rose, vert forêt, et les cinq pastels des domaines viennent tous de son plumage.\n\nCe phénix n'est pas un ornement, c'est le dispositif de progression. Il est présent en entier dès la première seconde, mais sans couleur ; chaque semaine tenue lui en rend une part. C'est ce qui remplace la barre de pourcentage, et c'est la raison pour laquelle aucun score, aucune série, aucun badge n'existe dans l'interface : la progression est déjà racontée, et elle l'est par une image qui ne juge pas. Une semaine ratée laisse simplement le phénix là où il en était.\n\nLe monde est dense en contenu et calme en signaux. Une seule couleur saturée — le prune — et seulement là où l'on peut agir ; le vert forêt pour tout ce qui se lit sans se cliquer ; le magenta pour les liens et la manuscrite. Un seul moment animé dans tout le produit. Deux traitements de carte, et deux seulement. Chaque fois qu'une teinte signale un état, une matière, une forme ou une phrase le signale aussi.",
+    "keyCharacteristics": [
+      "Fond crème chaud (creme), cartes blanches à ombre très basse, coins à 1,15 rem partout.",
+      "Une seule couleur saturée pour l'action ; le reste de la saturation est réservé à l'identité.",
+      "La couleur ne porte jamais l'information seule : matière, forme ou texte doublent toujours.",
+      "Aucun score, aucune jauge, aucune série, aucun badge, et le non-fait sans rouge.",
+      "Figtree en display et en texte, Caveat pour la voix manuscrite uniquement.",
+      "Un seul moment orchestré : le retour des couleurs au phénix à la clôture du rituel."
+    ],
+    "rules": [
+      {
+        "name": "La règle de l'unique saturé",
+        "body": "Le prune est la seule couleur saturée posée en aplat, et seulement sur ce qui agit. Test : si un aplat prune n'est ni un bouton, ni un état sélectionné, ni la bande d'appel à l'action, il est mal placé.",
+        "section": "colors"
+      },
+      {
+        "name": "La règle du forêt qui n'agit pas",
+        "body": "Tout ce qui se lit sans se cliquer — titres, faits du héros, numéros de jalons, phrases de tensions et de forces — est en vert forêt. Un titre en prune promet un clic qui n'existe pas.",
+        "section": "colors"
+      },
+      {
+        "name": "La règle de la couleur jamais seule",
+        "body": "Aucun état n'est signalé par la teinte seule. L'onglet actif a une pastille pleine derrière son icône ; la ligne choisie change de fond et reçoit une pastille avec sa coche ; la jauge-phénix a des plumes colorées, quatre pastilles pleines ou creuses, et une phrase écrite. Test : en niveaux de gris, l'état doit rester lisible.",
+        "section": "colors"
+      },
+      {
+        "name": "La règle des cinq domaines",
+        "body": "Cinq domaines, cinq teintes, cinq accents. Aucun partage. Deux domaines sur une même couleur, c'est un système d'identité qui ment.",
+        "section": "colors"
+      },
+      {
+        "name": "La règle du non-fait sans rouge",
+        "body": "Rien dans le produit n'utilise de rouge d'alerte pour une action non faite. Une case non cochée d'une semaine passée est un anneau gris clair (#d8ccc5) sur fond transparent, sans compteur et sans mention. Une semaine ratée ne casse rien.",
+        "section": "colors"
+      },
+      {
+        "name": "La règle des 58ch",
+        "body": "Le texte courant est plafonné à 58ch, pas 70. L'unité ch vaut la largeur du chiffre zéro, sensiblement plus large que la lettre moyenne : à 70ch la ligne rendait près de cent caractères, soit un tiers de plus que le plancher de lisibilité. Le cap est invisible sur téléphone et décisif dès que la colonne s'ouvre à 58 rem.",
+        "section": "typography"
+      },
+      {
+        "name": "La règle des polices par variable propre",
+        "body": "Les polices sont exposées via --police-display, --police-texte et --police-manuscrite, jamais via les variables --font-* de Tailwind. Celles-ci ne sont émises dans la feuille finale que si une utilitaire Tailwind les consomme : sans consommateur explicite, la variable n'existe pas, la déclaration retombe silencieusement sur la pile système, et rien ne signale l'erreur. Une police qui disparaît sans message est le pire mode de panne typographique.",
+        "section": "typography"
+      },
+      {
+        "name": "La règle de la manuscrite qui ne travaille pas",
+        "body": "Caveat ne porte jamais un libellé de bouton, une étiquette, un nombre, ni une information dont la lecture doit être sûre. Elle porte de la voix. Ce qui doit être compris du premier coup n'a pas à être joli.",
+        "section": "typography"
+      },
+      {
+        "name": "La règle du titre sans étiquette",
+        "body": "Aucune étiquette en capitales, aucun surtitre, aucun mot-clé espacé au-dessus d'un titre. Le titre porte son propre poids. Ce qui doit être signalé comme prioritaire l'est par le fond, la taille et une phrase dans le flux — jamais par une pastille de texte posée au-dessus.",
+        "section": "typography"
+      },
+      {
+        "name": "La règle de l'ombre qui tombe",
+        "body": "Une ombre porte un décalage et un flou. Un halo coloré centré sans décalage n'est pas de la profondeur, c'est de la décoration ; il n'en existe aucun dans ce produit.",
+        "section": "elevation"
+      },
+      {
+        "name": "La règle des deux cartes",
+        "body": "Il y a deux traitements de carte, et deux seulement : .carte, blanche et surélevée, pour ce qu'on peut ouvrir ou manipuler ; .carte-douce, pastel et posée sans élévation, pour ce qui informe. Même rayon, même famille. Un troisième traitement serait du bruit.",
+        "section": "elevation"
+      },
+      {
+        "name": "La règle du symbole vectoriel",
+        "body": "Le phénix est un SVG de 240×240 aux chemins nommés, jamais une image raster : net du favicon de 16 px à l'écran de profil à 168 px, quelques kilo-octets, et chaque plume peut porter sa couleur indépendamment.",
+        "section": "shapes"
+      },
+      {
+        "name": "La règle de la jauge interdite",
+        "body": "Le phénix remplace la barre de pourcentage. Il n'existe dans ce produit ni barre de progression, ni anneau de complétion, ni radar, ni note, ni pourcentage. Les scores existent dans le moteur pour répartir les actions et ne sortent jamais à l'écran.",
+        "section": "components"
+      },
+      {
+        "name": "La règle des variantes par style en ligne",
+        "body": "La couleur d'un bouton passe toujours par sa variante, posée en style en ligne, jamais par une classe bg-* ajoutée par-dessus. À spécificité égale, c'est l'ordre de la feuille finale qui tranche — autrement dit le hasard du bundle. Le className d'appel sert à la disposition (largeur, marge), pas à la teinte.",
+        "section": "components"
+      },
+      {
+        "name": "La règle du désactivé en aplat",
+        "body": "L'état désactivé est un aplat neutre (#ece5df), jamais une opacité réduite. Baisser l'opacité d'un bouton plein donne une teinte pâle sur un fond pâle, et le libellé passe sous le seuil de contraste sans que personne le voie.",
+        "section": "components"
+      }
+    ],
+    "dos": [
+      "Do réserver le prune aux surfaces d'action, le magenta aux liens et à la manuscrite, le forêt à tout ce qui se lit sans se cliquer.",
+      "Do doubler chaque état signalé par une teinte d'une matière, d'une forme ou d'une phrase. Test : en niveaux de gris, l'état reste lisible.",
+      "Do poser la coche à 48 px, avant le texte, bord coche-repos au repos.",
+      "Do signaler la priorité par un fond rose pâle, un titre display agrandi et une phrase dans le flux.",
+      "Do choisir entre .carte (blanche, surélevée, ce qui s'ouvre) et .carte-douce (pastel, posée, ce qui informe), et n'inventer aucun troisième traitement.",
+      "Do dessiner toute nouvelle icône dans le système existant : grille de 24, trait de 1,7, extrémités arrondies, aucun aplat.",
+      "Do plafonner le texte courant à 58ch et employer les chiffres tabulaires (.chiffres) pour toute suite de chiffres susceptible de changer.",
+      "Do appeler les polices par --police-display, --police-texte et --police-manuscrite.",
+      "Do neutraliser la durée ET le décalage sous prefers-reduced-motion."
+    ],
+    "donts": [
+      "Don't afficher un score, une note, un pourcentage, une jauge ou un radar. Les scores restent dans le moteur.",
+      "Don't introduire une série, un badge, un compteur de régularité, ni marquer le non-fait en rouge. Une semaine ratée ne casse rien.",
+      "Don't poser une étiquette en capitales, un surtitre ou un mot-clé espacé au-dessus d'un titre.",
+      "Don't faire porter la couleur seule d'une information.",
+      "Don't faire partager une teinte à deux domaines.",
+      "Don't colorer un bouton par une classe bg-* ajoutée sur l'appel ; passer par la variante.",
+      "Don't rendre un bouton désactivé par une opacité : utiliser l'aplat desactive.",
+      "Don't ajouter un deuxième moment animé. Le retour des couleurs au phénix est le seul, et il se fait par superposition d'une jumelle grise — jamais par une transition de fill depuis une valeur inconnue. Le décalage de chaque plume est posé en ligne, parce que nth-of-type compterait aussi les jumelles grises.",
+      "Don't conditionner la visibilité d'un contenu à une animation : .revelation retarde l'arrivée, elle ne cache jamais.",
+      "Don't afficher un chiffre de traction, un taux de satisfaction, un avis ou un témoignage. Le produit n'a pas d'utilisatrices ; la rangée de chiffres de l'accueil porte des faits vérifiables sur le produit lui-même (8 min, 3, 0).",
+      "Don't attacher une photographie à un récit ni laisser croire qu'une femme photographiée témoigne. Les récits sont illustratifs et l'interface le dit ; la bande d'ambiance est en alt=\"\" avec sa légende explicite.",
+      "Don't répéter la jauge-phénix deux fois sur un même écran."
+    ]
+  }
+}
